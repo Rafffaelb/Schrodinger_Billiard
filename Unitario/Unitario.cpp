@@ -77,7 +77,7 @@ int main(){
 
 	W << W1, W2;
 
-	// Projectors //
+	// Creating Projectors //
 
 	Eigen::MatrixXcd C1tio(2,2);
 	Eigen::MatrixXcd C2tio(2,2);
