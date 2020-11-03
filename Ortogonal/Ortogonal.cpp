@@ -169,7 +169,7 @@ int main(){
 		// Scattering Matrix //
 
 		MatrixXcd S = identityS -number_2*complex_identity*M_PI*(W.adjoint())*(D.inverse())*W;
-		
+
 		MatrixXcd ttdaga = C1*S*C2*(S.adjoint());
 
 		// Conductance and Power Shot Noise //

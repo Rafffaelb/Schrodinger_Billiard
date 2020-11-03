@@ -44,7 +44,7 @@ int main(){
 	MatrixXcd matrizpauli2(2,2);
 	MatrixXcd matrizpauli3(2,2);
 
-	matrizpauli1.real() << 1, 0, 0, 1;
+	matrizpauli1.real() << 0, 1, 1, 0;
 	matrizpauli1.imag() <<  0, 0, 0,  0;
 
 	matrizpauli2.real() << 0, 0, 0, 0;
@@ -130,7 +130,8 @@ int main(){
 		}
 	}
 
-	MatrixXcd A(ress,ress); MatrixXcd H(ress,ress);
+	MatrixXcd A(ress,ress);
+       	MatrixXcd H(ress,ress);
 	MatrixXcd H1(ress,ress); MatrixXcd H2(ress,ress);
 	MatrixXcd Simetrica(ress,ress); MatrixXcd Antisimetrica(ress,ress);
 	MatrixXcd identityS(W.cols(),W.cols());
@@ -143,6 +144,7 @@ int main(){
 		// Generating Hamiltonian Matrix //
 
 		A.setZero();
+		
 
 		for (int i = 1; i < ress + 1; i++){
 			for (int j = 1; j < ress + 1; j++){
@@ -187,8 +189,8 @@ int main(){
 		}
 	}
 
-	std::ofstream output_G("G.txt");
-	std::ofstream output_R("R.txt");
+	std::ofstream output_G("G_U.txt");
+	std::ofstream output_R("R_U.txt");
 	for (int i = 0; i < num_realization; i++){
 		for (int j = 0; j < 1; j++){
 			output_G << G(i,j).real() << " " << std::endl;
