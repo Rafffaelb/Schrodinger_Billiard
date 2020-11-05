@@ -30,8 +30,6 @@ void Criando_H (MatrixXcd *H_pointer, int ress, double V){
 		}
 	}
 
-	std::cout << "\nA matriz A na funcao fica:\n" << A << std::endl;
-
 	for (int i = 1; i < ress + 1; i++){
 		H1(i-1,i-1) = A(i-1,i-1)*sqrt(V/(2.0));
 		for (int j = i + 1; j < ress + 1; j++){
@@ -43,8 +41,6 @@ void Criando_H (MatrixXcd *H_pointer, int ress, double V){
 
 	MatrixXcd H = Simetrica;
 	*H_pointer = H;
-	
-	std::cout << "\nA matriz H dentro da função fica:\n" << *H_pointer << std::endl;
 
 }
 
@@ -62,7 +58,7 @@ int main(){
 	N1 = 1;
         N2 = 1;
     	n = N1+N2;
-	ress = 5;
+	ress = 100;
 	lambda = 0.5;
 	lambda1 = 1;
 	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
@@ -174,8 +170,6 @@ int main(){
 		H.setZero();
 		MatrixXcd* H_pointer = &H;
 		Criando_H(H_pointer, ress, V);
-
-		std::cout << "\nA matriz H fora da função fica:\n" << H << std::endl;
 
 		// Inverse Green Function //
 
