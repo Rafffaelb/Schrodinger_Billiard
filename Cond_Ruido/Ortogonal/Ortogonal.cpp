@@ -6,17 +6,52 @@
 #include <eigen3/Eigen/Eigenvalues>
 #include <ctime>
 #include <fstream>
+#include <chrono>
 
 using namespace Eigen;
 using namespace std::literals;
+
+void Criando_H (MatrixXcd *H_pointer, int ress, double V){
+	
+	auto seed = std::chrono::system_clock::now().time_since_epoch().count();	
+  	std::normal_distribution<double> distribution(0.0,1.0);
+	std::default_random_engine generator(seed);
+	
+	MatrixXcd A(ress,ress); 
+	MatrixXcd H1(ress,ress);
+	MatrixXcd Simetrica(ress,ress);
+
+	A.setZero();
+	
+	for (int i = 1; i < ress + 1; i++){
+		for (int j = 1; j < ress + 1; j++){
+			double aux = distribution(generator);
+			A(i-1,j-1) = aux;
+		}
+	}
+
+	std::cout << "\nA matriz A na funcao fica:\n" << A << std::endl;
+
+	for (int i = 1; i < ress + 1; i++){
+		H1(i-1,i-1) = A(i-1,i-1)*sqrt(V/(2.0));
+		for (int j = i + 1; j < ress + 1; j++){
+			H1(i-1,j-1) = A(i-1,j-1)*sqrt(V/(1.0));
+		}
+	}
+
+	Simetrica << H1 + H1.adjoint();
+
+	MatrixXcd H = Simetrica;
+	*H_pointer = H;
+	
+	std::cout << "\nA matriz H dentro da função fica:\n" << *H_pointer << std::endl;
+
+}
 
 int main(){
 
 	std::complex<double> complex_identity(0, 1);
 	std::complex<double> number_2(2, 0);
-
-	std::default_random_engine generator;
-  	std::normal_distribution<double> distribution(0.0,1.0);
 
 	// Input //
 
@@ -27,17 +62,15 @@ int main(){
 	N1 = 1;
         N2 = 1;
     	n = N1+N2;
-	ress = 100;
+	ress = 5;
 	lambda = 0.5;
 	lambda1 = 1;
 	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
 	V = lambda*lambda/ress;
 	num_realization = 100000;
-
+	
 	MatrixXcd G(num_realization,1);
 	MatrixXcd R(num_realization,1);
-	MatrixXcd Teste(num_realization,1);
-
 	// Pauli Matrices //
 
 	MatrixXcd matrizpauli1(2,2);
@@ -130,42 +163,24 @@ int main(){
 		}
 	}
 
-	MatrixXcd A(ress,ress); MatrixXcd H(ress,ress);
-	MatrixXcd H1(ress,ress);
-	MatrixXcd Simetrica(ress,ress);
 	MatrixXcd identityS(W.cols(),W.cols());
 	MatrixXcd D(ress,ress);
-
-	identityS << MatrixXcd::Identity(W.cols(),W.cols());
-
+	
 	for (int realization = 1; realization < num_realization + 1; realization++){
 
 		// Generating Hamiltonian Matrix //
 
-		A.setZero();
+		MatrixXcd H(ress,ress);
+		H.setZero();
+		MatrixXcd* H_pointer = &H;
+		Criando_H(H_pointer, ress, V);
 
-		for (int i = 1; i < ress + 1; i++){
-			for (int j = 1; j < ress + 1; j++){
-				double aux = distribution(generator);
-				A(i-1,j-1) = aux;
-			}
-		}
-
-		for (int i = 1; i < ress + 1; i++){
-			H1(i-1,i-1) = A(i-1,i-1)*sqrt(V/(2.0));
-			for (int j = i + 1; j < ress + 1; j++){
-				H1(i-1,j-1) = A(i-1,j-1)*sqrt(V/(1.0));
-			}
-		}
-
-		Simetrica << H1 + H1.adjoint();
-
-		H << Simetrica;
+		std::cout << "\nA matriz H fora da função fica:\n" << H << std::endl;
 
 		// Inverse Green Function //
 
 		D << (-H + complex_identity*M_PI*W*(W.adjoint()));
-
+		
 		// Scattering Matrix //
 
 		MatrixXcd S = identityS -number_2*complex_identity*M_PI*(W.adjoint())*(D.inverse())*W;
