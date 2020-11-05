@@ -67,7 +67,61 @@ void Criando_W (MatrixXcd *W_pointer, int ress, int N1, int N2, double lambda, d
 	W << W1, W2;
 	*W_pointer = W;
 
-	std::cout << "\nA matriz W dentro da função fica:\n" << *W_pointer << std::endl;
+}
+
+void Criando_Projetores (MatrixXcd *C1_pointer, MatrixXcd *C2_pointer, int N1, int N2){
+
+	MatrixXcd C1tio(2,2);
+	MatrixXcd C2tio(2,2);
+
+	MatrixXcd identidade1 = MatrixXcd::Identity(N1,N1);
+	MatrixXcd identidade2 = MatrixXcd::Identity(N2,N2);
+	
+	MatrixXcd C1(2*N1, 2*N1);
+	MatrixXcd C2(2*N2, 2*N2);
+
+	for (int i=1; i < 3; i++){
+		for (int j=1; j < 3; j++){
+			if (i == 1 && j == 1){
+				std::complex<double> aux(1,0);
+				C1tio(i-1,j-1) = aux;
+			}
+			else{
+				std::complex<double> aux(0,0);
+				C1tio(i-1,j-1) = aux;
+			}
+		}
+	}
+
+	for (int i=1; i < 3; i++){
+		for (int j=1; j < 3; j++){
+			if (i == 2 && j == 2){
+				std::complex<double> aux(1,0);
+				C2tio(i-1,j-1) = aux;
+			}
+			else{
+				std::complex<double> aux(0,0);
+				C2tio(i-1,j-1) = aux;
+			}
+		}
+	}
+
+	for (int i = 1; i < 3; i++){
+		for (int j = 1; j < 3; j++){
+			C1.block((i-1)*identidade1.rows(), (j-1)*identidade1.cols(), identidade1.rows(), identidade1.cols()) = C1tio(i-1,j-1)*identidade1;
+			
+		}
+	}
+
+	for (int i = 1; i < 3; i++){
+		for (int j = 1; j < 3; j++){
+			C2.block((i-1)*identidade2.rows(), (j-1)*identidade2.cols(), identidade2.rows(), identidade2.cols()) = C2tio(i-1,j-1)*identidade2;
+		}
+	}
+
+	*C1_pointer << C1;
+	*C2_pointer << C2;
+
 }
 
 int main(){
@@ -81,10 +135,10 @@ int main(){
 	int N1, N2, n, ress, num_realization, lambda1;
 
 	Gamma = 1;
-	N1 = 1;
-        N2 = 1;
+	N1 = 2;
+        N2 = 2;
     	n = N1+N2;
-	ress = 5;
+	ress = 10;
 	lambda = 0.5;
 	lambda1 = 1;
 	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
@@ -118,60 +172,18 @@ int main(){
 	
 	Criando_W(W_pointer, ress, N1, N2, lambda, y);
 
-	std::cout << "\nA matriz W fora da função fica:\n" << W << std::endl;
-
 	// Creating Projectors //
 
-	Eigen::MatrixXcd C1tio(2,2);
-	Eigen::MatrixXcd C2tio(2,2);
-
-	for (int i=1; i < 3; i++){
-		for (int j=1; j < 3; j++){
-			if (i == 1 && j == 1){
-				std::complex<double> aux(1,0);
-				C1tio(i-1,j-1) = aux;
-			}
-			else{
-				std::complex<double> aux(0,0);
-				C1tio(i-1,j-1) = aux;
-			}
-		}
-	}
-
-	for (int i=1; i < 3; i++){
-		for (int j=1; j < 3; j++){
-			if (i == 2 && j == 2){
-				std::complex<double> aux(1,0);
-				C2tio(i-1,j-1) = aux;
-			}
-			else{
-				std::complex<double> aux(0,0);
-				C2tio(i-1,j-1) = aux;
-			}
-		}
-	}
-
-	MatrixXcd identidade1 = MatrixXcd::Identity(N1,N1);
-	MatrixXcd identidade2 = MatrixXcd::Identity(N2,N2);
-
-	MatrixXcd C1(identidade1.rows() * C1tio.rows(),identidade1.cols() * C1tio.cols() );
-	MatrixXcd C2(identidade2.rows() * C2tio.rows(),identidade2.cols() * C2tio.cols() );
+	MatrixXcd C1(2*N1, 2*N1);
+	MatrixXcd C2(2*N2, 2*N2);
 
 	C1.setZero();
 	C2.setZero();
 
-	for (int i = 1; i < 3; i++){
-		for (int j = 1; j < 3; j++){
-			C1.block((i-1)*identidade1.rows(), (j-1)*identidade1.cols(), identidade1.rows(), identidade1.cols()) = C1tio(i-1,j-1)*identidade1;
-			
-		}
-	}
+	MatrixXcd *C1_pointer = &C1;
+	MatrixXcd *C2_pointer = &C2;
 
-	for (int i = 1; i < 3; i++){
-		for (int j = 1; j < 3; j++){
-			C2.block((i-1)*identidade2.rows(), (j-1)*identidade2.cols(), identidade2.rows(), identidade2.cols()) = C2tio(i-1,j-1)*identidade2;
-		}
-	}
+	Criando_Projetores(C1_pointer, C2_pointer, N1, N2);
 	
 	for (int realization = 1; realization < num_realization + 1; realization++){
 
