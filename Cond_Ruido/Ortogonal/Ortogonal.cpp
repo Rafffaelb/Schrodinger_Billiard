@@ -30,8 +30,6 @@ void Criando_H (MatrixXcd *H_pointer, int ress, double V){
 		}
 	}
 
-	std::cout << "\nA matriz A na funcao fica:\n" << A << std::endl;
-
 	for (int i = 1; i < ress + 1; i++){
 		H1(i-1,i-1) = A(i-1,i-1)*sqrt(V/(2.0));
 		for (int j = i + 1; j < ress + 1; j++){
@@ -44,8 +42,32 @@ void Criando_H (MatrixXcd *H_pointer, int ress, double V){
 	MatrixXcd H = Simetrica;
 	*H_pointer = H;
 	
-	std::cout << "\nA matriz H dentro da função fica:\n" << *H_pointer << std::endl;
+}
 
+void Criando_W (MatrixXcd *W_pointer, int ress, int N1, int N2, double lambda, double y){
+
+	MatrixXcd W1(ress,N1);
+	MatrixXcd W2(ress,N2);
+	MatrixXcd W(ress,N1+N2);
+
+	for (int j=1; j < ress+1; j++ ){
+		for (int k=1; k < N1+1; k++){
+			std::complex<double> aux(y*(sqrt(((2.0*lambda))/(M_PI*(ress+1)))*sin(j*k*M_PI/(ress+1))), 0);
+			W1(j-1,k-1) = aux;
+		}
+	}
+
+	for (int j=1; j < ress+1; j++ ){
+		for (int k=1; k < N2+1; k++){
+			std::complex<double> aux(y*(sqrt(((2.0*lambda))/(M_PI*(ress+1)))*sin(j*(k+N1)*M_PI/(ress+1))), 0);
+			W2(j-1,k-1) = aux;
+		}
+	}
+
+	W << W1, W2;
+	*W_pointer = W;
+
+	std::cout << "\nA matriz W dentro da função fica:\n" << *W_pointer << std::endl;
 }
 
 int main(){
@@ -69,6 +91,7 @@ int main(){
 	V = lambda*lambda/ress;
 	num_realization = 100000;
 	
+	MatrixXcd identityS(n,n);
 	MatrixXcd G(num_realization,1);
 	MatrixXcd R(num_realization,1);
 	// Pauli Matrices //
@@ -89,26 +112,13 @@ int main(){
 
 	// Creating W Matrices //
 
-	Eigen::MatrixXcd W1(ress,N1);
-	Eigen::MatrixXcd W2(ress,N2);
+	MatrixXcd W(ress,n);
+	W.setZero();
+	MatrixXcd* W_pointer = &W;
+	
+	Criando_W(W_pointer, ress, N1, N2, lambda, y);
 
-	for (int j=1; j < ress+1; j++ ){
-		for (int k=1; k < N1+1; k++){
-			std::complex<double> aux(y*(sqrt(((2.0*lambda))/(M_PI*(ress+1)))*sin(j*k*M_PI/(ress+1))), 0);
-			W1(j-1,k-1) = aux;
-		}
-	}
-
-	for (int j=1; j < ress+1; j++ ){
-		for (int k=1; k < N2+1; k++){
-			std::complex<double> aux(y*(sqrt(((2.0*lambda))/(M_PI*(ress+1)))*sin(j*(k+N1)*M_PI/(ress+1))), 0);
-			W2(j-1,k-1) = aux;
-		}
-	}
-
-	Eigen::MatrixXcd W(W1.rows(), W1.cols() + W2.cols());
-
-	W << W1, W2;
+	std::cout << "\nA matriz W fora da função fica:\n" << W << std::endl;
 
 	// Creating Projectors //
 
@@ -162,9 +172,6 @@ int main(){
 			C2.block((i-1)*identidade2.rows(), (j-1)*identidade2.cols(), identidade2.rows(), identidade2.cols()) = C2tio(i-1,j-1)*identidade2;
 		}
 	}
-
-	MatrixXcd identityS(W.cols(),W.cols());
-	MatrixXcd D(ress,ress);
 	
 	for (int realization = 1; realization < num_realization + 1; realization++){
 
@@ -175,11 +182,9 @@ int main(){
 		MatrixXcd* H_pointer = &H;
 		Criando_H(H_pointer, ress, V);
 
-		std::cout << "\nA matriz H fora da função fica:\n" << H << std::endl;
-
 		// Inverse Green Function //
 
-		D << (-H + complex_identity*M_PI*W*(W.adjoint()));
+		MatrixXcd D = (-H + complex_identity*M_PI*W*(W.adjoint()));
 		
 		// Scattering Matrix //
 
