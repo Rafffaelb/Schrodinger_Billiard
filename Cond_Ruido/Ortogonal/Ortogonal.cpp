@@ -135,15 +135,15 @@ int main(){
 	int N1, N2, n, ress, num_realization, lambda1;
 
 	Gamma = 1;
-	N1 = 2;
-        N2 = 2;
+	N1 = 1;
+        N2 = 1;
     	n = N1+N2;
-	ress = 10;
+	ress = 100;
 	lambda = 0.5;
 	lambda1 = 1;
 	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
 	V = lambda*lambda/ress;
-	num_realization = 100000;
+	num_realization = 50000;
 	
 	MatrixXcd identityS(n,n);
 	MatrixXcd G(num_realization,1);
