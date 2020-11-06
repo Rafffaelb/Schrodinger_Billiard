@@ -43,40 +43,10 @@ void Criando_H (MatrixXcd *H_pointer, int ress, double V){
 
 	MatrixXcd H = Simetrica;
 	*H_pointer = H;
-<<<<<<< HEAD
-
-}
-
-int main(){
-
-	std::complex<double> complex_identity(0, 1);
-	std::complex<double> number_2(2, 0);
-
-	// Input //
-
-	double Gamma, lambda, y, V, gama;
-	int N1, N2, n, ress, num_realization, lambda1;
-
-	Gamma = 1;
-	N1 = 1;
-        N2 = 1;
-    	n = N1+N2;
-	ress = 100;
-	lambda = 0.5;
-	lambda1 = 1;
-	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
-	V = lambda*lambda/ress;
-	num_realization = 100000;
-	
-	MatrixXcd G(num_realization,1);
-	MatrixXcd R(num_realization,1);
-	// Pauli Matrices //
-=======
 	
 }
 
 void Criando_W (MatrixXcd *W_pointer, int ress, int N1, int N2, double lambda, double y){
->>>>>>> feature-1
 
 	MatrixXcd W1(ress,N1);
 	MatrixXcd W2(ress,N2);
@@ -225,11 +195,7 @@ int main(){
 		H.setZero();
 		MatrixXcd* H_pointer = &H;
 		Criando_H(H_pointer, ress, V);
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> feature-1
 		// Inverse Green Function //
 
 		MatrixXcd D = (-H + complex_identity*M_PI*W*(W.adjoint()));
