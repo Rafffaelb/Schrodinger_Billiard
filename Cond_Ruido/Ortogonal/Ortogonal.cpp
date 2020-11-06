@@ -22,6 +22,8 @@ void Criando_H (MatrixXcd *H_pointer, int ress, double V){
 	MatrixXcd Simetrica(ress,ress);
 
 	A.setZero();
+	H1.setZero();
+	Simetrica.setZero();
 	
 	for (int i = 1; i < ress + 1; i++){
 		for (int j = 1; j < ress + 1; j++){
@@ -135,15 +137,15 @@ int main(){
 	int N1, N2, n, ress, num_realization, lambda1;
 
 	Gamma = 1;
-	N1 = 2;
-        N2 = 2;
+	N1 = 1;
+        N2 = 1;
     	n = N1+N2;
-	ress = 10;
+	ress = 100;
 	lambda = 0.5;
 	lambda1 = 1;
 	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
 	V = lambda*lambda/ress;
-	num_realization = 100000;
+	num_realization = 50000;
 	
 	MatrixXcd identityS(n,n);
 	MatrixXcd G(num_realization,1);
@@ -193,7 +195,7 @@ int main(){
 		H.setZero();
 		MatrixXcd* H_pointer = &H;
 		Criando_H(H_pointer, ress, V);
-
+		
 		// Inverse Green Function //
 
 		MatrixXcd D = (-H + complex_identity*M_PI*W*(W.adjoint()));
