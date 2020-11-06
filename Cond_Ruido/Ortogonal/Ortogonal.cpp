@@ -22,6 +22,8 @@ void Criando_H (MatrixXcd *H_pointer, int ress, double V){
 	MatrixXcd Simetrica(ress,ress);
 
 	A.setZero();
+	H1.setZero();
+	Simetrica.setZero();
 	
 	for (int i = 1; i < ress + 1; i++){
 		for (int j = 1; j < ress + 1; j++){
@@ -41,6 +43,7 @@ void Criando_H (MatrixXcd *H_pointer, int ress, double V){
 
 	MatrixXcd H = Simetrica;
 	*H_pointer = H;
+<<<<<<< HEAD
 
 }
 
@@ -68,25 +71,16 @@ int main(){
 	MatrixXcd G(num_realization,1);
 	MatrixXcd R(num_realization,1);
 	// Pauli Matrices //
-
-	MatrixXcd matrizpauli1(2,2);
-	MatrixXcd matrizpauli2(2,2);
-	MatrixXcd matrizpauli3(2,2);
-
-	matrizpauli1.real() << 1, 0, 0, 1;
-	matrizpauli1.imag() <<  0, 0, 0,  0;
-
-	matrizpauli2.real() << 0, 0, 0, 0;
-	matrizpauli2.imag() <<  0, -1, 1,  0;
-
+=======
 	
-	matrizpauli3.real() << 1, 0, 0, -1;
-	matrizpauli3.imag() <<  0, 0, 0,  0;
+}
 
-	// Creating W Matrices //
+void Criando_W (MatrixXcd *W_pointer, int ress, int N1, int N2, double lambda, double y){
+>>>>>>> feature-1
 
-	Eigen::MatrixXcd W1(ress,N1);
-	Eigen::MatrixXcd W2(ress,N2);
+	MatrixXcd W1(ress,N1);
+	MatrixXcd W2(ress,N2);
+	MatrixXcd W(ress,N1+N2);
 
 	for (int j=1; j < ress+1; j++ ){
 		for (int k=1; k < N1+1; k++){
@@ -102,14 +96,21 @@ int main(){
 		}
 	}
 
-	Eigen::MatrixXcd W(W1.rows(), W1.cols() + W2.cols());
-
 	W << W1, W2;
+	*W_pointer = W;
 
-	// Creating Projectors //
+}
 
-	Eigen::MatrixXcd C1tio(2,2);
-	Eigen::MatrixXcd C2tio(2,2);
+void Criando_Projetores (MatrixXcd *C1_pointer, MatrixXcd *C2_pointer, int N1, int N2){
+
+	MatrixXcd C1tio(2,2);
+	MatrixXcd C2tio(2,2);
+
+	MatrixXcd identidade1 = MatrixXcd::Identity(N1,N1);
+	MatrixXcd identidade2 = MatrixXcd::Identity(N2,N2);
+	
+	MatrixXcd C1(2*N1, 2*N1);
+	MatrixXcd C2(2*N2, 2*N2);
 
 	for (int i=1; i < 3; i++){
 		for (int j=1; j < 3; j++){
@@ -137,15 +138,6 @@ int main(){
 		}
 	}
 
-	MatrixXcd identidade1 = MatrixXcd::Identity(N1,N1);
-	MatrixXcd identidade2 = MatrixXcd::Identity(N2,N2);
-
-	MatrixXcd C1(identidade1.rows() * C1tio.rows(),identidade1.cols() * C1tio.cols() );
-	MatrixXcd C2(identidade2.rows() * C2tio.rows(),identidade2.cols() * C2tio.cols() );
-
-	C1.setZero();
-	C2.setZero();
-
 	for (int i = 1; i < 3; i++){
 		for (int j = 1; j < 3; j++){
 			C1.block((i-1)*identidade1.rows(), (j-1)*identidade1.cols(), identidade1.rows(), identidade1.cols()) = C1tio(i-1,j-1)*identidade1;
@@ -159,8 +151,71 @@ int main(){
 		}
 	}
 
-	MatrixXcd identityS(W.cols(),W.cols());
-	MatrixXcd D(ress,ress);
+	*C1_pointer << C1;
+	*C2_pointer << C2;
+
+}
+
+int main(){
+
+	std::complex<double> complex_identity(0, 1);
+	std::complex<double> number_2(2, 0);
+
+	// Input //
+
+	double Gamma, lambda, y, V, gama;
+	int N1, N2, n, ress, num_realization, lambda1;
+
+	Gamma = 1;
+	N1 = 1;
+        N2 = 1;
+    	n = N1+N2;
+	ress = 100;
+	lambda = 0.5;
+	lambda1 = 1;
+	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
+	V = lambda*lambda/ress;
+	num_realization = 50000;
+	
+	MatrixXcd identityS(n,n);
+	MatrixXcd G(num_realization,1);
+	MatrixXcd R(num_realization,1);
+	// Pauli Matrices //
+
+	MatrixXcd matrizpauli1(2,2);
+	MatrixXcd matrizpauli2(2,2);
+	MatrixXcd matrizpauli3(2,2);
+
+	matrizpauli1.real() << 1, 0, 0, 1;
+	matrizpauli1.imag() <<  0, 0, 0,  0;
+
+	matrizpauli2.real() << 0, 0, 0, 0;
+	matrizpauli2.imag() <<  0, -1, 1,  0;
+
+	
+	matrizpauli3.real() << 1, 0, 0, -1;
+	matrizpauli3.imag() <<  0, 0, 0,  0;
+
+	// Creating W Matrices //
+
+	MatrixXcd W(ress,n);
+	W.setZero();
+	MatrixXcd* W_pointer = &W;
+	
+	Criando_W(W_pointer, ress, N1, N2, lambda, y);
+
+	// Creating Projectors //
+
+	MatrixXcd C1(2*N1, 2*N1);
+	MatrixXcd C2(2*N2, 2*N2);
+
+	C1.setZero();
+	C2.setZero();
+
+	MatrixXcd *C1_pointer = &C1;
+	MatrixXcd *C2_pointer = &C2;
+
+	Criando_Projetores(C1_pointer, C2_pointer, N1, N2);
 	
 	for (int realization = 1; realization < num_realization + 1; realization++){
 
@@ -170,10 +225,14 @@ int main(){
 		H.setZero();
 		MatrixXcd* H_pointer = &H;
 		Criando_H(H_pointer, ress, V);
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> feature-1
 		// Inverse Green Function //
 
-		D << (-H + complex_identity*M_PI*W*(W.adjoint()));
+		MatrixXcd D = (-H + complex_identity*M_PI*W*(W.adjoint()));
 		
 		// Scattering Matrix //
 
