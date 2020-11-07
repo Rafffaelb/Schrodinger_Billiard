@@ -6,7 +6,7 @@
 #include <eigen3/Eigen/Eigenvalues>
 #include <ctime>
 #include <chrono>
-#include "../../include/Ham_O.h"
+#include "../include/Ham_O.h"
 
 using namespace std;
 using namespace Eigen;

@@ -3,7 +3,7 @@
 #include <complex>
 #include <eigen3/Eigen/Dense>
 #include <eigen3/Eigen/Eigenvalues>
-#include "../../include/W_O.h"
+#include "../include/W_O.h"
 
 using namespace Eigen;
 using namespace std::literals;
