@@ -22,11 +22,11 @@ int main(){
 	int N1, N2, n, ress, num_realization;
 
 	Gamma = 1;
-	ress = 25;
+	ress = 600;
 	lambda = 0.5;
 	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
 	V = lambda*lambda/ress;
-	num_realization = 1000;
+	num_realization = 100000;
 	
 	MatrixXcd G(num_realization,10);
 	MatrixXcd R(num_realization,10);
@@ -103,7 +103,7 @@ int main(){
 			G(realization-1, N1-1) = ttdaga.trace();
 			R(realization-1, N1-1) = (ttdaga*(identityR-ttdaga)).trace();
 
-			if (realization % 10000 == 0){
+			if (realization % 50000 == 0){
 				std::cout << "\nQuantidade de realizacoes: " << realization << " | Número de canal atual (N1): " << N1 << std::endl;
 			}
 		}
