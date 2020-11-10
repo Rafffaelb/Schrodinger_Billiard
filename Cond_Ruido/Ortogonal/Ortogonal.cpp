@@ -22,7 +22,7 @@ int main(){
 	int N1, N2, n, ress, num_realization;
 
 	Gamma = 1;
-	ress = 600;
+	ress = 100;
 	lambda = 0.5;
 	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
 	V = lambda*lambda/ress;
@@ -90,9 +90,6 @@ int main(){
 			// Scattering Matrix //
 
 			MatrixXcd S = identityS -number_2*complex_identity*M_PI*(W.adjoint())*(D.inverse())*W;
-
-			//std::cout << "\nA matriz S fica:\n" << S << std::endl;
-			//std::cout << "\nA matriz S transposta fica:\n" << S.transpose() << std::endl;
 
 			MatrixXcd ttdaga = C1*S*C2*(S.adjoint());
 
