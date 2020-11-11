@@ -4,14 +4,18 @@
 #include <eigen3/Eigen/Dense>
 #include <eigen3/Eigen/Eigenvalues>
 #include <fstream>
+#include <ctime>
 #include "../../include/Ham_O.h"
 #include "../../include/W_O.h"
 #include "../../include/Projetores_O.h"
+#include "omp.h"
 
 using namespace Eigen;
 using namespace std::literals;
 
 int main(){
+
+	const clock_t begin_time = clock();
 
 	std::complex<double> complex_identity(0, 1);
 	std::complex<double> number_2(2, 0);
@@ -20,7 +24,7 @@ int main(){
 	
 	double Gamma, lambda, y, V, gama;
 	int N1, N2, n, ress, num_realization;
-
+	
 	Gamma = 1;
 	ress = 100;
 	lambda = 0.5;
@@ -73,23 +77,27 @@ int main(){
 		MatrixXcd *C2_pointer = &C2;
 
 		Criando_Projetores(C1_pointer, C2_pointer, N1, N2);
-	
+		
+		#pragma omp parallel for	
 		for (int realization = 1; realization < num_realization + 1; realization++){
 
 			// Generating Hamiltonian Matrix //
-
-			MatrixXcd H(ress,ress);
-			H.setZero();
-			MatrixXcd* H_pointer = &H;
-			Criando_H(H_pointer, ress, V);
-		
+			
+			 MatrixXcd H(ress,ress);
+			 H.setZero();
+			 MatrixXcd* H_pointer = &H;
+			 Criando_H(H_pointer, ress, V);
+			
 			// Inverse Green Function //
 
 			MatrixXcd D = (-H + complex_identity*M_PI*W*(W.adjoint()));
-		
-			// Scattering Matrix //
 
-			MatrixXcd S = identityS -number_2*complex_identity*M_PI*(W.adjoint())*(D.inverse())*W;
+			PartialPivLU<MatrixXcd> lu(D);
+			MatrixXcd D_inv_W = lu.inverse()*W;
+			
+			// Scattering Matrix //
+			
+			MatrixXcd S = identityS -number_2*complex_identity*M_PI*(W.adjoint())*D_inv_W;
 
 			MatrixXcd ttdaga = C1*S*C2*(S.adjoint());
 
@@ -99,7 +107,7 @@ int main(){
 
 			G(realization-1, N1-1) = ttdaga.trace();
 			R(realization-1, N1-1) = (ttdaga*(identityR-ttdaga)).trace();
-
+			
 			if (realization % 50000 == 0){
 				std::cout << "\nQuantidade de realizacoes: " << realization << " | Número de canal atual (N1): " << N1 << std::endl;
 			}
@@ -120,5 +128,6 @@ int main(){
 			}
 		}
 	}
+	std::cout << "\nO tempo de execução foi:\n" << float(clock()-begin_time)/CLOCKS_PER_SEC;
 	return 0;
 }
