@@ -5,6 +5,7 @@
 #include <eigen3/Eigen/Eigenvalues>
 #include <fstream>
 #include <ctime>
+#include <chrono>
 #include "../../include/Ham_O.h"
 #include "../../include/W_O.h"
 #include "../../include/Projetores_O.h"
@@ -15,8 +16,7 @@ using namespace std::literals;
 
 int main(){
 
-	const clock_t begin_time = clock();
-
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	std::complex<double> complex_identity(0, 1);
 	std::complex<double> number_2(2, 0);
 
@@ -35,13 +35,16 @@ int main(){
 	MatrixXcd G(num_realization,10);
 	MatrixXcd R(num_realization,10);
 	
+	G.setZero();
+	R.setZero();
+
 	for (int N1 = 1; N1 < 11; N1++ ){
         
 		N2 = N1;
     		n = N1+N2;
-	
-		MatrixXcd identityS(n,n);
 
+		MatrixXcd identityS = MatrixXcd::Identity(n,n);
+		
 		// Pauli Matrices //
 
 		MatrixXcd matrizpauli1(2,2);
@@ -79,25 +82,30 @@ int main(){
 		Criando_Projetores(C1_pointer, C2_pointer, N1, N2);
 		
 		#pragma omp parallel for	
-		for (int realization = 1; realization < num_realization + 1; realization++){
+		for (int realization = 1; realization < num_realization+1; realization++){
 
 			// Generating Hamiltonian Matrix //
 			
-			 MatrixXcd H(ress,ress);
-			 H.setZero();
-			 MatrixXcd* H_pointer = &H;
-			 Criando_H(H_pointer, ress, V);
-			
+			MatrixXcd H(ress,ress);
+			H.setZero();
+			MatrixXcd* H_pointer = &H;
+			Criando_H(H_pointer, ress, V);
+
 			// Inverse Green Function //
 
-			MatrixXcd D = (-H + complex_identity*M_PI*W*(W.adjoint()));
+			MatrixXcd D(ress,ress);
+			D.setZero();
+			D << (-H + complex_identity*M_PI*W*(W.adjoint()));
 
 			PartialPivLU<MatrixXcd> lu(D);
 			MatrixXcd D_inv_W = lu.inverse()*W;
 			
+
 			// Scattering Matrix //
-			
-			MatrixXcd S = identityS -number_2*complex_identity*M_PI*(W.adjoint())*D_inv_W;
+
+			MatrixXcd S(n,n);
+			S.setZero();
+			S << identityS - number_2*complex_identity*M_PI*(W.adjoint())*D_inv_W;
 
 			MatrixXcd ttdaga = C1*S*C2*(S.adjoint());
 
@@ -128,6 +136,10 @@ int main(){
 			}
 		}
 	}
-	std::cout << "\nO tempo de execução foi:\n" << float(clock()-begin_time)/CLOCKS_PER_SEC;
+
+	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+
+	std::cout << "\nTime: " << std::chrono::duration_cast<std::chrono::minutes>(end-begin).count() << " [minutes]" << std::endl;
+
 	return 0;
 }
