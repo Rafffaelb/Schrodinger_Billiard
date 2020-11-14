@@ -26,7 +26,7 @@ int main(){
 	int N1, N2, n, ress, num_realization;
 	
 	Gamma = 1;
-	ress = 100;
+	ress = 600;
 	lambda = 0.5;
 	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
 	V = lambda*lambda/ress;
