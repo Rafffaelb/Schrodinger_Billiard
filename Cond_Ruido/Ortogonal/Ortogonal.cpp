@@ -37,6 +37,22 @@ int main(){
 	
 	G.setZero();
 	R.setZero();
+	
+	// Pauli Matrices //
+
+	MatrixXcd matrizpauli1(2,2);
+	MatrixXcd matrizpauli2(2,2);
+	MatrixXcd matrizpauli3(2,2);
+
+	matrizpauli1.real() << 1, 0, 0, 1;
+	matrizpauli1.imag() <<  0, 0, 0,  0;
+
+	matrizpauli2.real() << 0, 0, 0, 0;
+	matrizpauli2.imag() <<  0, -1, 1,  0;
+	
+	matrizpauli3.real() << 1, 0, 0, -1;
+	matrizpauli3.imag() <<  0, 0, 0,  0;
+
 
 	for (int N1 = 1; N1 < 11; N1++ ){
         
@@ -45,21 +61,6 @@ int main(){
 
 		MatrixXcd identityS = MatrixXcd::Identity(n,n);
 		
-		// Pauli Matrices //
-
-		MatrixXcd matrizpauli1(2,2);
-		MatrixXcd matrizpauli2(2,2);
-		MatrixXcd matrizpauli3(2,2);
-
-		matrizpauli1.real() << 1, 0, 0, 1;
-		matrizpauli1.imag() <<  0, 0, 0,  0;
-
-		matrizpauli2.real() << 0, 0, 0, 0;
-		matrizpauli2.imag() <<  0, -1, 1,  0;
-	
-		matrizpauli3.real() << 1, 0, 0, -1;
-		matrizpauli3.imag() <<  0, 0, 0,  0;
-
 		// Creating W Matrices //
 
 		MatrixXcd W(ress,n);
