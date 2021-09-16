@@ -4,8 +4,7 @@
 
 using namespace std;
 using namespace Eigen;
-using namespace std::literals;
 
-void Criando_W(MatrixXcd *W_pointer, int ress, int N1, int N2, double lambda, double y);
+void Create_W(MatrixXcd *W_pointer, int ress, int N1, int N2, double lambda, double y);
 
 #endif

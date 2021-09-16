@@ -10,9 +10,8 @@
 
 using namespace std;
 using namespace Eigen;
-using namespace std::literals;
 
-void Criando_H (MatrixXcd *H_pointer, int ress, double V){
+void Create_H (MatrixXcd *H_pointer, int ress, double V){
 	
 	auto seed = std::chrono::system_clock::now().time_since_epoch().count();	
   	std::normal_distribution<double> distribution(0.0,1.0);
@@ -20,11 +19,11 @@ void Criando_H (MatrixXcd *H_pointer, int ress, double V){
 	
 	MatrixXcd A(ress,ress); 
 	MatrixXcd H1(ress,ress);
-	MatrixXcd Simetrica(ress,ress);
+	MatrixXcd Symmetric(ress,ress);
 
 	A.setZero();
 	H1.setZero();
-	Simetrica.setZero();
+	Symmetric.setZero();
 	
 	for (int i = 1; i < ress + 1; i++){
 		for (int j = 1; j < ress + 1; j++){
@@ -40,9 +39,9 @@ void Criando_H (MatrixXcd *H_pointer, int ress, double V){
 		}
 	}
 
-	Simetrica << H1 + H1.adjoint();
+	Symmetric << H1 + H1.adjoint();
 
-	MatrixXcd H = Simetrica;
+	MatrixXcd H = Symmetric;
 	*H_pointer = H;
 	
 }
