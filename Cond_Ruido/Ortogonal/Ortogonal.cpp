@@ -33,10 +33,10 @@ int main(){
 	num_steps = 100000;
 	
 	MatrixXcd G(num_steps,10);
-	MatrixXcd R(num_steps,10);
+	MatrixXcd P(num_steps,10);
 	
 	G.setZero();
-	R.setZero();
+	P.setZero();
 	
 	for (int N1 = 1; N1 < 11; N1++ ){
         
@@ -45,7 +45,7 @@ int main(){
 
 		MatrixXcd identityS = MatrixXcd::Identity(n,n);
 		
-		// Creating W Matrices //
+		// Create W Matrices //
 
 		MatrixXcd W(ress,n);
 		W.setZero();
@@ -53,7 +53,7 @@ int main(){
 	
 		Create_W(W_pointer, ress, N1, N2, lambda, y);
 
-		// Creating Projectors //
+		// Create Projectors //
 
 		MatrixXcd C1(2*N1, 2*N1); MatrixXcd C2(2*N2, 2*N2);
 		C1.setZero(); C2.setZero();
@@ -64,7 +64,7 @@ int main(){
 		#pragma omp parallel for	
 		for (int step = 1; step < num_steps+1; step++){
 
-			// Generating Hamiltonian Matrix //
+			// Generate Hamiltonian Matrix //
 			
 			MatrixXcd H(ress,ress);
 			H.setZero();
@@ -72,19 +72,20 @@ int main(){
 
 			Create_H(H_pointer, ress, V);
 
+			// Create billiard setup //
+
 			Quantum_chaotic_billiard billiard_setup(H, W, C1, C2);
+
+			// Scattering Matrix //
+			
 			billiard_setup.Calculate_Smatrix();
-			// billiard_setup.calculate_conductance();
-			// billiard_setup.calculate_power_shot_noise();
+		
+			// Calculate Conductance (G) and Power Shot Noise (P) //
 
-			// MatrixXcd ttdaga = C1*S*C2*(S.adjoint());
+			billiard_setup.Calculate_G_and_P();
 
-			// Conductance and Power Shot Noise //
-
-			// MatrixXcd identityR = MatrixXcd::Identity(ttdaga.rows(),ttdaga.cols());
-
-			// G(step-1, N1-1) = ttdaga.trace();
-			// R(step-1, N1-1) = (ttdaga*(identityR-ttdaga)).trace();
+			G(step-1, N1-1) = billiard_setup.getG();
+			P(step-1, N1-1) = billiard_setup.getP();
 			
 			if (step % 50000 == 0){
 				std::cout << "\nCurrent number of steps: " << step << " | Current number of open channels (N): " << N1 << std::endl;
@@ -92,16 +93,16 @@ int main(){
 		}
 
 		std::ofstream output_G("G_O.txt");
-		std::ofstream output_R("R_O.txt");
+		std::ofstream output_P("P_O.txt");
 		for (int i = 0; i < num_steps; i++){
 			for (int j = 0; j < 10; j++){
 				if (j == 9){
 					output_G << G(i,j).real() << std::endl;
-					output_R << R(i,j).real() << std::endl;
+					output_P << P(i,j).real() << std::endl;
 				}
 				else{
 					output_G << G(i,j).real() << "\t";
-					output_R << R(i,j).real() << "\t";
+					output_P << P(i,j).real() << "\t";
 				}
 			}
 		}

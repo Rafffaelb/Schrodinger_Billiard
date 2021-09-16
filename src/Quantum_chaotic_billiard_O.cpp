@@ -4,9 +4,11 @@
 #include <eigen3/Eigen/Dense>
 #include <eigen3/Eigen/Eigenvalues>
 #include "../include/Quantum_chaotic_billiard_O.h"
-	
-std::complex<double> complex_identity(0,1);
-std::complex<double> number_2(2,0);
+
+using namespace std;
+
+complex<double> complex_identity(0,1);
+complex<double> number_2(2,0);
 
 Quantum_chaotic_billiard::Quantum_chaotic_billiard(MatrixXcd H, MatrixXcd W, MatrixXcd C1, MatrixXcd C2){
 	Set_Setup(H, W, C1, C2);
@@ -21,13 +23,13 @@ void Quantum_chaotic_billiard::Set_Setup(MatrixXcd H, MatrixXcd W, MatrixXcd C1,
 }
 
 void Quantum_chaotic_billiard::Calculate_Smatrix(){
-	
+
 	int ress = _H.rows();
 	int N1 = (_C1.rows())/2;
 	int N2 = (_C2.rows())/2;
 	int n = N1+N2;
+	
 	MatrixXcd identityS = MatrixXcd::Identity(n,n);
-
 
 	MatrixXcd D(_H.rows(), _H.cols());
 
@@ -36,11 +38,30 @@ void Quantum_chaotic_billiard::Calculate_Smatrix(){
 	MatrixXcd D_inv_W = lu.inverse()*_W;
 
 	// Scattering Matrix //
-	
+
 	MatrixXcd S(n,n);
-	S.setZero();
 
 	S << identityS - number_2*complex_identity*M_PI*(_W.adjoint())*D_inv_W;
-	std::cout << "The S matrix inside object is:\n" << S << std::endl; 
 
-}	
+	this -> _S = S;
+	
+}
+
+void Quantum_chaotic_billiard::Calculate_G_and_P(){
+
+	MatrixXcd ttdaga = _C1*_S*_C2*(_S.adjoint());
+
+	MatrixXcd identityP = MatrixXcd::Identity(ttdaga.rows(),ttdaga.cols());
+
+	_G = ttdaga.trace();
+	_P = (ttdaga*(identityP-ttdaga)).trace();
+
+}
+
+complex<double> Quantum_chaotic_billiard::getG(){
+	return this -> _G;
+}
+
+complex<double> Quantum_chaotic_billiard::getP(){
+	return this -> _P;
+}
