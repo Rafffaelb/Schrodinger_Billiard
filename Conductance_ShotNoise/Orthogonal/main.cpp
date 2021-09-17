@@ -67,15 +67,15 @@ int main(){
 
 			// Generate Hamiltonian Matrix //
 			
-			MatrixXcd H(ress,ress);
-			H.setZero();
-			MatrixXcd* H_pointer = &H;
+			MatrixXcd H_O(ress,ress);
+			H_O.setZero();
+			MatrixXcd* H_pointer = &H_O;
 
 			Create_H(H_pointer, ress, V);
 
 			// Create billiard setup //
 
-			Quantum_chaotic_billiard billiard_setup(H, W, C1, C2);
+			Quantum_chaotic_billiard billiard_setup(H_O, W, C1, C2);
 
 			// Scattering Matrix //
 			
