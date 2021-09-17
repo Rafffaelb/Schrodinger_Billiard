@@ -7,9 +7,9 @@
 #include <ctime>
 #include <chrono>
 #include "../../include/Ham_O.h"
-#include "../../include/W_O.h"
-#include "../../include/ProjectionMatrices_O.h"
-#include "../../include/Quantum_chaotic_billiard_O.h"
+#include "../../include/W.h"
+#include "../../include/ProjectionMatrices.h"
+#include "../../include/Quantum_chaotic_billiard.h"
 #include "../../include/Save_txt_files.h"
 #include "omp.h"
 

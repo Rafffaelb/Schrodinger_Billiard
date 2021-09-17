@@ -3,7 +3,7 @@
 #include <complex>
 #include <eigen3/Eigen/Dense>
 #include <eigen3/Eigen/Eigenvalues>
-#include "../include/Quantum_chaotic_billiard_O.h"
+#include "../include/Quantum_chaotic_billiard.h"
 
 using namespace std;
 
