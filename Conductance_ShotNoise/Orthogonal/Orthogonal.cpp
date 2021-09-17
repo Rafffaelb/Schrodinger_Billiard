@@ -10,6 +10,7 @@
 #include "../../include/W_O.h"
 #include "../../include/ProjectionMatrices_O.h"
 #include "../../include/Quantum_chaotic_billiard_O.h"
+#include "../../include/Save_txt_files.h"
 #include "omp.h"
 
 using namespace Eigen;
@@ -37,7 +38,7 @@ int main(){
 	
 	G.setZero();
 	P.setZero();
-	
+
 	for (int N1 = 1; N1 < 11; N1++ ){
         
 		N2 = N1;
@@ -92,20 +93,10 @@ int main(){
 			}
 		}
 
-		std::ofstream output_G("G_O.txt");
-		std::ofstream output_P("P_O.txt");
-		for (int i = 0; i < num_steps; i++){
-			for (int j = 0; j < 10; j++){
-				if (j == 9){
-					output_G << G(i,j).real() << std::endl;
-					output_P << P(i,j).real() << std::endl;
-				}
-				else{
-					output_G << G(i,j).real() << "\t";
-					output_P << P(i,j).real() << "\t";
-				}
-			}
-		}
+		// Save G and P matrices as txt files //
+
+		Save_txt_files(G, P, num_steps);
+
 	}
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
