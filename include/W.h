@@ -1,6 +1,6 @@
 #include <iostream>
-#ifndef W_O_H
-#define W_O_H
+#ifndef W_H
+#define W_H
 
 using namespace std;
 using namespace Eigen;

@@ -1,6 +1,6 @@
 #include <iostream>
-#ifndef QUANTUM_CHAOTIC_BILLIARD_O_H
-#define QUANTUM_CHAOTIC_BILLIARD_O_H
+#ifndef QUANTUM_CHAOTIC_BILLIARD_H
+#define QUANTUM_CHAOTIC_BILLIARD_H
 
 using namespace std;
 using namespace Eigen;
