@@ -41,8 +41,6 @@ int main(){
         
 		N2 = N1;
     		n = N1+N2;
-
-		MatrixXcd identityS = MatrixXcd::Identity(n,n);
 		
 		// Create W Matrices //
 
