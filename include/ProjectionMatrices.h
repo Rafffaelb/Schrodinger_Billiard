@@ -7,6 +7,6 @@ using namespace Eigen;
 
 void Create_ProjectionMatrices (MatrixXcd *C1_pointer, MatrixXcd *C2_pointer, int N1, int N2);
 
-void Create_ProjectionMatrices_S (MatrixXcd *C1_pointer, MatrixXcd *C2_pointer, int N1, int N2);
+void Create_ProjectionMatrices_Symplectic (MatrixXcd *C1_pointer, MatrixXcd *C2_pointer, int N1, int N2);
 
 #endif

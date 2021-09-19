@@ -11,15 +11,15 @@
 using namespace std;
 using namespace Eigen;
 
-complex<double> complex_identity1(0,1);
-
 void Create_H (MatrixXcd *H_pointer, int ress, double V){
 	
 	auto seed = std::chrono::system_clock::now().time_since_epoch().count();	
   	std::normal_distribution<double> distribution(0.0,1.0);
 	std::default_random_engine generator(seed);
 
-	MatrixXcd identity2x2_aux = MatrixXcd::Identity(2,2);
+	complex<double> complex_identity(0,1);
+
+	MatrixXcd identity2x2 = MatrixXcd::Identity(2,2);
 
 	MatrixXcd paulimatrix1(2,2);
 	MatrixXcd paulimatrix2(2,2);
@@ -85,7 +85,7 @@ void Create_H (MatrixXcd *H_pointer, int ress, double V){
 
 	for (int i = 1; i < Symmetric.rows() + 1; i++){
 		for (int j = 1; j < Symmetric.cols() + 1; j++){
-			Q0.block((i-1)*identity2x2_aux.rows(), (j-1)*identity2x2_aux.cols(), identity2x2_aux.rows(), identity2x2_aux.cols()) = Symmetric(i-1,j-1)*identity2x2_aux;
+			Q0.block((i-1)*identity2x2.rows(), (j-1)*identity2x2.cols(), identity2x2.rows(), identity2x2.cols()) = Symmetric(i-1,j-1)*identity2x2;
 			Q1.block((i-1)*paulimatrix1.rows(), (j-1)*paulimatrix1.cols(), paulimatrix1.rows(), paulimatrix1.cols()) = Antisymmetric1(i-1,j-1)*paulimatrix1;
 			Q2.block((i-1)*paulimatrix2.rows(), (j-1)*paulimatrix2.cols(), paulimatrix2.rows(), paulimatrix2.cols()) = Antisymmetric2(i-1,j-1)*paulimatrix2;
 			Q3.block((i-1)*paulimatrix3.rows(), (j-1)*paulimatrix3.cols(), paulimatrix3.rows(), paulimatrix3.cols()) = Antisymmetric3(i-1,j-1)*paulimatrix3;
@@ -93,7 +93,7 @@ void Create_H (MatrixXcd *H_pointer, int ress, double V){
 	}
 
 	MatrixXcd H(2*ress,2*ress);
-	H << Q0 + complex_identity1*(Q1 + Q2 + Q3);
+	H << Q0 + complex_identity*(Q1 + Q2 + Q3);
 	*H_pointer = H;
 }
 

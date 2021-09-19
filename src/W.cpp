@@ -32,7 +32,7 @@ void Create_W (MatrixXcd *W_pointer, int ress, int N1, int N2, double lambda, do
 
 }
 
-void Create_W_S (MatrixXcd *W_pointer, int ress, int N1, int N2, double lambda, double y){
+void Create_W_Symplectic (MatrixXcd *W_pointer, int ress, int N1, int N2, double lambda, double y){
 	
 	MatrixXcd identity2x2(2,2);
 
@@ -40,8 +40,8 @@ void Create_W_S (MatrixXcd *W_pointer, int ress, int N1, int N2, double lambda, 
 
 	MatrixXcd W1(ress,N1);
 	MatrixXcd W2(ress,N2);
-	MatrixXcd W_aux(W1.rows(), W1.cols() + W2.cols());
-	MatrixXcd W(2*W1.rows(), 2*(W1.cols() + W2.cols()));
+	MatrixXcd W_aux1(W1.rows(), W1.cols() + W2.cols());
+	MatrixXcd W_aux2(2*W1.rows(), 2*(W1.cols() + W2.cols()));
 
 	for (int j = 1; j < ress + 1; j++){
 		for (int k = 1; k < N1 + 1; k++){
@@ -57,14 +57,14 @@ void Create_W_S (MatrixXcd *W_pointer, int ress, int N1, int N2, double lambda, 
 		}
 	}
 
-	W_aux << W1, W2;
+	W_aux1 << W1, W2;
 
-	for (int i = 1; i < W.rows() + 1; i++){
-		for (int j = 1; j < W.cols() + 1; j++){
-			W.block((i-1)*identity2x2.rows(), (j-1)*identity2x2.cols(), identity2x2.rows(), identity2x2.cols()) = W(i-1,j-1)*identity2x2;
+	for (int i = 1; i < W_aux1.rows() + 1; i++){
+		for (int j = 1; j < W_aux1.cols() + 1; j++){
+			W_aux2.block((i-1)*identity2x2.rows(), (j-1)*identity2x2.cols(), identity2x2.rows(), identity2x2.cols()) = W_aux1(i-1,j-1)*identity2x2;
 		}
 	}
 
+	MatrixXcd W = W_aux2;
 	*W_pointer = W;
-
 }

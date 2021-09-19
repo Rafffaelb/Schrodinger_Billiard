@@ -62,7 +62,7 @@ void Create_ProjectionMatrices (MatrixXcd *C1_pointer, MatrixXcd *C2_pointer, in
 
 }
 
-void Create_ProjectionMatrices_S(MatrixXcd *C1_pointer, MatrixXcd *C2_pointer, int N1, int N2){
+void Create_ProjectionMatrices_Symplectic(MatrixXcd *C1_pointer, MatrixXcd *C2_pointer, int N1, int N2){
 	
 	MatrixXcd identity2N1 = MatrixXcd::Identity(2*N1,2*N1);
 	MatrixXcd identity2N2 = MatrixXcd::Identity(2*N2,2*N2);
@@ -113,5 +113,8 @@ void Create_ProjectionMatrices_S(MatrixXcd *C1_pointer, MatrixXcd *C2_pointer, i
 			C2.block((i-1)*identity2N2.rows(), (j-1)*identity2N2.cols(), identity2N2.rows(), identity2N2.cols()) = C2tio(i-1,j-1)*identity2N2;
 		}
 	}
+
+	*C1_pointer << C1;
+	*C2_pointer << C2;
 
 }

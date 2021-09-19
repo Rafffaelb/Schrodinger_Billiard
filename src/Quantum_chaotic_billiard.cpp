@@ -7,9 +7,6 @@
 
 using namespace std;
 
-complex<double> complex_identity(0,1);
-complex<double> number_2(2,0);
-
 Quantum_chaotic_billiard::Quantum_chaotic_billiard(MatrixXcd H, MatrixXcd W, MatrixXcd C1, MatrixXcd C2){
 	Set_Setup(H, W, C1, C2);
 }
@@ -23,6 +20,9 @@ void Quantum_chaotic_billiard::Set_Setup(MatrixXcd H, MatrixXcd W, MatrixXcd C1,
 }
 
 void Quantum_chaotic_billiard::Calculate_Smatrix(){
+	
+	complex<double> number_2(2,0);
+	complex<double> complex_identity(0,1);
 
 	int ress = _H.rows();
 	int N1 = (_C1.rows())/2;
@@ -42,7 +42,7 @@ void Quantum_chaotic_billiard::Calculate_Smatrix(){
 	MatrixXcd S(n,n);
 
 	S << identityS - number_2*complex_identity*M_PI*(_W.adjoint())*D_inv_W;
-
+	
 	this -> _S = S;
 	
 }
