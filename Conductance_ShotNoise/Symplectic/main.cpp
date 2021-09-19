@@ -25,7 +25,7 @@ int main(){
 	int N1, N2, n, ress, num_steps;
 	
 	Gamma = 1;
-	ress = 100;
+	ress = 50;
 	lambda = 0.5;
 	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
 	V = lambda*lambda/ress;
@@ -41,8 +41,6 @@ int main(){
         
 		N2 = N1;
     		n = N1+N2;
-
-		MatrixXcd identityS = MatrixXcd::Identity(2*n,2*n);
 		
 		// Create W Matrices //
 
@@ -50,7 +48,7 @@ int main(){
 		W.setZero();
 		MatrixXcd* W_pointer = &W;
 	
-		Create_W(W_pointer, ress, N1, N2, lambda, y);
+		Create_W_Symplectic(W_pointer, ress, N1, N2, lambda, y);
 
 		// Create Projectors //
 
@@ -58,14 +56,14 @@ int main(){
 		C1.setZero(); C2.setZero();
 		MatrixXcd *C1_pointer = &C1; MatrixXcd *C2_pointer = &C2;
 
-		Create_ProjectionMatrices(C1_pointer, C2_pointer, N1, N2);
+		Create_ProjectionMatrices_Symplectic(C1_pointer, C2_pointer, N1, N2);
 		
 		#pragma omp parallel for	
 		for (int step = 1; step < num_steps+1; step++){
 
 			// Generate Hamiltonian Matrix //
 			
-			MatrixXcd H_S(ress,ress);
+			MatrixXcd H_S(2*ress,2*ress);
 			H_S.setZero();
 			MatrixXcd* H_pointer = &H_S;
 
