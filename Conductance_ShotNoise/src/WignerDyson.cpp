@@ -1,7 +1,9 @@
 #include <iostream>
+#include <chrono>
 #include "../include/WignerDyson.h"
 #include "../include/Quantum_chaotic_billiard.h"
 #include <eigen3/Eigen/Dense>
+#include <omp.h>
 
 using namespace std;
 using namespace Eigen;
@@ -19,6 +21,8 @@ void WignerDyson::Create_H(MatrixXcd* H_pointer, int _ress, double V) {};
 void WignerDyson::Save_txt_files(MatrixXcd G, MatrixXcd P, int num_steps) {};
 
 void WignerDyson::Run_Simulation(){
+
+	auto start = chrono::system_clock::now();
 
 	double y = sqrt(1.0/_Gamma)*(1.0-sqrt(1.0-_Gamma));
 	double V = _lambda*_lambda/_ress;
@@ -49,7 +53,8 @@ void WignerDyson::Run_Simulation(){
 		MatrixXcd *C1_pointer = &C1; MatrixXcd *C2_pointer = &C2;
 
 		Create_ProjectionMatrices(C1_pointer, C2_pointer, N1, N2);
-	
+		
+		#pragma omp parallel for shared(W, C1, C2)
 		for (int step = 1; step < _num_steps + 1; step++){
 		
 			// Generate Hamiltonian Matrix //
@@ -84,5 +89,11 @@ void WignerDyson::Run_Simulation(){
 	
 		Save_txt_files(G, P, _num_steps);
 	}
+
+	auto end = chrono::system_clock::now();
+	auto elapsed =
+		chrono::duration_cast<chrono::minutes>(end-start);
+	cout << "\n Simulation time duration: " << elapsed.count() << "\n";
+
 }
 
