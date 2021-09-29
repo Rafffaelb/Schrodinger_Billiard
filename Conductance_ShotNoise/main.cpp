@@ -10,39 +10,76 @@ using namespace std;
 
 int main(int argc, char **argv){
 
-	double Gamma, lambda, y, V, gama;
-	int N1, N2, n, ress, num_steps, spin_deg;
+	double lambda;
+	int num_steps, spin_deg;
 
-	Gamma = 1;
-	ress = 100;
 	lambda = 0.5;
-	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));
-	V = lambda*lambda/ress;
 	num_steps = 100000;
 
 	for (int i = 1; i < argc; i++){
 		
 		if (strcmp(argv[i],"Orthogonal") == 0){
-			
+		
 			spin_deg = 1;
-			cout << "\n ####### Running Orthogonal ####### \n" << endl;
-			Orthogonal orthogonal(Gamma, ress, lambda, num_steps, spin_deg);
-			orthogonal.Run_Simulation();
+			for (int j = 1; j < argc; j++){
+				
+				if (strcmp(argv[j],"Channel") == 0){
+					
+					cout << "\n ####### Running Orthogonal (variable: Channel) ####### \n" << endl;
+					Orthogonal orthogonal(lambda, num_steps, spin_deg);
+					orthogonal.Run_Simulation_Channels();
+					orthogonal.~Orthogonal();
+				}
+				if (strcmp(argv[j],"Gamma") == 0){
+					cout << "\n ###### Running Orthogonal (variable: Gamma) ###### \n" << endl;
+					Orthogonal orthogonal(lambda, num_steps, spin_deg);
+					orthogonal.Run_Simulation_Gamma();
+					orthogonal.~Orthogonal();
+				}
+			}
 		}
 		else{
 			if (strcmp(argv[i],"Unitary") == 0){
-			
+		
 				spin_deg = 1;
-				cout << "\n ####### Running Unitary ####### \n" << endl;
-				Unitary unitary(Gamma, ress, lambda, num_steps, spin_deg);
-				unitary.Run_Simulation();
-		}
+				for (int j = 1; j < argc; j++){
+				
+					if (strcmp(argv[j],"Channel") == 0){
+					
+						cout << "\n ####### Running Unitary (variable: Channel) ####### \n" << endl;
+						Unitary unitary(lambda, num_steps, spin_deg);
+						unitary.Run_Simulation_Channels();
+						unitary.~Unitary();
+					}
+					if (strcmp(argv[j],"Gamma") == 0){
+						cout << "\n ###### Running Unitary (variable: Gamma) ###### \n" << endl;
+						Unitary unitary(lambda, num_steps, spin_deg);
+						unitary.Run_Simulation_Gamma();
+						unitary.~Unitary();
+					}
+				}
+			}
 			else{
 				if (strcmp(argv[i],"Symplectic") == 0){
+		
 					spin_deg = 2;
-					cout << "\n ####### Run Symplectic ###### \n" << endl;
-					Symplectic symplectic(Gamma, ress, lambda, num_steps, spin_deg);
-					symplectic.Run_Simulation();
+					for (int j = 1; j < argc; j++){
+				
+						if (strcmp(argv[j],"Channel") == 0){
+					
+							cout << "\n ####### Running Symplectic (variable: Channel) ####### \n" << endl;
+							Symplectic symplectic(lambda, num_steps, spin_deg);
+							symplectic.Run_Simulation_Channels();
+							symplectic.~Symplectic();
+						}
+						if (strcmp(argv[j],"Gamma") == 0){
+						
+							cout << "\n ###### Running Symplectic (variable: Gamma) ###### \n" << endl;
+							Symplectic symplectic(lambda, num_steps, spin_deg);
+							symplectic.Run_Simulation_Gamma();
+							symplectic.~Symplectic();
+						}
+					}
 				}
 			}
 		}

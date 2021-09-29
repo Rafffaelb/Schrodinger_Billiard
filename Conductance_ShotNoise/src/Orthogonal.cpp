@@ -9,10 +9,8 @@
 
 using namespace std;
 
-Orthogonal::Orthogonal(double Gamma, int ress, double lambda, int num_steps, int spin_deg){
+Orthogonal::Orthogonal(double lambda, int num_steps, int spin_deg){
 
-	this -> _Gamma = Gamma;
-	this -> _ress = ress;
 	this -> _lambda = lambda;
 	this -> _num_steps = num_steps;
 	this -> _spin_deg = spin_deg;
@@ -134,13 +132,31 @@ void Orthogonal::Create_H(MatrixXcd* H_pointer, int ress, double V){
 	*H_pointer = H;	
 }
 
-void Orthogonal::Save_txt_files(MatrixXcd G, MatrixXcd P, int num_steps){
-	std::ofstream output_G("Data_Analysis/G_O.txt");
-	std::ofstream output_P("Data_Analysis/P_O.txt");
+void Orthogonal::Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_steps){
+	std::ofstream output_G("Data_Analysis/G_O_Channel.txt");
+	std::ofstream output_P("Data_Analysis/P_O_Channel.txt");
 
 	for(int i = 0; i < num_steps; i++){
 		for (int j = 0; j < 10; j++){
 			if (j == 9){
+				output_G << G(i,j).real() << std::endl;
+				output_P << P(i,j).real() << std::endl;
+			}
+			else{
+				output_G << G(i,j).real() << "\t";
+				output_P << P(i,j).real() << "\t";
+			}
+		}
+	}	
+}
+
+void Orthogonal::Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps){
+	std::ofstream output_G("Data_Analysis/G_O_Gamma_N1.txt");
+	std::ofstream output_P("Data_Analysis/P_O_Gamma_N1.txt");
+
+	for(int i = 0; i < num_steps; i++){
+		for (int j = 0; j < 21; j++){
+			if (j == 20){
 				output_G << G(i,j).real() << std::endl;
 				output_P << P(i,j).real() << std::endl;
 			}

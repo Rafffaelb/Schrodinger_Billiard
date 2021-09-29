@@ -6,7 +6,7 @@
 class Unitary: public WignerDyson{
 
 	public:
-		Unitary(double Gamma, int ress, double lambda, int num_steps, int spin_deg);
+		Unitary(double lambda, int num_steps, int spin_deg);
 
 		~Unitary();
 
@@ -15,7 +15,9 @@ class Unitary: public WignerDyson{
 		void Create_ProjectionMatrices(MatrixXcd *C1_pointer, MatrixXcd* C2_pointer, int N1, int N2);
 
 		void Create_H(MatrixXcd* H_pointer, int ress, double V);
-		void Save_txt_files(MatrixXcd G, MatrixXcd P, int num_steps);
+		
+		void Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_steps);
+		void Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps);
 };
 
 #endif
