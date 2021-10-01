@@ -6,6 +6,7 @@
 #include <ctime>
 #include <chrono>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -138,8 +139,8 @@ void Unitary::Create_H(MatrixXcd* H_pointer, int ress, double V){
 
 void Unitary::Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_steps){
 	
-	std::ofstream output_G("Data_Analysis/G_U_Channel.txt");
-	std::ofstream output_P("Data_Analysis/P_U_Channel.txt");
+	std::ofstream output_G("Data_Analysis/Channel/G_U_Channel.txt");
+	std::ofstream output_P("Data_Analysis/Channel/P_U_Channel.txt");
 
 	for(int i = 0; i < num_steps; i++){
 		for (int j = 0; j < 10; j++){
@@ -155,9 +156,9 @@ void Unitary::Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_steps){
 	}	
 }
 
-void Unitary::Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps){
-	std::ofstream output_G("Data_Analysis/G_U_Gamma_N1.txt");
-	std::ofstream output_P("Data_Analysis/P_U_Gamma_N1.txt");
+void Unitary::Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps, int N1){
+	std::ofstream output_G("Data_Analysis/Gamma/G_U_Gamma_N"+to_string(N1)+".txt");
+	std::ofstream output_P("Data_Analysis/Gamma/P_U_Gamma_N"+to_string(N1)+".txt");
 
 	for(int i = 0; i < num_steps; i++){
 		for (int j = 0; j < 21; j++){

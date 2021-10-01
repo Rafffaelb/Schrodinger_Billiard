@@ -6,6 +6,7 @@
 #include <chrono>
 #include <random>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -133,8 +134,8 @@ void Orthogonal::Create_H(MatrixXcd* H_pointer, int ress, double V){
 }
 
 void Orthogonal::Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_steps){
-	std::ofstream output_G("Data_Analysis/G_O_Channel.txt");
-	std::ofstream output_P("Data_Analysis/P_O_Channel.txt");
+	std::ofstream output_G("Data_Analysis/Channel/G_O_Channel.txt");
+	std::ofstream output_P("Data_Analysis/Channel/P_O_Channel.txt");
 
 	for(int i = 0; i < num_steps; i++){
 		for (int j = 0; j < 10; j++){
@@ -150,9 +151,10 @@ void Orthogonal::Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_steps
 	}	
 }
 
-void Orthogonal::Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps){
-	std::ofstream output_G("Data_Analysis/G_O_Gamma_N1.txt");
-	std::ofstream output_P("Data_Analysis/P_O_Gamma_N1.txt");
+void Orthogonal::Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps, int N1){
+
+	std::ofstream output_G("Data_Analysis/Gamma/G_O_Gamma_N"+to_string(N1)+".txt");
+	std::ofstream output_P("Data_Analysis/Gamma/P_O_Gamma_N"+to_string(N1)+".txt");
 
 	for(int i = 0; i < num_steps; i++){
 		for (int j = 0; j < 21; j++){

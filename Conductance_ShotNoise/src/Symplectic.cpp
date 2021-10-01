@@ -6,6 +6,7 @@
 #include <chrono>
 #include <random>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -203,8 +204,8 @@ void Symplectic::Create_H(MatrixXcd* H_pointer, int ress, double V){
 }
 
 void Symplectic::Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_steps){
-	std::ofstream output_G("Data_Analysis/G_S_Channel.txt");
-	std::ofstream output_P("Data_Analysis/P_S_Channel.txt");
+	std::ofstream output_G("Data_Analysis/Channel/G_S_Channel.txt");
+	std::ofstream output_P("Data_Analysis/Channel/P_S_Channel.txt");
 
 	for(int i = 0; i < num_steps; i++){
 		for (int j = 0; j < 10; j++){
@@ -220,9 +221,9 @@ void Symplectic::Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_steps
 	}	
 }
 
-void Symplectic::Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps){
-	std::ofstream output_G("Data_Analysis/G_S_Gamma_N1.txt");
-	std::ofstream output_P("Data_Analysis/P_S_Gamma_N1.txt");
+void Symplectic::Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps, int N1){
+	std::ofstream output_G("Data_Analysis/Gamma/G_S_Gamma_N"+to_string(N1)+".txt");
+	std::ofstream output_P("Data_Analysis/Gamma/P_S_Gamma_N"+to_string(N1)+".txt");
 
 	for(int i = 0; i < num_steps; i++){
 		for (int j = 0; j < 21; j++){

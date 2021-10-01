@@ -28,7 +28,7 @@ class WignerDyson{
 		virtual void Create_H(MatrixXcd* H_pointer, int _ress, double V) = 0;
 	
 		virtual void Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_setps) = 0;
-		virtual void Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_setps) = 0;
+		virtual void Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_setps, int N1) = 0;
 };
 
 #endif

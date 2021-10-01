@@ -17,7 +17,7 @@ class Symplectic: public WignerDyson{
 		void Create_H(MatrixXcd* H_pointer, int ress, double V);
 		
 		void Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_steps);
-		void Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps);
+		void Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps, int N1);
 
 };
 
