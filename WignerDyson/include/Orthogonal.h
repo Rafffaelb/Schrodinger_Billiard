@@ -1,7 +1,7 @@
 #ifndef ORTHOGONAL_H
 #define ORTHOGONAL_H
 
-#include "WignerDyson.h"
+#include "WignerDyson_AbstractClass_h/WignerDyson.h"
 
 class Orthogonal: public WignerDyson{
 

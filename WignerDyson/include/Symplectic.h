@@ -1,7 +1,7 @@
 #ifndef SYMPLECTIC_H
 #define SYMPLECTIC_H
 
-#include "WignerDyson.h"
+#include "WignerDyson_AbstractClass_h/WignerDyson.h"
 
 class Symplectic: public WignerDyson{
 

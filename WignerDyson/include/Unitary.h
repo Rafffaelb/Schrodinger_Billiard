@@ -1,7 +1,7 @@
 #ifndef UNITARY_H
 #define UNITARY_H
 
-#include "WignerDyson.h"
+#include "WignerDyson_AbstractClass_h/WignerDyson.h"
 
 class Unitary: public WignerDyson{
 

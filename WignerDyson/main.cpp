@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include "include/WignerDyson.h"
+#include "include/WignerDyson_AbstractClass_h/WignerDyson.h"
 #include <cmath>
 #include "include/Orthogonal.h"
 #include "include/Unitary.h"
@@ -31,6 +31,7 @@ int main(int argc, char **argv){
 					orthogonal.~Orthogonal();
 				}
 				if (strcmp(argv[j],"Gamma") == 0){
+	
 					cout << "\n ###### Running Orthogonal (variable: Gamma) ###### \n" << endl;
 					Orthogonal orthogonal(lambda, num_steps, spin_deg);
 					orthogonal.Run_Simulation_Conductance_Gamma();
@@ -52,6 +53,7 @@ int main(int argc, char **argv){
 						unitary.~Unitary();
 					}
 					if (strcmp(argv[j],"Gamma") == 0){
+	
 						cout << "\n ###### Running Unitary (variable: Gamma) ###### \n" << endl;
 						Unitary unitary(lambda, num_steps, spin_deg);
 						unitary.Run_Simulation_Conductance_Gamma();
