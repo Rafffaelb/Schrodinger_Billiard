@@ -10,6 +10,7 @@ class Quantum_chaotic_billiard
 	private:
 		complex<double> _G;
 		complex<double> _P;
+		double _Concurrence;
 
 		MatrixXcd _H;
 		MatrixXcd _W;
@@ -29,6 +30,10 @@ class Quantum_chaotic_billiard
 		complex<double> getG();
 
 		complex<double> getP();
+
+		void Calculate_Concurrence();
+
+		double getConcurrence();
 };
 
 #endif

@@ -22,6 +22,7 @@ class WignerDyson{
 		
 		void Run_Simulation_Conductance_Channels();
 		void Run_Simulation_Conductance_Gamma();
+		void Run_Simulation_Concurrence_Gamma();
 
 		virtual void Create_ProjectionMatrices(MatrixXcd *C1_pointer, MatrixXcd* C2_pointer, int N1, int N2) = 0;
 
@@ -29,6 +30,7 @@ class WignerDyson{
 	
 		virtual void Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_setps) = 0;
 		virtual void Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_setps, int N1) = 0;
+		virtual void Save_txt_files_Concurrence_Gamma(MatrixXd Concurrence, int num_steps) = 0;
 };
 
 #endif

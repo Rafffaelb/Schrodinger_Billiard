@@ -22,3 +22,4 @@ void WignerDyson::Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_step
 
 void WignerDyson::Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps, int N1) {};
 
+void WignerDyson::Save_txt_files_Concurrence_Gamma(MatrixXd, int num_steps) {};

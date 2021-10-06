@@ -18,6 +18,7 @@ class Orthogonal: public WignerDyson{
 		
 		void Save_txt_files_Channels(MatrixXcd G, MatrixXcd P, int num_steps);
 		void Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps, int N1);
+		void Save_txt_files_Concurrence_Gamma(MatrixXd Concurrence, int num_steps);
 };
 
 #endif

@@ -30,11 +30,20 @@ int main(int argc, char **argv){
 					orthogonal.Run_Simulation_Conductance_Channels();
 					orthogonal.~Orthogonal();
 				}
+
 				if (strcmp(argv[j],"Gamma") == 0){
 	
 					cout << "\n ###### Running Orthogonal (variable: Gamma) ###### \n" << endl;
 					Orthogonal orthogonal(lambda, num_steps, spin_deg);
 					orthogonal.Run_Simulation_Conductance_Gamma();
+					orthogonal.~Orthogonal();
+				}
+
+				if (strcmp(argv[j],"Concurrence") == 0){
+
+					cout << "\n ###### Running Orthogonal Concurrence (variable: Gamma) ###### \n" << endl;
+					Orthogonal orthogonal(lambda, num_steps, spin_deg);
+					orthogonal.Run_Simulation_Concurrence_Gamma();
 					orthogonal.~Orthogonal();
 				}
 			}
@@ -52,11 +61,20 @@ int main(int argc, char **argv){
 						unitary.Run_Simulation_Conductance_Channels();
 						unitary.~Unitary();
 					}
+			
 					if (strcmp(argv[j],"Gamma") == 0){
 	
 						cout << "\n ###### Running Unitary (variable: Gamma) ###### \n" << endl;
 						Unitary unitary(lambda, num_steps, spin_deg);
 						unitary.Run_Simulation_Conductance_Gamma();
+						unitary.~Unitary();
+					}
+			
+					if (strcmp(argv[j],"Concurrence") == 0){
+
+						cout << "\n ###### Running Unitary Concurrence (variable: Gamma) ###### \n" << endl;
+						Unitary unitary(lambda, num_steps, spin_deg);
+						unitary.Run_Simulation_Concurrence_Gamma();
 						unitary.~Unitary();
 					}
 				}

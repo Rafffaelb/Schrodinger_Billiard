@@ -65,3 +65,25 @@ complex<double> Quantum_chaotic_billiard::getG(){
 complex<double> Quantum_chaotic_billiard::getP(){
 	return this -> _P;
 }
+
+void Quantum_chaotic_billiard::Calculate_Concurrence(){
+
+	const int N1 = (_C1.rows())/2;
+	const int N2 = (_C2.rows())/2;
+
+	MatrixXcd t = _S.block(N1,0,N2,N1);
+
+	MatrixXcd ttdaga = t*t.adjoint();
+
+	VectorXcd eigenvalues_ttdaga = ttdaga.eigenvalues();
+
+	double tau_1 = eigenvalues_ttdaga(0).real();
+	double tau_2 = eigenvalues_ttdaga(1).real();
+
+	_Concurrence = 2*(sqrt(tau_1*(1-tau_1)*tau_2*(1-tau_2))/(tau_1+tau_2-2*tau_1*tau_2));
+}
+
+double Quantum_chaotic_billiard::getConcurrence(){
+	return this -> _Concurrence;
+}
+

@@ -238,3 +238,7 @@ void Symplectic::Save_txt_files_Gamma(MatrixXcd G, MatrixXcd P, int num_steps, i
 		}
 	}	
 }
+
+void Symplectic::Save_txt_files_Concurrence_Gamma(MatrixXd Concurrence, int num_steps){
+
+}
