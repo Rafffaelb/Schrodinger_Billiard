@@ -32,8 +32,10 @@ void WignerDyson::Run_Simulation_Concurrence_Gamma(){
 	Create_ProjectionMatrices(C1_pointer, C2_pointer, N1, N2);
 	
 	MatrixXd Concurrence(_num_steps, 21);
+	MatrixXd Entanglement(_num_steps,21);
 
 	Concurrence.setZero();
+	Entanglement.setZero();
 
 	for (int gamma_idx = 1; gamma_idx < 22; gamma_idx++){
 	
@@ -80,14 +82,16 @@ void WignerDyson::Run_Simulation_Concurrence_Gamma(){
 			billiard_setup.Calculate_Concurrence();
 
 			Concurrence(step-1, gamma_idx-1) = billiard_setup.getConcurrence();
+			Entanglement(step-1, gamma_idx-1) = billiard_setup.getEntanglement();
 
-			if (step % 100000 == 0){
+
+			if (step % _num_steps == 0){
 				std::cout << "\nCurrent number of steps: " << step << "| Current index of Gamma: " << gamma_idx << std::endl;
 			}
 
 		}
 		//Save Concurrence matrix as txt files //
-		Save_txt_files_Concurrence_Gamma(Concurrence, _num_steps);
+		Save_txt_files_Concurrence_Gamma(Concurrence, Entanglement, _num_steps);
 		
 	}
 

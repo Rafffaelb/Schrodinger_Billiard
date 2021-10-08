@@ -81,9 +81,14 @@ void Quantum_chaotic_billiard::Calculate_Concurrence(){
 	double tau_2 = eigenvalues_ttdaga(1).real();
 
 	_Concurrence = 2*(sqrt(tau_1*(1-tau_1)*tau_2*(1-tau_2))/(tau_1+tau_2-2*tau_1*tau_2));
+
+	_Entanglement = -((1+sqrt(1-pow(_Concurrence,2)))/2)*log2((1+sqrt(1-pow(_Concurrence,2)))/2) - (1-(1+sqrt(1-pow(_Concurrence,2)))/2)*log2(1-(1+sqrt(1-pow(_Concurrence,2)))/2);
 }
 
 double Quantum_chaotic_billiard::getConcurrence(){
 	return this -> _Concurrence;
 }
 
+double Quantum_chaotic_billiard::getEntanglement(){
+	return this -> _Entanglement;
+}

@@ -11,6 +11,7 @@ class Quantum_chaotic_billiard
 		complex<double> _G;
 		complex<double> _P;
 		double _Concurrence;
+		double _Entanglement;
 
 		MatrixXcd _H;
 		MatrixXcd _W;
@@ -34,6 +35,8 @@ class Quantum_chaotic_billiard
 		void Calculate_Concurrence();
 
 		double getConcurrence();
+		
+		double getEntanglement();
 };
 
 #endif
