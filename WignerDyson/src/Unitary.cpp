@@ -192,3 +192,19 @@ void Unitary::Save_txt_files_Concurrence_Gamma(MatrixXd Concurrence, MatrixXd En
 		}
 	}	
 }
+
+void Unitary::Save_txt_files_Bell_Parameter_Ress(MatrixXd Bell_Parameter_Ress, int num_steps){
+
+	std::ofstream output_Bell_Parameter_Ress("Data_Analysis/Bell_Parameter/Bell_Ress/Bell_Parameter_U_Ress.txt");
+
+	for(int i = 0; i < num_steps; i++){
+		for (int j = 0; j < 11; j++){
+			if (j == 10){
+				output_Bell_Parameter_Ress << Bell_Parameter_Ress(i,j) << std::endl;
+			}
+			else{
+				output_Bell_Parameter_Ress << Bell_Parameter_Ress(i,j) << "\t";
+			}
+		}
+	}
+}

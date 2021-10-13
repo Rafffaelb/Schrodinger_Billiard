@@ -46,6 +46,14 @@ int main(int argc, char **argv){
 					orthogonal.Run_Simulation_Concurrence_Gamma();
 					orthogonal.~Orthogonal();
 				}
+
+				if (strcmp(argv[j],"Bell_Parameter_Ress") == 0){
+					
+					cout << "\n ###### Running Orthogonal Bell Parameter (variable: Ress) ##### \n" << endl;
+					Orthogonal orthogonal(lambda, num_steps, spin_deg);
+					orthogonal.Run_Simulation_Bell_Parameter_Ress();
+					orthogonal.~Orthogonal();
+				}
 			}
 		}
 		else{
@@ -75,6 +83,13 @@ int main(int argc, char **argv){
 						cout << "\n ###### Running Unitary Concurrence (variable: Gamma) ###### \n" << endl;
 						Unitary unitary(lambda, num_steps, spin_deg);
 						unitary.Run_Simulation_Concurrence_Gamma();
+						unitary.~Unitary();
+					}
+					if (strcmp(argv[j],"Bell_Parameter_Ress") == 0){
+					
+						cout << "\n ###### Running Unitary Bell Parameter (variable: Ress) ##### \n" << endl;
+						Unitary unitary(lambda, num_steps, spin_deg);
+						unitary.Run_Simulation_Bell_Parameter_Ress();
 						unitary.~Unitary();
 					}
 				}

@@ -1,8 +1,12 @@
 #include <iostream>
 #include <cmath>
+#include <ctime>
+#include <chrono>
+#include <random>
 #include <complex>
 #include <eigen3/Eigen/Dense>
 #include <eigen3/Eigen/Eigenvalues>
+#include <eigen3/Eigen/QR>
 #include "../include/Quantum_chaotic_billiard.h"
 
 using namespace std;
@@ -92,3 +96,66 @@ double Quantum_chaotic_billiard::getConcurrence(){
 double Quantum_chaotic_billiard::getEntanglement(){
 	return this -> _Entanglement;
 }
+
+void Haar_measure();
+
+void Quantum_chaotic_billiard::Calculate_Bell_Parameter_Ress(){
+
+	const int N1 = (_C1.rows())/2;
+	const int N2 = (_C2.rows())/2;
+
+	MatrixXcd t = _S.block(N1,0,N2,N1);
+	MatrixXcd r = _S.block(0,0,N1,N1);
+
+	Haar_measure();
+
+}
+
+double Quantum_chaotic_billiard::getBell_Parameter_Ress(){
+	return this -> _Concurrence;
+}
+
+void Haar_measure(){
+
+	complex<double> complex_identity(0,1);
+
+	MatrixXcd Z(2,2), A(2,2), B(2,2), Q(2,2), R(2,2);
+	MatrixXcd Diag_R, Delta;
+
+	ColPivHouseholderQR<MatrixXcd> qr(Z.rows(), Z.cols());
+
+	auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::normal_distribution<double> distribution(0.0,1.0);
+	std::default_random_engine generator(seed);
+	
+	for (int i = 1; i < 3; i++){
+		for (int j = 1; j < 3; j++){
+			double aux = distribution(generator);
+			A(i-1,j-1) = aux;
+		}
+	}
+
+	for (int i = 1; i < 3; i++){
+			for (int j = 1; j < 3; j++){
+			double aux = distribution(generator);
+			B(i-1,j-1) = aux;
+		}
+	}
+
+	Z = (1/sqrt(2))*(A+complex_identity*B);
+
+	qr.compute(Z);
+
+	Q = qr.householderQ().setLength(qr.nonzeroPivots());
+	R = qr.matrixR().template triangularView<Upper>();
+
+	Diag_R = R.diagonal().matrix().asDiagonal();
+
+	Delta = Diag_R*Diag_R.cwiseAbs().inverse();
+
+	Q = Q*Delta; // Unitary random matrix distributed with Haar measure //
+
+
+}
+
+

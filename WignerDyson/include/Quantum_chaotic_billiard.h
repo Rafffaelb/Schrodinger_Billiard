@@ -12,6 +12,7 @@ class Quantum_chaotic_billiard
 		complex<double> _P;
 		double _Concurrence;
 		double _Entanglement;
+		double _Bell_Parameter_Ress;
 
 		MatrixXcd _H;
 		MatrixXcd _W;
@@ -37,6 +38,10 @@ class Quantum_chaotic_billiard
 		double getConcurrence();
 		
 		double getEntanglement();
+
+		void Calculate_Bell_Parameter_Ress();
+	
+		double getBell_Parameter_Ress();
 };
 
 #endif
