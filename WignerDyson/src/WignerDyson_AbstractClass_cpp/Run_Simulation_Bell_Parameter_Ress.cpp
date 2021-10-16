@@ -16,7 +16,6 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Ress(){
 	double Gamma, y, V;
        	int ress, ress_idx, N1, N2, n;
 
-	V = _lambda*_lambda/ress;
 	Gamma = 1;
 	y = sqrt(double(1.0)/Gamma)*(1.0-sqrt(1.0-Gamma));
 
@@ -40,6 +39,8 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Ress(){
 
 	for (ress_idx = 1; ress_idx < 12; ress_idx++){
 
+		V = _lambda*_lambda/ress;
+
 		// Create W Matrices //
 
 		MatrixXcd W(_spin_deg * ress, _spin_deg * n);
@@ -47,15 +48,15 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Ress(){
 		MatrixXcd *W_pointer = &W;
 
 		Create_W(W_pointer, ress, N1, N2, _lambda, y);
-		
-//		#pragma omp parallel for shared(W, C1, C2)
+
+		#pragma omp parallel for shared(W, C1, C2)
 		for (int step = 1; step < _num_steps + 1; step++){
 		
 			// Generate Hamiltonian Matrix //
 
 			MatrixXcd H(_spin_deg * ress, _spin_deg * ress);
 			H.setZero();
-			MatrixXcd* H_pointer = &H;
+			MatrixXcd *H_pointer = &H;
 
 			Create_H(H_pointer, ress, V);
 
@@ -72,7 +73,6 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Ress(){
 			billiard_setup.Calculate_Bell_Parameter_Ress();
 
 			Bell_Parameter_Ress(step-1, ress_idx-1) = billiard_setup.getBell_Parameter_Ress();
-
 
 			if (step % _num_steps == 0){
 				std::cout << "\nCurrent number of steps: " << step << "| Current index of Ress: " << ress_idx << std::endl;

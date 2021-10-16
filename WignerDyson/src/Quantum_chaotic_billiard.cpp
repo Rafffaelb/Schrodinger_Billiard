@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include <cmath>
 #include <ctime>
 #include <chrono>
@@ -97,25 +98,41 @@ double Quantum_chaotic_billiard::getEntanglement(){
 	return this -> _Entanglement;
 }
 
-void Haar_measure();
+MatrixXcd Create_Unitary_Random_Matrix();
 
 void Quantum_chaotic_billiard::Calculate_Bell_Parameter_Ress(){
+
+	MatrixXcd r, t, U_L(2,2), U_R(2,2), U_Lprime(2,2), U_Rprime(2,2);
+	complex<double> C_a_b, C_a_bprime, C_aprime_b, C_aprime_bprime, Const_Norm;
 
 	const int N1 = (_C1.rows())/2;
 	const int N2 = (_C2.rows())/2;
 
-	MatrixXcd t = _S.block(N1,0,N2,N1);
-	MatrixXcd r = _S.block(0,0,N1,N1);
+	t = _S.block(N1,0,N2,N1);
+	r = _S.block(0,0,N1,N1);
 
-	Haar_measure();
+	U_L = Create_Unitary_Random_Matrix();
+	U_R = Create_Unitary_Random_Matrix();
+	U_Lprime = Create_Unitary_Random_Matrix();
+	U_Rprime = Create_Unitary_Random_Matrix();
 
+	Const_Norm = ((r*r.adjoint()).trace())*((t*t.adjoint()).trace())-(r*t.adjoint()*t*r.adjoint()).trace();
+
+	C_a_b = (((U_L*r*r.adjoint()).trace())*((U_R*t*t.adjoint()).trace()) - ((U_L*r*t.adjoint()*U_R*t*r.adjoint()).trace()))/Const_Norm;
+	C_a_bprime = (((U_L*r*r.adjoint()).trace())*((U_Rprime*t*t.adjoint()).trace()) - ((U_L*r*t.adjoint()*U_Rprime*t*r.adjoint()).trace()))/Const_Norm;
+	C_aprime_b = (((U_Lprime*r*r.adjoint()).trace())*((U_R*t*t.adjoint()).trace()) - ((U_Lprime*r*t.adjoint()*U_R*t*r.adjoint()).trace()))/Const_Norm;
+	C_aprime_bprime = (((U_Lprime*r*r.adjoint()).trace())*((U_Rprime*t*t.adjoint()).trace()) - ((U_Lprime*r*t.adjoint()*U_Rprime*t*r.adjoint()).trace()))/Const_Norm;
+
+	_Bell_Parameter_Ress = abs(((C_a_b + C_aprime_b + C_a_bprime - C_aprime_bprime).real()));
 }
 
 double Quantum_chaotic_billiard::getBell_Parameter_Ress(){
-	return this -> _Concurrence;
+	return this -> _Bell_Parameter_Ress;
 }
 
-void Haar_measure(){
+MatrixXcd Create_Unitary_Random_Matrix(){
+
+	// Function to Create Unitary Random Matrix distributed with Haar Measure //
 
 	complex<double> complex_identity(0,1);
 
@@ -153,9 +170,9 @@ void Haar_measure(){
 
 	Delta = Diag_R*Diag_R.cwiseAbs().inverse();
 
-	Q = Q*Delta; // Unitary random matrix distributed with Haar measure //
-
-
+	Q = Q*Delta;
+       
+	return Q; // Unitary random matrix distributed with Haar measure //
 }
 
 
