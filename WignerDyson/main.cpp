@@ -21,78 +21,93 @@ int main(int argc, char **argv){
 		if (strcmp(argv[i],"Orthogonal") == 0){
 		
 			spin_deg = 1;
+			
+			Orthogonal orthogonal(lambda, num_steps, spin_deg);
+
 			for (int j = 1; j < argc; j++){
 				
 				if (strcmp(argv[j],"Channel") == 0){
 					
 					cout << "\n ####### Running Orthogonal (variable: Channel) ####### \n" << endl;
-					Orthogonal orthogonal(lambda, num_steps, spin_deg);
+				
 					orthogonal.Run_Simulation_Conductance_Channels();
-					orthogonal.~Orthogonal();
 				}
 
 				if (strcmp(argv[j],"Gamma") == 0){
 	
 					cout << "\n ###### Running Orthogonal (variable: Gamma) ###### \n" << endl;
-					Orthogonal orthogonal(lambda, num_steps, spin_deg);
+				
 					orthogonal.Run_Simulation_Conductance_Gamma();
-					orthogonal.~Orthogonal();
 				}
 
 				if (strcmp(argv[j],"Concurrence") == 0){
 
 					cout << "\n ###### Running Orthogonal Concurrence (variable: Gamma) ###### \n" << endl;
-					Orthogonal orthogonal(lambda, num_steps, spin_deg);
+				
 					orthogonal.Run_Simulation_Concurrence_Gamma();
-					orthogonal.~Orthogonal();
 				}
 
 				if (strcmp(argv[j],"Bell_Parameter_Ress") == 0){
 					
 					cout << "\n ###### Running Orthogonal Bell Parameter (variable: Ress) ##### \n" << endl;
-					Orthogonal orthogonal(lambda, num_steps, spin_deg);
+				
 					orthogonal.Run_Simulation_Bell_Parameter_Ress();
-					orthogonal.~Orthogonal();
+				}
+
+				if (strcmp(argv[j],"Bell_Parameter_Gamma") == 0){
+		
+					cout << "\n ###### Running Orthogonal Bell Parameter (variable: Gamma) #### \n" << endl;
+					
+					orthogonal.Run_Simulation_Bell_Parameter_Gamma();
 				}
 			}
+			
+			orthogonal.~Orthogonal();
 		}
 		else{
 			if (strcmp(argv[i],"Unitary") == 0){
 		
 				spin_deg = 1;
+
+				Unitary unitary(lambda, num_steps, spin_deg);
+
 				for (int j = 1; j < argc; j++){
 				
 					if (strcmp(argv[j],"Channel") == 0){
 					
 						cout << "\n ####### Running Unitary (variable: Channel) ####### \n" << endl;
-						Unitary unitary(lambda, num_steps, spin_deg);
+					
 						unitary.Run_Simulation_Conductance_Channels();
-						unitary.~Unitary();
 					}
 			
 					if (strcmp(argv[j],"Gamma") == 0){
 	
 						cout << "\n ###### Running Unitary (variable: Gamma) ###### \n" << endl;
-						Unitary unitary(lambda, num_steps, spin_deg);
+					
 						unitary.Run_Simulation_Conductance_Gamma();
-						unitary.~Unitary();
 					}
 			
 					if (strcmp(argv[j],"Concurrence") == 0){
 
 						cout << "\n ###### Running Unitary Concurrence (variable: Gamma) ###### \n" << endl;
-						Unitary unitary(lambda, num_steps, spin_deg);
+						
 						unitary.Run_Simulation_Concurrence_Gamma();
-						unitary.~Unitary();
 					}
 					if (strcmp(argv[j],"Bell_Parameter_Ress") == 0){
 					
 						cout << "\n ###### Running Unitary Bell Parameter (variable: Ress) ##### \n" << endl;
-						Unitary unitary(lambda, num_steps, spin_deg);
+					
 						unitary.Run_Simulation_Bell_Parameter_Ress();
-						unitary.~Unitary();
+					}
+					if (strcmp(argv[j],"Bell_Parameter_Gamma") == 0){
+						
+						cout << "\n ##### Running Unitary Bell Parameter (variable: Gamma) ##### \n" << endl;
+
+						unitary.Run_Simulation_Bell_Parameter_Gamma();
 					}
 				}
+				
+				unitary.~Unitary();
 			}
 			else{
 				if (strcmp(argv[i],"Symplectic") == 0){
