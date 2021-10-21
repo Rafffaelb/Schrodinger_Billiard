@@ -26,4 +26,4 @@ void WignerDyson::Save_txt_files_Concurrence_Gamma(MatrixXd Concurrence, MatrixX
 
 void WignerDyson::Save_txt_files_Bell_Parameter_Ress(MatrixXd Bell_Parameter_Ress, int num_steps) {};
 
-void WignerDyson::Save_txt_files_Bell_Parameter_Gamma(MatrixXd Bell_Parameter_Gamma, int num_steps) {};
+void WignerDyson::Save_txt_files_Bell_Parameter_Gamma(MatrixXd Bell_Parameter_Gamma, MatrixXd Bell_Parameter_Dephase_Gamma, int num_steps) {};

@@ -70,9 +70,9 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Ress(){
 
 			// Bell Parameter //
 		
-			billiard_setup.Calculate_Bell_Parameter_Ress();
+			billiard_setup.Calculate_Bell_Parameter();
 
-			Bell_Parameter_Ress(step-1, ress_idx-1) = billiard_setup.getBell_Parameter_Ress();
+			Bell_Parameter_Ress(step-1, ress_idx-1) = billiard_setup.getBell_Parameter();
 
 			if (step % _num_steps == 0){
 				std::cout << "\nCurrent number of steps: " << step << "| Current index of Ress: " << ress_idx << std::endl;

@@ -99,11 +99,15 @@ double Quantum_chaotic_billiard::getEntanglement(){
 }
 
 MatrixXcd Create_Unitary_Random_Matrix();
+complex<double> Calculate_Noise(MatrixXcd r, MatrixXcd t, MatrixXcd U_L, MatrixXcd U_R);
 
-void Quantum_chaotic_billiard::Calculate_Bell_Parameter_Ress(){
+void Quantum_chaotic_billiard::Calculate_Bell_Parameter(){
 
-	MatrixXcd r, t, U_L(2,2), U_R(2,2), U_Lprime(2,2), U_Rprime(2,2);
-	complex<double> C_a_b, C_a_bprime, C_aprime_b, C_aprime_bprime, Const_Norm;
+	MatrixXcd r, t, U_L(2,2), U_R(2,2), U_Lprime(2,2), U_Rprime(2,2), paulimatrix_z(2,2);
+	complex<double> C_a_b, C_a_bprime, C_aprime_b, C_aprime_bprime;
+
+	paulimatrix_z << 1, 0,
+			 0, -1;
 
 	const int N1 = (_C1.rows())/2;
 	const int N2 = (_C2.rows())/2;
@@ -116,18 +120,21 @@ void Quantum_chaotic_billiard::Calculate_Bell_Parameter_Ress(){
 	U_Lprime = Create_Unitary_Random_Matrix();
 	U_Rprime = Create_Unitary_Random_Matrix();
 
-	Const_Norm = ((r*r.adjoint()).trace())*((t*t.adjoint()).trace())-(r*t.adjoint()*t*r.adjoint()).trace();
+	C_a_b = Calculate_Noise(r, t, U_L, U_R);
+	C_a_bprime = Calculate_Noise(r, t, U_L, U_Rprime);
+	C_aprime_b = Calculate_Noise(r, t, U_Lprime, U_R);
+	C_aprime_bprime = Calculate_Noise(r, t, U_Lprime, U_Rprime);
 
-	C_a_b = (((U_L*r*r.adjoint()).trace())*((U_R*t*t.adjoint()).trace()) - ((U_L*r*t.adjoint()*U_R*t*r.adjoint()).trace()))/Const_Norm;
-	C_a_bprime = (((U_L*r*r.adjoint()).trace())*((U_Rprime*t*t.adjoint()).trace()) - ((U_L*r*t.adjoint()*U_Rprime*t*r.adjoint()).trace()))/Const_Norm;
-	C_aprime_b = (((U_Lprime*r*r.adjoint()).trace())*((U_R*t*t.adjoint()).trace()) - ((U_Lprime*r*t.adjoint()*U_R*t*r.adjoint()).trace()))/Const_Norm;
-	C_aprime_bprime = (((U_Lprime*r*r.adjoint()).trace())*((U_Rprime*t*t.adjoint()).trace()) - ((U_Lprime*r*t.adjoint()*U_Rprime*t*r.adjoint()).trace()))/Const_Norm;
-
-	_Bell_Parameter_Ress = abs(((C_a_b + C_aprime_b + C_a_bprime - C_aprime_bprime).real()));
+	_Bell_Parameter = abs(((C_a_b + C_aprime_b + C_a_bprime - C_aprime_bprime).real()));
+	_Bell_Parameter_Dephase = 2*abs((paulimatrix_z*r*t.adjoint()*paulimatrix_z*t*r.adjoint()).trace())/((r.adjoint()*r*t.adjoint()*t).trace()).real();
 }
 
-double Quantum_chaotic_billiard::getBell_Parameter_Ress(){
-	return this -> _Bell_Parameter_Ress;
+double Quantum_chaotic_billiard::getBell_Parameter(){
+	return this -> _Bell_Parameter;
+}
+
+double Quantum_chaotic_billiard::getBell_Parameter_Dephase(){
+	return this -> _Bell_Parameter_Dephase;
 }
 
 MatrixXcd Create_Unitary_Random_Matrix(){
@@ -175,4 +182,21 @@ MatrixXcd Create_Unitary_Random_Matrix(){
 	return Q; // Unitary random matrix distributed with Haar measure //
 }
 
+complex<double> Calculate_Noise(MatrixXcd r, MatrixXcd t, MatrixXcd U_L, MatrixXcd U_R){
+	
+	complex<double> C, Const_Norm;
 
+	MatrixXcd paulimatrix_z(2,2), a_dot_sigma(2,2), b_dot_sigma(2,2);
+
+	paulimatrix_z << 1, 0,
+			 0, -1;
+
+	a_dot_sigma = U_L.adjoint()*paulimatrix_z*U_L;
+	b_dot_sigma = U_R.adjoint()*paulimatrix_z*U_R;
+
+	Const_Norm = ((r*r.adjoint()).trace())*((t*t.adjoint()).trace())-(r*t.adjoint()*t*r.adjoint()).trace();
+
+	C = ((((a_dot_sigma)*r*r.adjoint()).trace())*(((b_dot_sigma)*t*t.adjoint()).trace()) - (((a_dot_sigma)*r*t.adjoint()*(b_dot_sigma)*t*r.adjoint()).trace()))/Const_Norm;
+
+	return C;
+}

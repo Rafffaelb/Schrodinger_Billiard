@@ -32,8 +32,10 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Gamma(){
 	Create_ProjectionMatrices(C1_pointer, C2_pointer, N1, N2);
 	
 	MatrixXd Bell_Parameter_Gamma(_num_steps, 21);
+	MatrixXd Bell_Parameter_Dephase_Gamma(_num_steps, 21);
 
 	Bell_Parameter_Gamma.setZero();
+	Bell_Parameter_Dephase_Gamma.setZero();
 
 	for (int gamma_idx = 1; gamma_idx < 22; gamma_idx++){
 	
@@ -77,10 +79,10 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Gamma(){
 
 			// Bell Parameter //
 		
-			billiard_setup.Calculate_Bell_Parameter_Ress();
+			billiard_setup.Calculate_Bell_Parameter();
 
-			Bell_Parameter_Gamma(step-1, gamma_idx-1) = billiard_setup.getBell_Parameter_Ress();
-
+			Bell_Parameter_Gamma(step-1, gamma_idx-1) = billiard_setup.getBell_Parameter();
+			Bell_Parameter_Dephase_Gamma(step-1, gamma_idx-1) = billiard_setup.getBell_Parameter_Dephase();
 
 			if (step % _num_steps == 0){
 				std::cout << "\nCurrent number of steps: " << step << "| Current index of Gamma: " << gamma_idx << std::endl;
@@ -88,7 +90,7 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Gamma(){
 
 		}
 		//Save Concurrence matrix as txt files //
-		Save_txt_files_Bell_Parameter_Gamma(Bell_Parameter_Gamma, _num_steps);
+		Save_txt_files_Bell_Parameter_Gamma(Bell_Parameter_Gamma, Bell_Parameter_Dephase_Gamma, _num_steps);
 		
 	}
 

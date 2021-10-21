@@ -209,17 +209,20 @@ void Unitary::Save_txt_files_Bell_Parameter_Ress(MatrixXd Bell_Parameter_Ress, i
 	}
 }
 
-void Unitary::Save_txt_files_Bell_Parameter_Gamma(MatrixXd Bell_Parameter_Gamma, int num_steps){
+void Unitary::Save_txt_files_Bell_Parameter_Gamma(MatrixXd Bell_Parameter_Gamma, MatrixXd Bell_Parameter_Dephase_Gamma, int num_steps){
 
 	std::ofstream output_Bell_Parameter_Gamma("Data_Analysis/Bell_Parameter/Bell_Gamma/Bell_Parameter_U_Gamma.txt");
+	std::ofstream output_Bell_Parameter_Dephase_Gamma("Data_Analysis/Bell_Parameter/Bell_Gamma/Bell_Parameter_Dephase_U_Gamma.txt");
 
 	for(int i = 0; i < num_steps; i++){
 		for (int j = 0; j < 21; j++){
 			if (j == 20){
 				output_Bell_Parameter_Gamma << Bell_Parameter_Gamma(i,j) << std::endl;
+				output_Bell_Parameter_Dephase_Gamma << Bell_Parameter_Dephase_Gamma(i,j) << std::endl;
 			}
 			else{
 				output_Bell_Parameter_Gamma << Bell_Parameter_Gamma(i,j) << "\t";
+				output_Bell_Parameter_Dephase_Gamma << Bell_Parameter_Dephase_Gamma(i,j) << "\t";
 			}
 		}
 	}
