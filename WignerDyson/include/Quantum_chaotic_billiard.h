@@ -41,7 +41,9 @@ class Quantum_chaotic_billiard
 		double getEntanglement();
 
 		void Calculate_Bell_Parameter();
-	
+
+		void Calculate_Bell_Parameter_Fixed_Base();
+
 		double getBell_Parameter();
 
 		double getBell_Parameter_Dephase();

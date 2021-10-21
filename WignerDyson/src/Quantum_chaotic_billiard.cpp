@@ -100,6 +100,7 @@ double Quantum_chaotic_billiard::getEntanglement(){
 
 MatrixXcd Create_Unitary_Random_Matrix();
 complex<double> Calculate_Noise(MatrixXcd r, MatrixXcd t, MatrixXcd U_L, MatrixXcd U_R);
+complex<double> Calculate_Noise_Fixed_Base(MatrixXcd r, MatrixXcd t, MatrixXcd U_L, MatrixXcd U_R);
 
 void Quantum_chaotic_billiard::Calculate_Bell_Parameter(){
 
@@ -127,6 +128,36 @@ void Quantum_chaotic_billiard::Calculate_Bell_Parameter(){
 
 	_Bell_Parameter = abs(((C_a_b + C_aprime_b + C_a_bprime - C_aprime_bprime).real()));
 	_Bell_Parameter_Dephase = 2*abs((paulimatrix_z*r*t.adjoint()*paulimatrix_z*t*r.adjoint()).trace())/((r.adjoint()*r*t.adjoint()*t).trace()).real();
+}
+
+void Quantum_chaotic_billiard::Calculate_Bell_Parameter_Fixed_Base(){
+
+	MatrixXcd r, t, U_L(2,2), U_R(2,2), U_Lprime(2,2), U_Rprime(2,2), paulimatrix_x(2,2), paulimatrix_z(2,2);
+	complex<double> C_a_b, C_a_bprime, C_aprime_b, C_aprime_bprime;
+
+	paulimatrix_x << 0, 1,
+		      	 1, 0;
+
+	paulimatrix_z << 1, 0,
+			 0, -1;
+
+	const int N1 = (_C1.rows())/2;
+	const int N2 = (_C2.rows())/2;
+
+	t = _S.block(N1,0,N2,N1);
+	r = _S.block(0,0,N1,N1);
+
+	U_L = paulimatrix_z;
+	U_R = -(1/sqrt(2))*(paulimatrix_x + paulimatrix_z);
+	U_Lprime = paulimatrix_x;
+	U_Rprime = (1/sqrt(2))*(paulimatrix_z - paulimatrix_x);
+
+	C_a_b = Calculate_Noise_Fixed_Base(r, t, U_L, U_R);
+	C_a_bprime = Calculate_Noise_Fixed_Base(r, t, U_L, U_Rprime);
+	C_aprime_b = Calculate_Noise_Fixed_Base(r, t, U_Lprime, U_R);
+	C_aprime_bprime = Calculate_Noise_Fixed_Base(r, t, U_Lprime, U_Rprime);
+
+	_Bell_Parameter = abs(((C_a_b + C_aprime_b + C_a_bprime - C_aprime_bprime).real()));
 }
 
 double Quantum_chaotic_billiard::getBell_Parameter(){
@@ -193,6 +224,25 @@ complex<double> Calculate_Noise(MatrixXcd r, MatrixXcd t, MatrixXcd U_L, MatrixX
 
 	a_dot_sigma = U_L.adjoint()*paulimatrix_z*U_L;
 	b_dot_sigma = U_R.adjoint()*paulimatrix_z*U_R;
+
+	Const_Norm = ((r*r.adjoint()).trace())*((t*t.adjoint()).trace())-(r*t.adjoint()*t*r.adjoint()).trace();
+
+	C = ((((a_dot_sigma)*r*r.adjoint()).trace())*(((b_dot_sigma)*t*t.adjoint()).trace()) - (((a_dot_sigma)*r*t.adjoint()*(b_dot_sigma)*t*r.adjoint()).trace()))/Const_Norm;
+
+	return C;
+}
+
+complex<double> Calculate_Noise_Fixed_Base(MatrixXcd r, MatrixXcd t, MatrixXcd U_L, MatrixXcd U_R){
+	
+	complex<double> C, Const_Norm;
+
+	MatrixXcd paulimatrix_z(2,2), a_dot_sigma(2,2), b_dot_sigma(2,2);
+
+	paulimatrix_z << 1, 0,
+			 0, -1;
+
+	a_dot_sigma = U_L;
+	b_dot_sigma = U_R;
 
 	Const_Norm = ((r*r.adjoint()).trace())*((t*t.adjoint()).trace())-(r*t.adjoint()*t*r.adjoint()).trace();
 

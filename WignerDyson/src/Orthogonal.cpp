@@ -229,3 +229,19 @@ void Orthogonal::Save_txt_files_Bell_Parameter_Gamma(MatrixXd Bell_Parameter_Gam
 		}
 	}
 }
+
+void Orthogonal::Save_txt_files_Bell_Parameter_Fixed_Base(MatrixXd Bell_Parameter_Fixed_Base, int num_steps){
+
+	std::ofstream output_Bell_Parameter_Fixed_Base("Data_Analysis/Bell_Parameter/Bell_Fixed_Base/Bell_Parameter_O_Fixed_Base.txt");
+
+	for(int i = 0; i < num_steps; i++){
+		for (int j = 0; j < 2; j++){
+			if (j == 1){
+				output_Bell_Parameter_Fixed_Base << Bell_Parameter_Fixed_Base(i,j) << std::endl;
+			}
+			else{
+				output_Bell_Parameter_Fixed_Base << Bell_Parameter_Fixed_Base(i,j) << "\t";
+			}
+		}
+	}
+}

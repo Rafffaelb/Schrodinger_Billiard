@@ -60,6 +60,13 @@ int main(int argc, char **argv){
 					
 					orthogonal.Run_Simulation_Bell_Parameter_Gamma();
 				}
+
+				if (strcmp(argv[j],"Bell_Parameter_Fixed_Base") == 0){
+				
+					cout << "\n ###### Running Orthogonal Bell Parameter Fixed Base ##### \n" << endl;
+
+					orthogonal.Run_Simulation_Bell_Parameter_Fixed_Base();
+				}
 			}
 			
 			orthogonal.~Orthogonal();
@@ -105,6 +112,13 @@ int main(int argc, char **argv){
 
 						unitary.Run_Simulation_Bell_Parameter_Gamma();
 					}
+
+					if (strcmp(argv[j],"Bell_Parameter_Fixed_Base") == 0){
+
+						cout << "\n ##### Running Unitary Bell Parameter Fixed Base ##### \n" << endl;
+
+						unitary.Run_Simulation_Bell_Parameter_Fixed_Base();
+					}
 				}
 				
 				unitary.~Unitary();
@@ -113,23 +127,28 @@ int main(int argc, char **argv){
 				if (strcmp(argv[i],"Symplectic") == 0){
 		
 					spin_deg = 2;
+
+					Symplectic symplectic(lambda, num_steps, spin_deg);
+
 					for (int j = 1; j < argc; j++){
 				
 						if (strcmp(argv[j],"Channel") == 0){
 					
 							cout << "\n ####### Running Symplectic (variable: Channel) ####### \n" << endl;
-							Symplectic symplectic(lambda, num_steps, spin_deg);
+						
 							symplectic.Run_Simulation_Conductance_Channels();
-							symplectic.~Symplectic();
+						
 						}
 						if (strcmp(argv[j],"Gamma") == 0){
 						
 							cout << "\n ###### Running Symplectic (variable: Gamma) ###### \n" << endl;
-							Symplectic symplectic(lambda, num_steps, spin_deg);
+						
 							symplectic.Run_Simulation_Conductance_Gamma();
-							symplectic.~Symplectic();
+						
 						}
 					}
+
+					symplectic.~Symplectic();
 				}
 			}
 		}

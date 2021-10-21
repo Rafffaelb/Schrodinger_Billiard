@@ -250,3 +250,7 @@ void Symplectic::Save_txt_files_Bell_Parameter_Ress(MatrixXd Bell_Parameter_Ress
 void Symplectic::Save_txt_files_Bell_Parameter_Gamma(MatrixXd Bell_Parameter_Gamma, MatrixXd Bell_Parameter_Dephase_Gamma, int num_steps){
 
 }
+
+void Symplectic::Save_txt_files_Bell_Parameter_Fixed_Base(MatrixXd Bell_Parameter_Fixed_Base, int num_steps){
+
+}
