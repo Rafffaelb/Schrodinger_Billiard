@@ -16,17 +16,18 @@ The property which quantifies the number of electrons that can pass through the 
     <img width="75%" src="https://user-images.githubusercontent.com/53999015/146303088-65fac1ac-5f96-42c4-9b59-6736cf3f6de1.png">
 </p>
 
-As we can see in this figure, the distribution of realizations of conductance depends on the number of open channels but also on the β which indicates a specific symmetry of the hamiltonian. These symmetries are fundamentals to describe the physics of quantum billiards.
+As we can see in this figure, the distribution of realizations of conductance depends on the number of open channels but also on the β which indicates a specific symmetry of the hamiltonian. These symmetries are fundamentals to describe the physics of quantum billiards. In a Schrödinger billiard, we have three fundamental symmetries which are listed below:
+
 #### Gaussian Orthogonal Ensemble (GOE)
 The index β = 1 (blue), also indicated in the literature by "AI", represents a system that has time-reversal symmetry (TRS) and spin rotational symmetry (SRS). The Hamiltonian of this system has to be a real-symmetric matrix.
 #### Gaussian Unitary Ensemble (GUE)
-The β = 2 (red), also indicated by literature as "A", represents a system that the TRS is broken. In this case, it doesn't matter if SRS is preserved or broken. In this case, each element of the Hamiltonian is a complex number.
+The β = 2 (red), also indicated by literature as "A", represents a system that the TRS is broken. This happens when there is a magnetic field applied in the quantum dot, the magnetic field breaks the time-reversal symmetry. When the TRS is broken, it doesn't matter if SRS is preserved or broken. In this case, each element of the Hamiltonian is a complex number.
 #### Gaussian Symplectic Ensemble (GSE)
-The β = 4 (green), indicated by literature as "AII", represents a system that SRS is broken but TRS is preserved. In this case, the Hamiltonian has a quaternionic structure.
+The β = 4 (green), indicated by literature as "AII", represents a system that SRS is broken but TRS is preserved. In this case, the Hamiltonian has a quaternionic structure. In these systems, there is a special interaction called spin-orbit coupling that arises due to the relation between the apparent magnetic field seen from the electron perspective and the magnetic moment of the electron associated with its intrinsic spin. 
+
+In this repository, we analyze the influence of these three fundamental symmetries in the conductance of electrons inside a quantum billiard. We obtain the distributions of conductance, as well as the average and variance in terms of the number of open channels for each class of symmetry. We also perform simulations to see how the conductance of each class of symmetry depends on the barrier between the lead and chaotic cavity, which we call Γ as the transparency of the barrier. Moreover, we analyze the weak localization correction of conductance as a function of the barrier's transparency Γ. 
 
 The random-matrix theory of quantum transport has a lot of details and here I just give a brief overview of this project. However, reference [[2]](#2) is the standard guide for this topic. 
-
-Concluding this conductance section, in this repository we obtain the distributions of conductance, as well as the average and variance in terms of the number of open channels for each class of symmetry. We also perform simulations to see how the conductance of each class of symmetry depends on the barrier between the lead and chaotic cavity, which we call Γ as the transparency of the barrier. Moreover, we analyze the weak localization correction of conductance as a function of the barrier's transparency Γ.
 
 ## Power Shot Noise
 
