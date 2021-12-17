@@ -37,9 +37,11 @@ One of the founding fathers of mesoscopic physics Rolf Landauer once said: "The 
     <img width="75%" src="https://user-images.githubusercontent.com/53999015/146485017-2cc05951-1ad3-4fec-8768-66c1a83a6082.png">
 </p>
 
-In this repository, I perform numerical simulations of shot-noise power, also known as the spectral density of the noise. In the same way as the conductance, I analyze the influence of the GOE, GUE, and GSE ensembles on the distributions of shot-noise power, as well as the average and variance. I also explore the dependence of shot-noise power with the number of open channels and the barrier's transparency Γ, retrieving some results of the literature. The noise produced by scattered electrons in a chaotic cavity can be used to indicate the presence of entangled electron pairs by violations of Bell's inequality.
+In this repository, I perform numerical simulations of shot-noise power, also known as the spectral density of the noise. In the same way as the conductance, I analyze the influence of the GOE, GUE, and GSE ensembles on the distributions of shot-noise power, as well as the average and variance. I also explore the dependence of shot-noise power with the number of open channels and the barrier's transparency Γ, retrieving some results of the literature. The shot-noise produced by scattered electrons in a chaotic cavity can be used to indicate the presence of entangled electron pairs by violations of Bell's inequality.
 
-## Concurrence
+## Concurrence and Entanglement of Formation
+
+The concurrence is a property that quantifies the degree of entanglement of a system [[4]](#4) and can be viewed as how much a state of the system can be separated in two states from different subsystems. In this quantum billiards setup, we treat left and right leads as two subsystems and our goal is to entangle the left lead's electrons with the right lead's one.
 
 ## References
 <a id="1">[1]</a> 
@@ -52,3 +54,6 @@ C. W. J. Beenakker, Rev. Mod. Phys. 69, 731 – Published 1 July 1997
 Shot Noise in Mesoscopic Systems: From Single Particles to Quantum Liquids
 Kensuke Kobayashi, Masayuki Hashisaka
 Journal of the Physical Society of Japan, 90, 102001 (2021) 10.7566/JPSJ.90.102001
+
+<a id="4">[4]</a> 
+W. K. Wootters, Entanglement of formation of an arbitrary state of two qubits, Physical Review Letters 80, 2245 (1998).
