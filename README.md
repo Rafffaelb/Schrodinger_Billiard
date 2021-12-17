@@ -30,7 +30,12 @@ In this repository, I analyze the influence of these three fundamental symmetrie
 The random-matrix theory of quantum transport has a lot of details and here I just give a brief overview of this project. However, reference [[2]](#2) is the standard guide for this topic. 
 
 ## Power Shot Noise
+One of the founding fathers of mesoscopic physics Rolf Landauer once said: "The noise is the signal". Since then physicists have turned their attention to noise measurements. In mesoscopic physics, the shot noise is the fluctuations in time of the current's measurements due to the discreteness of the electrical charge. In Figure 3 we see a setup that measures the current and its respective noise when a constant bias voltage is applied to a conductor. The current noise is evaluated by using a spectral analyzer [[3]](#3).
 
+<p align="center" width="100%">
+  Figure 3<br>
+    <img width="75%" src="https://user-images.githubusercontent.com/53999015/146485017-2cc05951-1ad3-4fec-8768-66c1a83a6082.png">
+</p>
 
 ## References
 <a id="1">[1]</a> 
@@ -38,3 +43,8 @@ M. J. Berry, J. A. Katine, R. M. Westervelt, and A. C. Gossard, Phys. Rev. B 50,
 
 <a id="2">[2]</a> 
 C. W. J. Beenakker, Rev. Mod. Phys. 69, 731 – Published 1 July 1997
+
+<a id="3">[3]</a> 
+Shot Noise in Mesoscopic Systems: From Single Particles to Quantum Liquids
+Kensuke Kobayashi, Masayuki Hashisaka
+Journal of the Physical Society of Japan, 90, 102001 (2021) 10.7566/JPSJ.90.102001
