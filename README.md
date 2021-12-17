@@ -29,13 +29,17 @@ In this repository, I analyze the influence of these three fundamental symmetrie
 
 The random-matrix theory of quantum transport has a lot of details and here I just give a brief overview of this project. However, reference [[2]](#2) is the standard guide for this topic. 
 
-## Power Shot Noise
+## Shot-Noise Power
 One of the founding fathers of mesoscopic physics Rolf Landauer once said: "The noise is the signal". Since then physicists have turned their attention to noise measurements. In mesoscopic physics, the shot noise is the fluctuations in time of the current's measurements due to the discreteness of the electrical charge. In Figure 3 we see a setup that measures the current and its respective noise when a constant bias voltage is applied to a conductor. The current noise is evaluated by using a spectral analyzer [[3]](#3).
 
 <p align="center" width="100%">
   Figure 3<br>
     <img width="75%" src="https://user-images.githubusercontent.com/53999015/146485017-2cc05951-1ad3-4fec-8768-66c1a83a6082.png">
 </p>
+
+In this repository, I perform numerical simulations of shot-noise power, also known as the spectral density of the noise. In the same way as the conductance, I analyze the influence of the GOE, GUE, and GSE ensembles on the distributions of shot-noise power, as well as the average and variance. I also explore the dependence of shot-noise power with the number of open channels and the barrier's transparency Γ, retrieving some results of the literature. The noise produced by scattered electrons in a chaotic cavity can be used to indicate the presence of entangled electron pairs by violations of Bell's inequality.
+
+## Concurrence
 
 ## References
 <a id="1">[1]</a> 
