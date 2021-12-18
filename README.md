@@ -41,7 +41,9 @@ In this repository, I perform numerical simulations of shot-noise power, also kn
 
 ## Concurrence and Entanglement of Formation
 
-The concurrence is a property that quantifies the degree of entanglement of a system [[4]](#4) and can be viewed as how much a state of the system can be separated in two states from different subsystems. In this quantum billiards setup, we treat left and right leads as two subsystems and our goal is to entangle the left lead's electrons with the right lead's one.
+The concurrence is a property that quantifies the degree of entanglement of a system [[4]](#4) and can be viewed as how much a state of the system can be separated in two states from different subsystems. In this quantum billiards setup, we treat left and right leads as two subsystems and our goal is to entangle the left lead's electrons with the right lead's one. 
+
+
 
 ## References
 <a id="1">[1]</a> 
