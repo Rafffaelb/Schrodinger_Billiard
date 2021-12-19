@@ -1,6 +1,6 @@
 # Schrödinger's Billiard
 
-Hello! My name is Rafael and in this repository I perform numerical simulations to calculate properties of electrical transport in quantum billiards such as conductance, power shot noise, concurrence, the entanglement of formation and violations of Bell's inequality. The quantum billiards, also known as quantum dots, are extremely small devices about a few nanometers in which the electrons are carried by leads and scattered in a chaotic cavity, as we can see in Figure 1 [[1]](#1).
+Hello! My name is Rafael and in this repository I perform numerical simulations to calculate properties of electrical transport in quantum billiards such as conductance, power shot noise, concurrence, the entanglement of formation, and violations of Bell's inequality. All of the results of this repository can be found in the jupyter notebook's files of the directory "/WignerDyson/Data_Analysis". The quantum billiards, also known as quantum dots, are extremely small devices about a few nanometers in which the electrons are carried by leads and scattered in a chaotic cavity, as we can see in Figure 1 [[1]](#1).
 
 <p align="center" width="100%">
   Figure 1<br>
@@ -15,7 +15,7 @@ The property which quantifies the number of electrons that can pass through the 
 
 <p align="center" width="100%">
   Figure 2<br>
-    <img width="75%" src="https://user-images.githubusercontent.com/53999015/146303088-65fac1ac-5f96-42c4-9b59-6736cf3f6de1.png">
+    <img width="60%" src="https://user-images.githubusercontent.com/53999015/146303088-65fac1ac-5f96-42c4-9b59-6736cf3f6de1.png">
 </p>
 
 As we can see in this figure, the distribution of realizations of conductance depends on the number of open channels but also on the β which indicates a specific symmetry of the hamiltonian. These symmetries are fundamentals to describe the physics of quantum billiards. In a Schrödinger billiard, there are three fundamental symmetries which are listed below:
@@ -37,26 +37,37 @@ One of the founding fathers of mesoscopic physics Rolf Landauer once said: "The 
 
 <p align="center" width="100%">
   Figure 3<br>
-    <img width="75%" src="https://user-images.githubusercontent.com/53999015/146485017-2cc05951-1ad3-4fec-8768-66c1a83a6082.png">
+    <img width="50%" src="https://user-images.githubusercontent.com/53999015/146485017-2cc05951-1ad3-4fec-8768-66c1a83a6082.png">
 </p>
 
 ## Concurrence and Entanglement of Formation
 
-The concurrence is a property that quantifies the degree of entanglement of a system [[4]](#4) and can be viewed as how much a state of the system can be separated in two states from different subsystems. In this quantum billiards setup, we treat left and right leads as two subsystems and our goal is to entangle the left lead's electrons with the right lead's one. 
+**In this repository**, I analyze the influence of the time-reversal symmetry in the concurrence and entanglement of formation for the Schrödinger billiard. So I study the concurrence and entanglement of formation produced about to the orbitals degree of freedom and compare this production of entangled states when the time-reversal symmetry is broken or preserved. I obtain the distributions of concurrence and entanglement of formation, as well as the average and variance in terms of the barrier's transparency Γ, always retrieving some results from the literature [[4]](#4).
 
+The concurrence is a property that quantifies the degree of entanglement of a system [[5]](#5) and can be viewed as how much a state of the system can be separated in two states from different subsystems. In this quantum billiards setup, we treat left and right leads as two subsystems and our goal is to entangle the left lead's electrons with the right lead's one. In Schrödinger billiard, when two electrons are entangled their orbital degree of freedom can not be viewed as two separate states, so after the scatter we have a global state that describes the whole system.
+
+The entanglement of formation connects the concept of entanglement with the entropy of information theory. The physical meaning of entanglement of formation is the resource cost needed to prepare a given entangled state [[6]](#6). Let's suppose that Alice and Bob (left and right leads) want to create a state M without transferring quantum states between them, they need to share previous information E(M) of pure singlets to create this state M.
 
 
 ## References
-<a id="1">[1]</a> 
+<a id="1">[1]</a>
 M. J. Berry, J. A. Katine, R. M. Westervelt, and A. C. Gossard, Phys. Rev. B 50, 17721 (1994).
 
-<a id="2">[2]</a> 
+<a id="2">[2]</a>
 C. W. J. Beenakker, Rev. Mod. Phys. 69, 731 – Published 1 July 1997
 
-<a id="3">[3]</a> 
+<a id="3">[3]</a>
 Shot Noise in Mesoscopic Systems: From Single Particles to Quantum Liquids
 Kensuke Kobayashi, Masayuki Hashisaka
 Journal of the Physical Society of Japan, 90, 102001 (2021) 10.7566/JPSJ.90.102001
 
-<a id="4">[4]</a> 
+<a id="4">[4]</a>
+Beenakker, C. W. J., Kindermann, M., Marcus, C. M., & Yacoby, A.
+(2004). Entanglement production in a chaotic quantum dot. In .
+Kluwer. Retrieved from https://hdl.handle.net/1887/1298
+
+<a id="5">[5]</a> 
 W. K. Wootters, Entanglement of formation of an arbitrary state of two qubits, Physical Review Letters 80, 2245 (1998).
+
+<a id="6">[6]</a>
+C. H. Bennett, D. P. DiVincenzo, J. A. Smolin, and W. K. Wootters, Mixed-state entanglement and quantum error correction, Physical Review A54, 3824 (1996).
