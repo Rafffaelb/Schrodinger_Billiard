@@ -48,6 +48,9 @@ The concurrence is a property that quantifies the degree of entanglement of a sy
 
 The entanglement of formation connects the concept of entanglement with the entropy of information theory. The physical meaning of entanglement of formation is the resource cost needed to prepare a given entangled state [[6]](#6). Let's suppose that Alice and Bob (left and right leads) want to create a state M without transferring quantum states between them, they need to share previous information E(M) of pure singlets to create this state M. In the same way as concurrence, we say that the state with entanglement of formation 1 (0) is a Bell state (non-entangled state). 
 
+## Violations of Bell-CHSH Inequality
+
+**In this repository**, I perform numerical simulations of Bell's parameter to obtain violations of the CHSH inequality in Schrödinger billiard. The reference [[7]](#7) shows the relation between correlators of the current fluctuations and the Bell-CHSH inequality. So I study the dependence of the violations of Bell's parameter on the number of resonances and the transparency of the barrier Γ. I also explore the relation between the maximal violation of Bell's inequality and the concurrence [[8]](#8).
 
 ## References
 <a id="1">[1]</a>
@@ -71,3 +74,9 @@ W. K. Wootters, Entanglement of formation of an arbitrary state of two qubits, P
 
 <a id="6">[6]</a>
 C. H. Bennett, D. P. DiVincenzo, J. A. Smolin, and W. K. Wootters, Mixed-state entanglement and quantum error correction, Physical Review A54, 3824 (1996).
+
+<a id="7">[7]</a>
+C. W. J. Beenakker, C. Emary, M. Kindermann, and J. L. van Velsen, Proposal for Production and Detection of Entangled Electron-Hole Pairs in a Degenerate Electron Gas, Phys. Rev. Lett. 91, 147901 – Published 1 October 2003
+
+<a id="8">[8]</a>
+F. Verstraete and M. M. Wolf, Entanglement versus bell-violations and their behavior under local filtering operations, Phys. Rev. Lett.89, 170401 (2002).
