@@ -4,7 +4,7 @@ Hello! My name is Rafael and in this repository I perform numerical simulations 
 
 <p align="center" width="100%">
   Figure 1<br>
-    <img width="33%" src="https://www.lorentz.leidenuniv.nl/beenakkr/mesoscopics/topics/chaos/images/billiard.gif">
+    <img width="33%" src="https://user-images.githubusercontent.com/53999015/147526090-b1b1aee2-08b4-4cdb-9cae-a5959e1b25d7.gif">
 </p>
 
 ## Conductance
