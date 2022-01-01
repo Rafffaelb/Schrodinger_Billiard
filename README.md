@@ -40,6 +40,8 @@ One of the founding fathers of mesoscopic physics Rolf Landauer once said: "The 
     <img width="50%" src="https://user-images.githubusercontent.com/53999015/146485017-2cc05951-1ad3-4fec-8768-66c1a83a6082.png">
 </p>
 
+To understand more about shot noise and how we calculate it in a quantum system, I recommend reference [[3]](#3).
+
 ## Concurrence and Entanglement of Formation
 
 **In this repository**, I analyze the influence of the time-reversal symmetry in the concurrence and entanglement of formation for the Schrödinger billiard. So I study the concurrence and entanglement of formation produced in the orbitals degree of freedom and compare this production of entangled states when the time-reversal symmetry is broken or preserved. I obtain the distributions of concurrence and entanglement of formation, as well as the average and variance in terms of the barrier's transparency Γ, always recovering some results from the literature [[4]](#4).
