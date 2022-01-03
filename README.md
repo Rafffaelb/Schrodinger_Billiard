@@ -1,8 +1,8 @@
 # Schrödinger's Billiard
 
-Hello! My name is Rafael and in this repository I perform numerical simulations to calculate properties of electrical transport in quantum billiards such as conductance, power shot noise, concurrence, the entanglement of formation, and violations of Bell's inequality. All of the results of this repository can be found in the jupyter notebook's files of the directory "/WignerDyson/Data_Analysis". Since some concepts of this work are a little hard to understand, I will cover only some definitions and show their respective reference.
+Hello! My name is Rafael and in this repository I perform numerical simulations to calculate properties of electrical transport in quantum billiards such as conductance, power shot noise, concurrence, the entanglement of formation, and violations of Bell's inequality. All of the results of this repository can be found in the jupyter notebook's files of the directory "/WignerDyson/Data_Analysis". Since some concepts of this work are a little hard to understand, I will cover some definitions and show their respective introduction reference.
 
-The quantum billiards, also known as quantum dots, are extremely small devices about a few nanometers in which the electrons are carried by leads and scattered in a chaotic cavity, as we can see in Figure 1 [[1]](#1).
+The quantum billiards, also known as quantum dots, are extremely small devices about a few nanometers in which the electrons are carried by leads and scattered in a chaotic cavity, as we can see in Figure 1 [[1]](#1). Experimentally, physicists can build a two-dimensional electron gas at the interface between gallium-arsenide (GaAs) and aluminum-gallium-arsenide (AlGaAs) by a technique called molecular beam epitaxy. They use electrodes (gray area of Figure 1) to create barriers that confine the electrons in a small region.
 
 <p align="center" width="100%">
   Figure 1<br>
