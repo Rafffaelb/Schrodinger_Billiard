@@ -11,6 +11,8 @@ The quantum billiards, also known as quantum dots, are extremely small devices a
 
 The quantum billiard of this repository is called Schrödinger billiard because the electron's behavior is described by his equation (Schrödinger equation). The quantum mechanics theory shows us that an electron confined in a small region can only access discrete energies, which are the solutions of the Schrödinger equation. Therefore, the Hamiltonian is a matrix M x M, where M is the number of energies available inside the cavity, and the coupling matrix "W" between cavity and lead is a matrix with dimension M x N, where N is the number of energies available in the leads.
 
+In this work, the billiard is considered chaotic in the sense that small changes in the initial conditions can drastically change the trajectory of the particle in the classical limit accordingly to the correspondence principle. Experimentally, this can be achieved by changing the shape of the cavity.  
+
 ## Conductance
 
 **In this repository**, I analyze the influence of the three fundamental symmetries (GOE, GUE, GSE) in the conductance of electrons inside a quantum billiard. I obtain the distributions of conductance, as well as the average and variance in terms of the number of open channels for each class of symmetry. I also perform simulations to see how the conductance of each class of symmetry depends on the barrier between the lead and chaotic cavity, which Γ is called the transparency of the barrier. Moreover, we analyze the weak localization correction of conductance as a function of the barrier's transparency Γ. 
