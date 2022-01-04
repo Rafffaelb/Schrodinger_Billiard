@@ -2,6 +2,8 @@
 
 Hello! My name is Rafael and in this repository I perform numerical simulations to calculate properties of electrical transport in quantum billiards such as conductance, power shot noise, concurrence, the entanglement of formation, and violations of Bell's inequality. All of the results of this repository can be found in the jupyter notebook's files of the directory "/WignerDyson/Data_Analysis". Since some concepts of this work are a little hard to understand, I will cover some definitions and show their respective introduction reference.
 
+## Introduction
+
 The quantum billiards, also known as quantum dots, are extremely small devices about a few nanometers in which the electrons are carried by leads and scattered in a chaotic cavity, as we can see in Figure 1 [[1]](#1). Experimentally, physicists can build a two-dimensional electron gas at the interface between gallium-arsenide (GaAs) and aluminum-gallium-arsenide (AlGaAs) by a technique called molecular beam epitaxy. They use electrodes (gray area of Figure 1) to create barriers that confine the electrons in a small region.
 
 <p align="center" width="100%">
@@ -11,7 +13,7 @@ The quantum billiards, also known as quantum dots, are extremely small devices a
 
 The quantum billiard of this repository is called Schrödinger billiard because the electron's behavior is described by his equation (Schrödinger equation). The quantum mechanics theory shows us that an electron confined in a small region can only access discrete energies, which are the solutions of the Schrödinger equation. Therefore, the Hamiltonian is a matrix M x M, where M is the number of energies available inside the cavity, and the coupling matrix "W" between cavity and lead is a matrix with dimension M x N, where N is the number of energies available in the leads.
 
-In this work, the billiard is considered chaotic in the sense that small changes in the initial conditions can drastically change the trajectory of the particle in the classical limit accordingly to the correspondence principle. Experimentally, this can be achieved by changing the shape of the cavity. The chaos and the transport of electrons in this billiard are simulated by Random-Matrix Theory (RMT). This theory of quantum transport has a lot of details and here I just give a brief overview of this project. However, reference [[2]](#2) is the standard guide for this topic. 
+In this work, the billiard is considered chaotic in the sense that small changes in the initial conditions can drastically change the trajectory of the particle in the classical limit. Experimentally, this can be achieved by changing the shape of the cavity. The chaos and the transport of electrons in this billiard are simulated by Random-Matrix Theory (RMT). This theory of quantum transport has a lot of details and here I just give a brief overview of this project. However, reference [[2]](#2) is the standard guide for this topic. 
 
 ## Conductance
 
