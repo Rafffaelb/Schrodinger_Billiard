@@ -9,6 +9,8 @@ The quantum billiards, also known as quantum dots, are extremely small devices a
     <img width="33%" src="https://user-images.githubusercontent.com/53999015/147526090-b1b1aee2-08b4-4cdb-9cae-a5959e1b25d7.gif">
 </p>
 
+The quantum billiard of this repository is called Schrödinger billiard because the electron's behavior is described by his equation (Schrödinger equation). The quantum mechanics theory shows us that an electron confined in a small region can only access discrete energies, which are the solutions of the Schrödinger equation.
+
 ## Conductance
 
 **In this repository**, I analyze the influence of the three fundamental symmetries (GOE, GUE, GSE) in the conductance of electrons inside a quantum billiard. I obtain the distributions of conductance, as well as the average and variance in terms of the number of open channels for each class of symmetry. I also perform simulations to see how the conductance of each class of symmetry depends on the barrier between the lead and chaotic cavity, which Γ is called the transparency of the barrier. Moreover, we analyze the weak localization correction of conductance as a function of the barrier's transparency Γ. 
