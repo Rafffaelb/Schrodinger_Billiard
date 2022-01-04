@@ -9,7 +9,7 @@ The quantum billiards, also known as quantum dots, are extremely small devices a
     <img width="33%" src="https://user-images.githubusercontent.com/53999015/147526090-b1b1aee2-08b4-4cdb-9cae-a5959e1b25d7.gif">
 </p>
 
-The quantum billiard of this repository is called Schrödinger billiard because the electron's behavior is described by his equation (Schrödinger equation). The quantum mechanics theory shows us that an electron confined in a small region can only access discrete energies, which are the solutions of the Schrödinger equation.
+The quantum billiard of this repository is called Schrödinger billiard because the electron's behavior is described by his equation (Schrödinger equation). The quantum mechanics theory shows us that an electron confined in a small region can only access discrete energies, which are the solutions of the Schrödinger equation. Therefore, the Hamiltonian is a matrix M x M, where M is the number of energies available inside the cavity, and the coupling matrix "W" between cavity and lead is a matrix with dimension M x N, where N is the number of energies available in the leads.
 
 ## Conductance
 
