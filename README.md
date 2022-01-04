@@ -11,7 +11,7 @@ The quantum billiards, also known as quantum dots, are extremely small devices a
 
 The quantum billiard of this repository is called Schrödinger billiard because the electron's behavior is described by his equation (Schrödinger equation). The quantum mechanics theory shows us that an electron confined in a small region can only access discrete energies, which are the solutions of the Schrödinger equation. Therefore, the Hamiltonian is a matrix M x M, where M is the number of energies available inside the cavity, and the coupling matrix "W" between cavity and lead is a matrix with dimension M x N, where N is the number of energies available in the leads.
 
-In this work, the billiard is considered chaotic in the sense that small changes in the initial conditions can drastically change the trajectory of the particle in the classical limit accordingly to the correspondence principle. Experimentally, this can be achieved by changing the shape of the cavity.  
+In this work, the billiard is considered chaotic in the sense that small changes in the initial conditions can drastically change the trajectory of the particle in the classical limit accordingly to the correspondence principle. Experimentally, this can be achieved by changing the shape of the cavity. The chaos and the transport of electrons in this billiard are simulated by Random-Matrix Theory (RMT). This theory of quantum transport has a lot of details and here I just give a brief overview of this project. However, reference [[2]](#2) is the standard guide for this topic. 
 
 ## Conductance
 
@@ -32,8 +32,6 @@ The index β = 1 (blue), also indicated in the literature by "AI", represents a 
 The β = 2 (red), also indicated by literature as "A", represents a system that the TRS is broken. This happens when there is a magnetic field applied in the quantum dot, the magnetic field breaks the time-reversal symmetry. When the TRS is broken, it doesn't matter if SRS is preserved or broken. In this case, each element of the Hamiltonian is a complex number.
 #### Gaussian Symplectic Ensemble (GSE)
 The β = 4 (green), indicated by literature as "AII", represents a system that SRS is broken but TRS is preserved. In this case, the Hamiltonian has a quaternionic structure. In these systems, there is a special interaction called spin-orbit coupling that arises due to the relation between the apparent magnetic field seen from the electron perspective and the magnetic moment of the electron associated with its intrinsic spin. 
-
-The random-matrix theory of quantum transport has a lot of details and here I just give a brief overview of this project. However, reference [[2]](#2) is the standard guide for this topic. 
 
 ## Shot-Noise Power
 
