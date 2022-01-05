@@ -60,7 +60,7 @@ The entanglement of formation connects the concept of entanglement with the entr
 
 **In this repository**, I perform numerical simulations of Bell's parameter to obtain violations of the CHSH inequality in Schrödinger billiard. The reference [[7]](#7) shows the relation between correlators of the current fluctuations and the Bell-CHSH inequality. So I study the dependence of the violations of Bell's parameter on the number of resonances and the transparency of the barrier Γ. I also explore the relation between the maximal violation of Bell's inequality and the concurrence [[8]](#8).
 
-Bell's inequality was a remarkable step in understanding the nature of quantum physics. In 1964, John Bell proposed an experiment that checks whether quantum physics is a real and local theory, motivated by the EPR paradox.
+Bell's inequality was a remarkable step in understanding the nature of quantum physics. In 1964, John Bell proposed an inequality that checks whether quantum physics is a real and local theory [[9]](#9), motivated by the EPR paradox.
 
 ## References
 <a id="1">[1]</a>
@@ -90,3 +90,6 @@ C. W. J. Beenakker, C. Emary, M. Kindermann, and J. L. van Velsen, Proposal for 
 
 <a id="8">[8]</a>
 F. Verstraete and M. M. Wolf, Entanglement versus bell-violations and their behavior under local filtering operations, Phys. Rev. Lett.89, 170401 (2002).
+
+<a id="9">[9]</a>
+J.S. Bell On the Einstein-Poldolsky-Rosen paradox, Physics 1 195 (1964).
