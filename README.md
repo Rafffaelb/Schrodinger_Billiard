@@ -60,7 +60,7 @@ The entanglement of formation connects the concept of entanglement with the entr
 
 **In this repository**, I perform numerical simulations of Bell's parameter to obtain violations of the CHSH inequality in Schrödinger billiard. The reference [[7]](#7) shows the relation between correlators of the current fluctuations and the Bell-CHSH inequality. So I study the dependence of the violations of Bell's parameter on the number of resonances and the transparency of the barrier Γ. I also explore the relation between the maximal violation of Bell's inequality and the concurrence [[8]](#8).
 
-Bell's inequality was a remarkable step in understanding the nature of quantum physics. In 1964, John Bell proposed an inequality that checks whether quantum physics is a real and local theory [[9]](#9), motivated by the EPR paradox.
+Bell's inequality was a remarkable step in understanding the nature of quantum physics. In 1964, John Bell proposed an inequality that checks whether quantum physics is a real and local theory [[9]](#9), motivated by the EPR paradox. Violations of this inequality show that hidden-variable theories can not predict some correlations of quantum mechanics. For violate Bell's inequality, the experimentals have to exclude any possible communication between the two subsystems (locality loophole), and guaranteeing efficient measurement (detection loophole). In 2015, physicists used electron's spins separated by 1.3 kilometres to violate Bell's inequality with loop-hole free [[10]](#10).
 
 ## References
 <a id="1">[1]</a>
@@ -93,3 +93,8 @@ F. Verstraete and M. M. Wolf, Entanglement versus bell-violations and their beha
 
 <a id="9">[9]</a>
 J.S. Bell On the Einstein-Poldolsky-Rosen paradox, Physics 1 195 (1964).
+
+<a id="10">[10]</a>
+Hensen, B., Bernien, H., Dréau, A. et al. Loophole-free Bell inequality violation using electron spins separated by 1.3 kilometres. Nature 526, 682–686 (2015). https://doi.org/10.1038/nature15759
+
+
