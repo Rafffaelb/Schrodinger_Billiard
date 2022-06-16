@@ -75,7 +75,7 @@ void WignerDyson::Run_Simulation_Concurrence_Gamma(){
 
 			// Scattering Matrix //
 		
-			billiard_setup.Calculate_Smatrix();
+			billiard_setup.Calculate_Smatrix(0);
 
 			// Concurrence //
 		

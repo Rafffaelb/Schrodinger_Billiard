@@ -107,8 +107,9 @@ void Orthogonal::Create_ProjectionMatrices(MatrixXcd* C1_pointer, MatrixXcd* C2_
 
 void Orthogonal::Create_H(MatrixXcd* H_pointer, int ress, double V){
 	
-	auto seed = std::chrono::system_clock::now().time_since_epoch().count();	
-  	std::normal_distribution<double> distribution(0.0,1.0);
+//	auto seed = std::chrono::system_clock::now().time_since_epoch().count();	
+	int seed = 1;  
+	std::normal_distribution<double> distribution(0.0,1.0);
 	std::default_random_engine generator(seed);
 	
 	MatrixXcd A(ress,ress); 
@@ -118,7 +119,9 @@ void Orthogonal::Create_H(MatrixXcd* H_pointer, int ress, double V){
 	A.setZero();
 	H1.setZero();
 	Symmetric.setZero();
-	
+
+	cout << "\nAux = " << distribution(generator) << endl;
+
 	for (int i = 1; i < ress + 1; i++){
 		for (int j = 1; j < ress + 1; j++){
 			double aux = distribution(generator);
@@ -245,3 +248,20 @@ void Orthogonal::Save_txt_files_Bell_Parameter_Fixed_Base(MatrixXd Bell_Paramete
 		}
 	}
 }
+
+void Orthogonal::Save_txt_files_Energy(MatrixXcd G, int num_steps, int N1){
+
+	std::ofstream output_G("Data_Analysis/Energy/Energy_Channel/G_O_Gamma_N"+to_string(N1)+".txt");
+
+	for(int i = 0; i < num_steps; i++){
+		for (int j = 0; j < 61; j++){
+			if (j == 60){
+				output_G << G(i,j).real() << std::endl;
+			}
+			else{
+				output_G << G(i,j).real() << "\t";
+			}
+		}
+	}	
+}
+

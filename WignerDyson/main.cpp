@@ -14,7 +14,7 @@ int main(int argc, char **argv){
 	int num_steps, spin_deg;
 
 	lambda = 0.5;
-	num_steps = 1000000;
+	num_steps = 100000;
 
 	for (int i = 1; i < argc; i++){
 		
@@ -66,6 +66,13 @@ int main(int argc, char **argv){
 					cout << "\n ###### Running Orthogonal Bell Parameter Fixed Base ##### \n" << endl;
 
 					orthogonal.Run_Simulation_Bell_Parameter_Fixed_Base();
+				}
+
+				if (strcmp(argv[j],"Energy") == 0){
+	
+					cout << "\n ###### Running Orthogonal (variable: Energy) ###### \n" << endl;
+				
+					orthogonal.Run_Simulation_Conductance_Energy();
 				}
 			}
 			

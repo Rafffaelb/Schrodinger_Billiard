@@ -75,7 +75,7 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Gamma(){
 
 			// Scattering Matrix //
 		
-			billiard_setup.Calculate_Smatrix();
+			billiard_setup.Calculate_Smatrix(0);
 
 			// Bell Parameter //
 		
