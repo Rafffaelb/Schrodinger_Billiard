@@ -13,13 +13,13 @@ void WignerDyson::Run_Simulation_Conductance_Energy(){
 
 	auto start = chrono::system_clock::now();
 
-	double Gamma, Delta, y, V;
-       	int ress, N1, N2, n;
+	double Gamma, Delta, y, V, Energy;
+       	int N1, N2, n;
 
 	Delta = 0.01;
 	Gamma = 1;
 	y = sqrt(double(1.0)/Gamma)*(1.0-sqrt(1.0-Gamma));
-	ress = 200;
+	int ress = 100;
 	V = _lambda*_lambda/ress;
 
 	for (int i = 1; i < 11; i++){
@@ -63,11 +63,11 @@ void WignerDyson::Run_Simulation_Conductance_Energy(){
 
 			Quantum_chaotic_billiard billiard_setup(H, W, C1, C2);
 			
-		//	#pragma omp parallel for shared(W, C1, C2, H)
+//			#pragma omp parallel for shared(W, C1, C2, H)
 			for (int energy_idx = 1; energy_idx < 62; energy_idx++){
 
-				double Energy = ((N1*Gamma*Delta/M_PI)*(((double)energy_idx-31)/2))/8;
-				
+				Energy = ((N1*Gamma*Delta/M_PI)*(((double)energy_idx-31)/2))/8;
+
 				// Scattering Matrix //
 				
 				billiard_setup.Calculate_Smatrix(Energy);
@@ -79,7 +79,7 @@ void WignerDyson::Run_Simulation_Conductance_Energy(){
 				G(step-1, energy_idx-1) = billiard_setup.getG();
 			}
 
-			if (step % 50000 == 0){
+			if (step % 2000 == 0){
 				std::cout << "\nCurrent number of steps: " << step << "| Current number of open Channel N: " << N1 <<  std::endl;
 			}
 		}

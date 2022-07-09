@@ -36,11 +36,18 @@ void Quantum_chaotic_billiard::Calculate_Smatrix(double Energy){
 	
 	MatrixXcd identityS = MatrixXcd::Identity(n,n);
 
-	MatrixXcd D(_H.rows(), _H.cols());
+	MatrixXcd D(ress, ress);
 
-	D << ( Energy*MatrixXcd::Identity(ress,ress) -_H + complex_identity*M_PI*_W*(_W.adjoint()));
+	D << (Energy*MatrixXcd::Identity(ress,ress) -_H + complex_identity*M_PI*_W*(_W.adjoint()));
 	PartialPivLU<MatrixXcd> lu(D);
 	MatrixXcd D_inv_W = lu.inverse()*_W;
+
+	// Test //
+
+	// MatrixXcd x = D.partialPivLu().solve(_W);
+	// double relative_error = (D*x - _W).norm() / _W.norm(); // norm() is L2 norm
+	// std::cout << "\n The relative error is:\n" << relative_error << std::endl;
+	
 
 	// Scattering Matrix //
 
