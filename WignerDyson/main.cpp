@@ -11,10 +11,9 @@ using namespace std;
 int main(int argc, char **argv){
 
 	double lambda;
-	int num_steps, spin_deg;
+	int spin_deg;
 
 	lambda = 0.5;
-	num_steps = 2000;
 
 	for (int i = 1; i < argc; i++){
 		
@@ -22,7 +21,7 @@ int main(int argc, char **argv){
 		
 			spin_deg = 1;
 			
-			Orthogonal orthogonal(lambda, num_steps, spin_deg);
+			Orthogonal orthogonal(lambda, spin_deg);
 
 			for (int j = 1; j < argc; j++){
 				
@@ -74,8 +73,14 @@ int main(int argc, char **argv){
 				
 					orthogonal.Run_Simulation_Conductance_Energy();
 				}
-			}
 			
+				if (strcmp(argv[j],"Energy_Gamma") == 0){
+	
+					cout << "\n ###### Running Orthogonal (variable: Energy) (Parameter: Gamma) ###### \n" << endl;
+
+					orthogonal.Run_Simulation_Conductance_Energy_Gamma();
+				}
+			}
 			orthogonal.~Orthogonal();
 		}
 		else{
@@ -83,7 +88,7 @@ int main(int argc, char **argv){
 		
 				spin_deg = 1;
 
-				Unitary unitary(lambda, num_steps, spin_deg);
+				Unitary unitary(lambda, spin_deg);
 
 				for (int j = 1; j < argc; j++){
 				
@@ -126,6 +131,20 @@ int main(int argc, char **argv){
 
 						unitary.Run_Simulation_Bell_Parameter_Fixed_Base();
 					}
+
+					if (strcmp(argv[j],"Energy") == 0){
+	
+						cout << "\n ###### Running Unitary (variable: Energy) ###### \n" << endl;
+				
+						unitary.Run_Simulation_Conductance_Energy();
+					}
+
+
+					if (strcmp(argv[j],"Energy_Gamma") == 0){
+	
+						cout << "\n ###### Running Unitary (variable: Energy) (Parameter: Gamma) ###### \n" << endl;
+						unitary.Run_Simulation_Conductance_Energy_Gamma();
+					}
 				}
 				
 				unitary.~Unitary();
@@ -135,7 +154,7 @@ int main(int argc, char **argv){
 		
 					spin_deg = 2;
 
-					Symplectic symplectic(lambda, num_steps, spin_deg);
+					Symplectic symplectic(lambda, spin_deg);
 
 					for (int j = 1; j < argc; j++){
 				

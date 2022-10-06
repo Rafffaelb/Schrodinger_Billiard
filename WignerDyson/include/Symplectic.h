@@ -6,7 +6,7 @@
 class Symplectic: public WignerDyson{
 
 	public:
-		Symplectic(double lambda, int num_steps, int spin_deg);
+		Symplectic(double lambda, int spin_deg);
 
 		~Symplectic();
 
@@ -23,6 +23,8 @@ class Symplectic: public WignerDyson{
 		void Save_txt_files_Bell_Parameter_Gamma(MatrixXd Bell_Parameter_Gamma, MatrixXd Bell_Parameter_Dephase_Gamma, int num_steps);
 		void Save_txt_files_Bell_Parameter_Fixed_Base(MatrixXd Bell_Parameter_Fixed_Base, int num_steps);
 		void Save_txt_files_Energy(MatrixXcd G, int num_steps, int N1);
+		void Save_txt_files_Energy_Gamma(MatrixXcd G, int num_steps, int N1, int gamma_idx);
+
 };
 
 #endif

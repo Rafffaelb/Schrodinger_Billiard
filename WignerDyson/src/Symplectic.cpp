@@ -10,10 +10,9 @@
 
 using namespace std;
 
-Symplectic::Symplectic(double lambda, int num_steps, int spin_deg){
+Symplectic::Symplectic(double lambda, int spin_deg){
 
 	this -> _lambda = lambda;
-	this -> _num_steps = num_steps;
 	this -> _spin_deg = spin_deg;
 }
 
@@ -256,5 +255,9 @@ void Symplectic::Save_txt_files_Bell_Parameter_Fixed_Base(MatrixXd Bell_Paramete
 }
 
 void Symplectic::Save_txt_files_Energy(MatrixXcd G, int num_steps, int N1){
+
+}
+
+void Symplectic::Save_txt_files_Energy_Gamma(MatrixXcd G, int num_steps, int N1, int gamma_idx){
 
 }

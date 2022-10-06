@@ -11,10 +11,9 @@
 
 using namespace std;
 
-Orthogonal::Orthogonal(double lambda, int num_steps, int spin_deg){
+Orthogonal::Orthogonal(double lambda, int spin_deg){
 
 	this -> _lambda = lambda;
-	this -> _num_steps = num_steps;
 	this -> _spin_deg = spin_deg;
 
 }
@@ -213,6 +212,22 @@ void Orthogonal::Save_txt_files_Bell_Parameter_Fixed_Base(MatrixXd Bell_Paramete
 void Orthogonal::Save_txt_files_Energy(MatrixXcd G, int num_steps, int N1){
 
 	std::ofstream output_G("Data_Analysis/Energy/Energy_Channel/G_O_Gamma_N"+to_string(N1)+".txt");
+
+	for(int i = 0; i < num_steps; i++){
+		for (int j = 0; j < 61; j++){
+			if (j == 60){
+				output_G << G(i,j).real() << std::endl;
+			}
+			else{
+				output_G << G(i,j).real() << "\t";
+			}
+		}
+	}	
+}
+
+void Orthogonal::Save_txt_files_Energy_Gamma(MatrixXcd G, int num_steps, int N1, int gamma_idx){
+
+	std::ofstream output_G("Data_Analysis/Energy/Energy_Gamma/G_O_Gamma_N"+to_string(N1)+"_"+to_string(gamma_idx)+".txt");
 
 	for(int i = 0; i < num_steps; i++){
 		for (int j = 0; j < 61; j++){

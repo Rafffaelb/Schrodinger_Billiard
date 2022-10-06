@@ -14,12 +14,13 @@ void WignerDyson::Run_Simulation_Conductance_Energy(){
 	auto start = chrono::system_clock::now();
 
 	double Gamma, Delta, y, V, Energy;
-       	int N1, N2, n;
+       	int N1, N2, n, _num_steps;
 
 	Delta = 0.01;
 	Gamma = 1;
 	y = sqrt(double(1.0)/Gamma)*(1.0-sqrt(1.0-Gamma));
 	int ress = 100;
+	_num_steps = 5000; 
 	V = _lambda*_lambda/ress;
 
 	for (int i = 1; i < 11; i++){
@@ -48,7 +49,7 @@ void WignerDyson::Run_Simulation_Conductance_Energy(){
 		MatrixXcd *W_pointer = &W;
 
 		Create_W(W_pointer, ress, N1, N2, _lambda, y);
-
+		
 		for (int step = 1; step < _num_steps + 1; step++){
 		
 			// Generate Hamiltonian Matrix //
@@ -63,7 +64,7 @@ void WignerDyson::Run_Simulation_Conductance_Energy(){
 
 			Quantum_chaotic_billiard billiard_setup(H, W, C1, C2);
 			
-//			#pragma omp parallel for shared(W, C1, C2, H)
+			#pragma omp parallel for shared(H, W, C1, C2) firstprivate(billiard_setup)
 			for (int energy_idx = 1; energy_idx < 62; energy_idx++){
 
 				Energy = ((N1*Gamma*Delta/M_PI)*(((double)energy_idx-31)/2))/8;
@@ -79,7 +80,7 @@ void WignerDyson::Run_Simulation_Conductance_Energy(){
 				G(step-1, energy_idx-1) = billiard_setup.getG();
 			}
 
-			if (step % 2000 == 0){
+			if (step % _num_steps == 0){
 				std::cout << "\nCurrent number of steps: " << step << "| Current number of open Channel N: " << N1 <<  std::endl;
 			}
 		}

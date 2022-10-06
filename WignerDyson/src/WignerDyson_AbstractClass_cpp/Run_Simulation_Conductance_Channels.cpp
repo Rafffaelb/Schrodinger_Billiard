@@ -14,9 +14,10 @@ void WignerDyson::Run_Simulation_Conductance_Channels(){
 	auto start = chrono::system_clock::now();
 
 	double Gamma, y, V;
-       	int ress;
+       	int ress, _num_steps;
 
 	ress = 100;
+	_num_steps = 100000;
 
 	Gamma = 1;
 	y = sqrt(1.0/Gamma)*(1.0-sqrt(1.0-Gamma));

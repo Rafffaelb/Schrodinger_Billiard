@@ -32,3 +32,5 @@ void WignerDyson::Save_txt_files_Bell_Parameter_Fixed_Base(MatrixXd Bell_Paramet
 
 void WignerDyson::Save_txt_files_Energy(MatrixXcd G, int num_steps, int N1) {};
 
+void WignerDyson::Save_txt_files_Energy_Gamma(MatrixXcd G, int num_steps, int N1, int gamma_idx) {};
+

@@ -10,10 +10,9 @@
 
 using namespace std;
 
-Unitary::Unitary(double lambda, int num_steps, int spin_deg){
+Unitary::Unitary(double lambda, int spin_deg){
 
 	this -> _lambda = lambda;
-	this -> _num_steps = num_steps;
 	this -> _spin_deg = spin_deg;
 }
 
@@ -211,6 +210,22 @@ void Unitary::Save_txt_files_Bell_Parameter_Fixed_Base(MatrixXd Bell_Parameter_F
 void Unitary::Save_txt_files_Energy(MatrixXcd G, int num_steps, int N1){
 
 	std::ofstream output_G("Data_Analysis/Energy/Energy_Channel/G_U_Gamma_N"+to_string(N1)+".txt");
+
+	for(int i = 0; i < num_steps; i++){
+		for (int j = 0; j < 61; j++){
+			if (j == 60){
+				output_G << G(i,j).real() << std::endl;
+			}
+			else{
+				output_G << G(i,j).real() << "\t";
+			}
+		}
+	}	
+}
+
+void Unitary::Save_txt_files_Energy_Gamma(MatrixXcd G, int num_steps, int N1, int gamma_idx){
+
+	std::ofstream output_G("Data_Analysis/Energy/Energy_Gamma/G_U_Gamma_N"+to_string(N1)+"_"+to_string(gamma_idx)+".txt");
 
 	for(int i = 0; i < num_steps; i++){
 		for (int j = 0; j < 61; j++){
