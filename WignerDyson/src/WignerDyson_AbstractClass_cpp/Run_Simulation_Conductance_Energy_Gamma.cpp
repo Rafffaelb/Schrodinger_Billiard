@@ -16,13 +16,13 @@ void WignerDyson::Run_Simulation_Conductance_Energy_Gamma(){
 	double Gamma, Delta, y, V, Energy, small_gamma;
        	int N1, N2, n, ress, _num_steps;
 
-	_num_steps = 2000;
+	_num_steps = 10000;
 
 	Eigen::VectorXf N_vector(6); N_vector << 1, 2, 5, 10, 15, 30;
 	Eigen::VectorXf ress_vector(6); ress_vector << 200, 200, 200, 200, 300, 600;
 	Eigen::VectorXf Delta_vector(6); Delta_vector << 0.01, 0.01, 0.01, 0.01, 0.0066, 0.0033;
 
-	for (int i = 5; i < 6; i++){
+	for (int i = 0; i < 6; i++){
 
 		MatrixXcd G(_num_steps, 61);
 		G.setZero();
@@ -79,13 +79,8 @@ void WignerDyson::Run_Simulation_Conductance_Energy_Gamma(){
 				// Create billiard setup //
 	
 				Quantum_chaotic_billiard billiard_setup(H, W, C1, C2);
-	
-				if (gamma_idx < 5){
-					small_gamma = (N1*Delta/(8*M_PI));
-				}
-				else{
-					small_gamma = (N1*Gamma*Delta/(8*M_PI));
-				}
+
+				small_gamma = (gamma_idx < 5) ? (N1*Delta/(8*M_PI)) : (N1*Gamma*Delta/(8*M_PI));
 
 				#pragma omp parallel for shared(W, C1, C2, H) firstprivate(billiard_setup)
 				for (int energy_idx = 1; energy_idx < 62; energy_idx++){
