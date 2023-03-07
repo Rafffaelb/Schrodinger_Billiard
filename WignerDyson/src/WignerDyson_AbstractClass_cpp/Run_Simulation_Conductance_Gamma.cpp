@@ -17,7 +17,7 @@ void WignerDyson::Run_Simulation_Conductance_Gamma(){
        	int ress, N1, N2, n, _num_steps;
 
 	ress = 100;
-	_num_steps = 100000;
+	_num_steps = 1000000;
 	V = _lambda*_lambda/ress;
 
 	for (int i = 1; i < 5; i++){
@@ -93,7 +93,7 @@ void WignerDyson::Run_Simulation_Conductance_Gamma(){
 				G(step-1, gamma_idx-1) = billiard_setup.getG();
 				P(step-1, gamma_idx-1) = billiard_setup.getP();
 				
-				if (step % 100000 == 0){
+				if (step % 1000000 == 0){
 					std::cout << "\nCurrent number of steps: " << step << "| Current index of Gamma: " << gamma_idx << "| Current number of open Channel N: " << N1 <<  std::endl;
 				}
 			}
