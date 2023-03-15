@@ -16,7 +16,7 @@ void WignerDyson::Run_Simulation_Conductance_Energy_Gamma(){
 	double Gamma, Delta, y, V, Energy, small_gamma;
        	int N1, N2, n, ress, _num_steps;
 
-	_num_steps = 10000;
+	_num_steps = 30000;
 
 	Eigen::VectorXf N_vector(6); N_vector << 1, 2, 5, 10, 15, 30;
 	Eigen::VectorXf ress_vector(6); ress_vector << 200, 200, 200, 200, 300, 600;
