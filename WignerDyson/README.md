@@ -91,8 +91,8 @@ The [Data_Analysis](file:///c:/Users/rafam/Documents/Physics_content/Schrodinger
 │   ├── Energy/             # Conductance vs energy analysis
 │   ├── Gamma/              # Conductance vs gamma parameter analysis
 │   └── Various .ipynb files for data visualization and analysis
-├── eigen-3.4.0/            # Eigen library (automatically downloaded)
-├── gpu_experiment/         # Experimental GPU-accelerated implementation
+├── eigen-3.4.0/            # Eigen library (automatically downloaded, Git-ignored)
+├── gpu_experiment/         # Experimental GPU-accelerated implementation (Git-ignored)
 ├── include/                # Header files for all classes
 │   ├── Orthogonal.h        # Orthogonal ensemble (GOE) implementation
 │   ├── Unitary.h           # Unitary ensemble (GUE) implementation
@@ -105,7 +105,16 @@ The [Data_Analysis](file:///c:/Users/rafam/Documents/Physics_content/Schrodinger
 │   ├── Symplectic.cpp      # Symplectic ensemble implementation
 │   ├── Quantum_chaotic_billiard.cpp  # Main quantum billiard implementation
 │   └── WignerDyson_AbstractClass_cpp/  # Abstract class implementations
-├── third_party/            # Third-party installation scripts
+├── third_party/            # Third-party installation scripts (Git-ignored)
 ├── Makefile               # Build configuration
 ├── main.cpp               # Main program entry point
-└── Various .bat files     # Installation scripts for dependencies
+└── Various .bat files     # Installation scripts for dependencies (Git-ignored)
+```
+
+**Note on Git-ignored Directories**: Several directories in this project are not tracked by Git:
+- `eigen-3.4.0/`: Third-party Eigen library, automatically downloaded during build
+- `gpu_experiment/`: Experimental GPU-accelerated code that is separate from the main project
+- `third_party/`: Scripts for installing additional dependencies
+- `.bat files`: Windows batch scripts for dependency installation
+
+These directories are excluded via `.gitignore` because they contain either third-party code or platform-specific installation scripts. They are essential for building and running the project locally but are not part of the core source code.
