@@ -16,3 +16,14 @@ Data_Analysis/Energy/Energy_Gamma/*.txt
 
 # Executable files
 *.exe
+
+# Third-party libraries and dependencies
+eigen-3.4.0/
+gpu_experiment/
+third_party/
+
+# Installation scripts
+install_cuda_support.bat
+
+# Editor swap files
+*.swp
