@@ -5,12 +5,30 @@
 #include <chrono>
 #include <random>
 #include <complex>
-#include <eigen3/Eigen/Dense>
-#include <eigen3/Eigen/Eigenvalues>
-#include <eigen3/Eigen/QR>
+#include <Eigen/Dense>
+#include <Eigen/Eigenvalues>
+#include <Eigen/QR>
 #include "../include/Quantum_chaotic_billiard.h"
 
+// Define M_PI if not available
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 using namespace std;
+
+MatrixXcd Kronecker_Product(MatrixXcd A, MatrixXcd B){
+
+	MatrixXcd C(A.rows() * B.rows(), A.cols() * B.rows());
+
+	for (int i = 0; i < A.rows(); i++){
+		for (int j = 0; j < A.cols(); j++){
+			C.block(i*B.rows(), j*B.cols(), B.rows(), B.cols()) = A(i,j)*B;
+		}
+	}
+
+	return C;
+}
 
 Quantum_chaotic_billiard::Quantum_chaotic_billiard(MatrixXcd H, MatrixXcd W, MatrixXcd C1, MatrixXcd C2){
 	Set_Setup(H, W, C1, C2);
@@ -72,6 +90,7 @@ void Quantum_chaotic_billiard::Calculate_G_and_P(){
 	_P = (ttdaga*(identityP-ttdaga)).trace();
 
 }
+
 
 complex<double> Quantum_chaotic_billiard::getG(){
 	return this -> _G;

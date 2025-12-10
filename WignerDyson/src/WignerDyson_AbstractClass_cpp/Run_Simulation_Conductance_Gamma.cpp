@@ -1,10 +1,11 @@
 #include <iostream>
+#include <fstream>
+#include <Eigen/Dense>
+#include <cmath>
+#include <complex>
 #include <chrono>
-#include "../../include/WignerDyson_AbstractClass_h/WignerDyson.h"
-#include "../../include/Quantum_chaotic_billiard.h"
-#include "../../include/WignerDyson_AbstractClass_h/Run_Simulation_Conductance_Gamma.h"
-#include <eigen3/Eigen/Dense>
-#include <omp.h>
+#include "../include/WignerDyson_AbstractClass_h/WignerDyson.h"
+#include "../include/Quantum_chaotic_billiard.h"
 
 using namespace std;
 using namespace Eigen;

@@ -1,4 +1,4 @@
-#include <eigen3/Eigen/Dense>
+#include <Eigen/Dense>
 #ifndef WIGNERDYSON_H
 #define WIGNERDYSON_H
 
