@@ -30,6 +30,108 @@ This will:
 1. Automatically download and extract the Eigen library if not already present
 2. Compile all source files
 
+## Quick Start
+
+```bash
+# Build the project (automatically downloads required Eigen library)
+make
+
+# Run a simulation (example: orthogonal conductance vs channel count)
+./WignerDyson.exe Orthogonal Channel
+
+# View results in Data_Analysis Jupyter notebooks
+```
+
+## Installing Docker (Windows)
+
+To simplify setup, you can use Docker to run this project in a consistent environment:
+
+Option 1 - Guided Installation:
+```cmd
+install_docker.bat
+```
+
+Option 2 - Automated Installation (requires admin privileges):
+```cmd
+install_docker_enhanced.bat
+```
+
+Follow the instructions in the script to download and install Docker Desktop,
+then restart your computer and launch Docker Desktop.
+
+## Using Docker
+
+This project can be built and run using Docker for a consistent environment across different systems.
+
+For detailed Docker usage instructions, see [README_DOCKER.md](README_DOCKER.md).
+
+### Building the Docker Image
+
+Make sure you are in the `WignerDyson` directory before building (this is where the Dockerfile is located):
+
+```bash
+# Navigate to the WignerDyson directory where the Dockerfile is located
+cd WignerDyson
+
+# Build the Docker image
+docker build -t schrodinger-billiard .
+```
+
+Alternatively, from the parent directory:
+```bash
+# Build from the parent directory by specifying the path
+docker build -t schrodinger-billiard WignerDyson/
+```
+
+Or using the provided helper script (Linux/macOS):
+```bash
+cd WignerDyson
+chmod +x docker_helper.sh
+./docker_helper.sh build
+```
+
+Or using the provided helper script (Windows):
+```cmd
+cd WignerDyson
+docker_helper.bat build
+```
+
+Or using docker-compose:
+
+```bash
+cd WignerDyson
+docker-compose build
+```
+
+### Running Simulations with Docker
+
+```bash
+# Run the container interactively
+docker run -it schrodinger-billiard
+
+# Run a specific simulation
+docker run schrodinger-billiard ./WignerDyson.exe Orthogonal Channel
+
+# Using docker-compose to preserve data
+docker-compose run schrodinger-billiard ./WignerDyson.exe Orthogonal Channel
+
+# Using the helper script
+./docker_helper.sh run
+./docker_helper.sh exec "./WignerDyson.exe Orthogonal Channel"
+```
+
+### Accessing Results
+
+When using docker-compose or the volume mount options, the Data_Analysis directory is mounted to your host system, so you can access simulation results directly.
+
+### Running Jupyter Notebooks
+
+```bash
+docker-compose run schrodinger-billiard jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+```
+
+Then access the notebook at http://localhost:8888 and use the token displayed in the terminal.
+
 ## Simulation Types
 
 ### Quantum Chaos Regimes
@@ -80,6 +182,10 @@ The [Data_Analysis](file:///c:/Users/rafam/Documents/Physics_content/Schrodinger
 - `Conductance_Energy.ipynb`
 - `Conductance_ShotNoise.ipynb`
 
+## Results Visualization
+
+Results are saved as `.dat` files and can be analyzed using the Jupyter notebooks in `WignerDyson/Data_Analysis/`.
+
 ## Project Structure
 
 ```
@@ -106,6 +212,9 @@ The [Data_Analysis](file:///c:/Users/rafam/Documents/Physics_content/Schrodinger
 │   ├── Quantum_chaotic_billiard.cpp  # Main quantum billiard implementation
 │   └── WignerDyson_AbstractClass_cpp/  # Abstract class implementations
 ├── third_party/            # Third-party installation scripts (Git-ignored)
+├── Dockerfile              # Docker configuration for containerization
+├── docker-compose.yml      # Docker Compose configuration for multi-container setups
+├── .dockerignore           # Files to ignore when building Docker images (Git-ignored)
 ├── Makefile               # Build configuration
 ├── main.cpp               # Main program entry point
 └── Various .bat files     # Installation scripts for dependencies (Git-ignored)
@@ -115,6 +224,7 @@ The [Data_Analysis](file:///c:/Users/rafam/Documents/Physics_content/Schrodinger
 - `eigen-3.4.0/`: Third-party Eigen library, automatically downloaded during build
 - `gpu_experiment/`: Experimental GPU-accelerated code that is separate from the main project
 - `third_party/`: Scripts for installing additional dependencies
+- `.dockerignore`: Docker ignore file (not needed in version control)
 - `.bat files`: Windows batch scripts for dependency installation
 
 These directories are excluded via `.gitignore` because they contain either third-party code or platform-specific installation scripts. They are essential for building and running the project locally but are not part of the core source code.

@@ -24,6 +24,16 @@ third_party/
 
 # Installation scripts
 install_cuda_support.bat
+install_docker.bat
+install_docker_enhanced.bat
 
 # Editor swap files
 *.swp
+
+# Docker related files
+.dockerignore
+Makefile.linux
+
+# Helper scripts
+docker_helper.sh
+docker_helper.bat

@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  schrodinger-billiard:
+    build: .
+    container_name: schrodinger-billiard
+    volumes:
+      # Mount the Data_Analysis directory to access results on the host
+      - ./Data_Analysis:/app/Data_Analysis
+      # Mount the current directory to access any other output files
+      - .:/app/host-volume
+    stdin_open: true
+    tty: true
+    working_dir: /app
