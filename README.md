@@ -41,7 +41,7 @@ The simulation is written in C++ and uses Random Matrix Theory to model quantum 
 make
 
 # Run a simulation (example: orthogonal conductance vs channel count)
-./WignerDyson.exe Orthogonal Channel
+WignerDyson.exe Orthogonal Channel
 
 # View results in Data_Analysis Jupyter notebooks
 ```
