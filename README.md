@@ -46,8 +46,41 @@ WignerDyson.exe Orthogonal Channel
 # View results in Data_Analysis Jupyter notebooks
 ```
 
-## Results Visualization
+## Installing Docker (Optional)
 
-Results are saved as `.dat` files and can be analyzed using the Jupyter notebooks in `WignerDyson/Data_Analysis/`.
+For a consistent environment regardless of your local setup, you can use Docker.
+Navigate to the WignerDyson directory and run the installation helper:
+
+```cmd
+cd WignerDyson
+install_docker.bat
+```
+
+Follow the instructions in the script to download and install Docker Desktop,
+then restart your computer and launch Docker Desktop.
+
+## Using Docker (Alternative Approach)
+
+For a consistent environment regardless of your local setup, you can use Docker:
+
+```bash
+# Navigate to the WignerDyson directory where the Dockerfile is located
+cd WignerDyson
+
+# Build the Docker image
+docker build -t schrodinger-billiard .
+
+# Run a simulation
+docker run schrodinger-billiard ./WignerDyson.exe Orthogonal Channel
+```
+
+Alternatively, from the root directory:
+```bash
+# Build from root directory by specifying the path
+docker build -t schrodinger-billiard WignerDyson/
+
+# Run a simulation
+docker run schrodinger-billiard ./WignerDyson.exe Orthogonal Channel
+```
 
 See the detailed [technical README](WignerDyson/README.md) for comprehensive build and usage instructions.
