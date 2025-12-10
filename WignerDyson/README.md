@@ -85,5 +85,27 @@ The [Data_Analysis](file:///c:/Users/rafam/Documents/Physics_content/Schrodinger
 ```
 .
 ├── Data_Analysis/          # Jupyter notebooks for data analysis
-├── include/                # Header files
-```
+│   ├── Bell_Parameter/     # Bell parameter analysis results
+│   ├── Channel/            # Conductance vs channel count analysis
+│   ├── Concurrence/        # Entanglement concurrence analysis
+│   ├── Energy/             # Conductance vs energy analysis
+│   ├── Gamma/              # Conductance vs gamma parameter analysis
+│   └── Various .ipynb files for data visualization and analysis
+├── eigen-3.4.0/            # Eigen library (automatically downloaded)
+├── gpu_experiment/         # Experimental GPU-accelerated implementation
+├── include/                # Header files for all classes
+│   ├── Orthogonal.h        # Orthogonal ensemble (GOE) implementation
+│   ├── Unitary.h           # Unitary ensemble (GUE) implementation
+│   ├── Symplectic.h        # Symplectic ensemble (GSE) implementation
+│   ├── Quantum_chaotic_billiard.h  # Main quantum billiard class
+│   └── WignerDyson_AbstractClass_h/  # Abstract base classes
+├── src/                    # Source files
+│   ├── Orthogonal.cpp      # Orthogonal ensemble implementation
+│   ├── Unitary.cpp         # Unitary ensemble implementation
+│   ├── Symplectic.cpp      # Symplectic ensemble implementation
+│   ├── Quantum_chaotic_billiard.cpp  # Main quantum billiard implementation
+│   └── WignerDyson_AbstractClass_cpp/  # Abstract class implementations
+├── third_party/            # Third-party installation scripts
+├── Makefile               # Build configuration
+├── main.cpp               # Main program entry point
+└── Various .bat files     # Installation scripts for dependencies
