@@ -4,6 +4,7 @@
 #include <cmath>
 #include <complex>
 #include <chrono>
+#include <iomanip>  // For progress formatting
 #include "../include/WignerDyson_AbstractClass_h/WignerDyson.h"
 #include "../include/Quantum_chaotic_billiard.h"
 
@@ -15,7 +16,7 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Fixed_Base(){
 	auto start = chrono::system_clock::now();
 
 	double Gamma, y, V;
-       	int ress, N1, N2, n, _num_steps;
+	int ress, N1, N2, n, _num_steps;
 
 	_num_steps = 4000000;
 	ress = 100;
@@ -48,7 +49,14 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Fixed_Base(){
 	MatrixXcd *W_pointer = &W;
 
 	Create_W(W_pointer, ress, N1, N2, _lambda, y);
-		
+	
+	// Print simulation header
+	cout << "\n===== BELL PARAMETER (FIXED BASE) SIMULATION =====" << endl;
+	cout << "Total number of steps: " << _num_steps << endl;
+	cout << "=================================================" << endl;
+	
+	auto simulation_start = chrono::system_clock::now();
+
 	#pragma omp parallel for shared(W, C1, C2)
 	for (int step = 1; step < _num_steps + 1; step++){
 		
@@ -76,11 +84,36 @@ void WignerDyson::Run_Simulation_Bell_Parameter_Fixed_Base(){
 		Bell_Parameter_Fixed_Base(step-1, 0) = billiard_setup.getBell_Parameter();
 		Bell_Parameter_Fixed_Base(step-1, 1) = billiard_setup.getConcurrence();
 
-		if (step % _num_steps == 0){
-			std::cout << "\nCurrent number of steps: " << step << std::endl;
+		// Improved progress reporting
+		if (step % (_num_steps / 100) == 0 || step == _num_steps){
+			auto current_time = chrono::system_clock::now();
+			auto elapsed = chrono::duration_cast<chrono::milliseconds>(current_time - simulation_start);
+			double progress = (double)step / _num_steps * 100;
+			long long eta_ms = (long long)(elapsed.count() * (_num_steps - step) / (double)step);
+			auto eta = chrono::milliseconds(eta_ms);
+			
+			int hours = chrono::duration_cast<chrono::hours>(eta).count();
+			int minutes = chrono::duration_cast<chrono::minutes>(eta % chrono::hours(1)).count();
+			int seconds = chrono::duration_cast<chrono::seconds>(eta % chrono::minutes(1)).count();
+			
+			#pragma omp critical
+			{
+				cout << fixed << setprecision(1);
+				cout << "\rStep: " << step << "/" << _num_steps << " (" << progress << "%) | ";
+				cout << "Elapsed: " << elapsed.count()/1000.0 << "s | ";
+				cout << "ETA: " << setw(2) << setfill('0') << hours << ":"
+				     << setw(2) << setfill('0') << minutes << ":"
+				     << setw(2) << setfill('0') << seconds;
+				if (step == _num_steps) cout << " [COMPLETE]";
+				cout.flush();
+			}
 		}
-
 	}
+	
+	// Print completion
+	auto simulation_end = chrono::system_clock::now();
+	auto simulation_elapsed = chrono::duration_cast<chrono::milliseconds>(simulation_end - simulation_start);
+	cout << "\nSimulation completed in " << simulation_elapsed.count()/1000.0 << " seconds" << endl;
 	
 	//Save Concurrence matrix as txt files //
 	Save_txt_files_Bell_Parameter_Fixed_Base(Bell_Parameter_Fixed_Base, _num_steps);

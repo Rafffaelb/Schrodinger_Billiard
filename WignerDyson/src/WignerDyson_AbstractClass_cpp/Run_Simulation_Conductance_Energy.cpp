@@ -4,6 +4,7 @@
 #include <cmath>
 #include <complex>
 #include <chrono>
+#include <iomanip>  // For formatted output
 #include "../include/WignerDyson_AbstractClass_h/WignerDyson.h"
 #include "../include/Quantum_chaotic_billiard.h"
 
@@ -51,6 +52,18 @@ void WignerDyson::Run_Simulation_Conductance_Energy(){
 
 		Create_W(W_pointer, ress, N1, N2, _lambda, y);
 		
+		auto energy_start = chrono::system_clock::now();
+		
+		// Report energy simulation start
+		double energy_min = ((N1*Gamma*Delta/M_PI)*(((double)1-31)/2))/8;
+		double energy_max = ((N1*Gamma*Delta/M_PI)*(((double)61-31)/2))/8;
+		
+		cout << "\n===== ENERGY SIMULATION =====" << endl;
+		cout << "Processing open channels N = " << N1 << endl;
+		cout << "Energy range: " << energy_min << " to " << energy_max << endl;
+		cout << "Number of steps per energy: " << _num_steps << endl;
+		cout << "=============================" << endl;
+
 		for (int step = 1; step < _num_steps + 1; step++){
 		
 			// Generate Hamiltonian Matrix //
@@ -81,10 +94,38 @@ void WignerDyson::Run_Simulation_Conductance_Energy(){
 				G(step-1, energy_idx-1) = billiard_setup.getG();
 			}
 
-			if (step % _num_steps == 0){
-				std::cout << "\nCurrent number of steps: " << step << "| Current number of open Channel N: " << N1 <<  std::endl;
+			// Progress reporting with percentage and ETA
+			if (step % 100 == 0 || step == _num_steps){
+				auto current_time = chrono::system_clock::now();
+				auto elapsed = chrono::duration_cast<chrono::milliseconds>(current_time - energy_start);
+				double progress = (double)step / _num_steps * 100;
+				long long eta_ms = (long long)(elapsed.count() * (_num_steps - step) / (double)step);
+				auto eta = chrono::milliseconds(eta_ms);
+				
+				int hours = chrono::duration_cast<chrono::hours>(eta).count();
+				int minutes = chrono::duration_cast<chrono::minutes>(eta % chrono::hours(1)).count();
+				int seconds = chrono::duration_cast<chrono::seconds>(eta % chrono::minutes(1)).count();
+				
+				#pragma omp critical
+				{
+					cout << fixed << setprecision(1);
+					cout << "\rEnergy N=" << N1 << "/10 | ";
+					cout << "Step: " << step << "/" << _num_steps << " (" << progress << "%) | ";
+					cout << "Elapsed: " << elapsed.count()/1000.0 << "s | ";
+					cout << "ETA: " << setw(2) << setfill('0') << hours << ":"
+					     << setw(2) << setfill('0') << minutes << ":"
+					     << setw(2) << setfill('0') << seconds;
+					if (step == _num_steps) cout << " [COMPLETE]";
+					cout.flush();
+				}
 			}
 		}
+		
+		// Print completion for this energy value
+		auto energy_end = chrono::system_clock::now();
+		auto energy_elapsed = chrono::duration_cast<chrono::milliseconds>(energy_end - energy_start);
+		cout << "\n\nEnergy N=" << N1 << " completed in " << energy_elapsed.count()/1000.0 << " seconds" << endl;
+
 		//Save G matrix as txt files //
 		Save_txt_files_Energy(G, _num_steps, N1);
 

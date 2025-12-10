@@ -4,6 +4,7 @@
 #include <cmath>
 #include <complex>
 #include <chrono>
+#include <iomanip>
 #include "../include/WignerDyson_AbstractClass_h/WignerDyson.h"
 #include "../include/Quantum_chaotic_billiard.h"
 
@@ -51,6 +52,14 @@ void WignerDyson::Run_Simulation_Conductance_Channels(){
 
 		Create_ProjectionMatrices(C1_pointer, C2_pointer, N1, N2);
 		
+		// Print channel information
+		cout << "\n===== CHANNEL SIMULATION =====" << endl;
+		cout << "Processing channel " << N1 << " of 10" << endl;
+		cout << "Number of steps per channel: " << _num_steps << endl;
+		cout << "=============================" << endl;
+		
+		auto channel_start = chrono::system_clock::now();
+		
 		#pragma omp parallel for shared(W, C1, C2)
 		for (int step = 1; step < _num_steps + 1; step++){
 		
@@ -77,10 +86,37 @@ void WignerDyson::Run_Simulation_Conductance_Channels(){
 			G(step-1, N1-1) = billiard_setup.getG();
 			P(step-1, N1-1) = billiard_setup.getP();
 	
-			if (step % 50000 == 0){
-				std::cout << "\nCurrent number of steps: " << step << "| Current number of open channels (N): " << N1 << std::endl;
+			// Improved progress reporting
+			if (step % 10000 == 0 || step == _num_steps){
+				auto current_time = chrono::system_clock::now();
+				auto elapsed = chrono::duration_cast<chrono::milliseconds>(current_time - channel_start);
+				double progress = (double)step / _num_steps * 100;
+				long long eta_ms = (long long)(elapsed.count() * (_num_steps - step) / (double)step);
+				auto eta = chrono::milliseconds(eta_ms);
+				
+				int hours = chrono::duration_cast<chrono::hours>(eta).count();
+				int minutes = chrono::duration_cast<chrono::minutes>(eta % chrono::hours(1)).count();
+				int seconds = chrono::duration_cast<chrono::seconds>(eta % chrono::minutes(1)).count();
+				
+				#pragma omp critical
+				{
+					cout << fixed << setprecision(1);
+					cout << "\rChannel " << N1 << "/10 | ";
+					cout << "Step: " << step << "/" << _num_steps << " (" << progress << "%) | ";
+					cout << "Elapsed: " << elapsed.count()/1000.0 << "s | ";
+					cout << "ETA: " << setw(2) << setfill('0') << hours << ":"
+					     << setw(2) << setfill('0') << minutes << ":"
+					     << setw(2) << setfill('0') << seconds;
+					if (step == _num_steps) cout << " [COMPLETE]";
+					cout.flush();
+				}
 			}
 		}
+		
+		// Print completion for this channel
+		auto channel_end = chrono::system_clock::now();
+		auto channel_elapsed = chrono::duration_cast<chrono::milliseconds>(channel_end - channel_start);
+		cout << "\nChannel " << N1 << " completed in " << channel_elapsed.count()/1000.0 << " seconds" << endl;
 	
 		//Save G and P matrices as txt files //
 	
@@ -90,6 +126,7 @@ void WignerDyson::Run_Simulation_Conductance_Channels(){
 	auto end = chrono::system_clock::now();
 	auto elapsed =
 		chrono::duration_cast<chrono::minutes>(end-start);
-	cout << "\n Simulation time duration: " << elapsed.count() << "\n";
+	cout << "\n===== SIMULATION COMPLETE =====" << endl;
+	cout << "Total simulation time: " << elapsed.count() << " minutes" << endl;
+	cout << "===============================" << endl;
 }
-

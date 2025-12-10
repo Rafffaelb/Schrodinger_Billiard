@@ -4,6 +4,7 @@
 #include <cmath>
 #include <complex>
 #include <chrono>
+#include <iomanip>  // For formatted output
 #include "../include/WignerDyson_AbstractClass_h/WignerDyson.h"
 #include "../include/Quantum_chaotic_billiard.h"
 
@@ -49,6 +50,14 @@ void WignerDyson::Run_Simulation_Concurrence_Gamma(){
 
 			Gamma = double(gamma_idx - 1) / double(20);
 		}
+		
+		cout << "\n===== CONCURRENCE SIMULATION =====" << endl;
+		cout << "Processing Gamma index " << gamma_idx << " of 21" << endl;
+		cout << "Gamma value: " << Gamma << endl;
+		cout << "Number of steps per Gamma: " << _num_steps << endl;
+		cout << "=================================" << endl;
+		
+		auto gamma_start = chrono::system_clock::now();
 
 		double y = sqrt(double(1.0)/Gamma)*(1.0-sqrt(1.0-Gamma));
 
@@ -87,11 +96,38 @@ void WignerDyson::Run_Simulation_Concurrence_Gamma(){
 			Entanglement(step-1, gamma_idx-1) = billiard_setup.getEntanglement();
 
 
-			if (step % _num_steps == 0){
-				std::cout << "\nCurrent number of steps: " << step << "| Current index of Gamma: " << gamma_idx << std::endl;
+			// Improved progress reporting
+			if (step % 50000 == 0 || step == _num_steps){
+				auto current_time = chrono::system_clock::now();
+				auto elapsed = chrono::duration_cast<chrono::milliseconds>(current_time - gamma_start);
+				double progress = (double)step / _num_steps * 100;
+				long long eta_ms = (long long)(elapsed.count() * (_num_steps - step) / (double)step);
+				auto eta = chrono::milliseconds(eta_ms);
+				
+				int hours = chrono::duration_cast<chrono::hours>(eta).count();
+				int minutes = chrono::duration_cast<chrono::minutes>(eta % chrono::hours(1)).count();
+				int seconds = chrono::duration_cast<chrono::seconds>(eta % chrono::minutes(1)).count();
+				
+				#pragma omp critical
+				{
+					cout << fixed << setprecision(1);
+					cout << "\rGamma " << gamma_idx << "/10 | ";
+					cout << "Step: " << step << "/" << _num_steps << " (" << progress << "%) | ";
+					cout << "Elapsed: " << elapsed.count()/1000.0 << "s | ";
+					cout << "ETA: " << setw(2) << setfill('0') << hours << ":"
+					     << setw(2) << setfill('0') << minutes << ":"
+					     << setw(2) << setfill('0') << seconds;
+					if (step == _num_steps) cout << " [COMPLETE]";
+					cout.flush();
+				}
 			}
-
 		}
+		
+		// Print completion for this gamma value
+		auto gamma_end = chrono::system_clock::now();
+		auto gamma_elapsed = chrono::duration_cast<chrono::milliseconds>(gamma_end - gamma_start); 
+		cout << "\nGamma " << Gamma << " (index " << gamma_idx << ") completed in " << gamma_elapsed.count()/1000.0 << " seconds" << endl;
+
 		//Save Concurrence matrix as txt files //
 		Save_txt_files_Concurrence_Gamma(Concurrence, Entanglement, _num_steps);
 		
@@ -100,5 +136,7 @@ void WignerDyson::Run_Simulation_Concurrence_Gamma(){
 	auto end = chrono::system_clock::now();
 	auto elapsed =
 		chrono::duration_cast<chrono::minutes>(end-start);
-	cout << "\n Simulation time duration: " << elapsed.count() << "\n";
+	cout << "\n===== SIMULATION COMPLETE =====" << endl;
+	cout << "Total simulation time: " << elapsed.count() << " minutes" << endl;
+	cout << "===============================" << endl;
 }
