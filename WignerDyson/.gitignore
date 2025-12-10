@@ -9,3 +9,10 @@ Data_Analysis/Bell_Parameter/Bell_Fixed_Base/*.txt
 Data_Analysis/Bell_Parameter/Correlator_Gamma/*.txt
 Data_Analysis/Energy/Energy_Channel/*.txt
 Data_Analysis/Energy/Energy_Gamma/*.txt
+
+# Object files
+*.o
+*.obj
+
+# Executable files
+*.exe
