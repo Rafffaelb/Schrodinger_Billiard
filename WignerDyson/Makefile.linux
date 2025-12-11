@@ -1,6 +1,8 @@
 CC = g++
 CXXFLAGS = -std=c++11 -O3 -I. -Ieigen-3.4.0 -DNDEBUG
 EIGEN_DIR = eigen-3.4.0
+EIGEN_VERSION = 3.4.0
+EIGEN_URL = https://gitlab.com/libeigen/eigen/-/archive/$(EIGEN_VERSION)/eigen-$(EIGEN_VERSION).tar.bz2
 
 # Source files
 SRCS = main.cpp \
@@ -21,13 +23,31 @@ SRCS = main.cpp \
 OBJS = $(SRCS:.cpp=.o)
 TARGET = WignerDyson
 
-.PHONY: all clean clean-all eigen-check
+.PHONY: all clean clean-all eigen-download eigen-check
 
 all: eigen-check $(TARGET)
 
 eigen-check:
 	@if [ ! -d "$(EIGEN_DIR)" ]; then \
-		echo "Eigen library not found."; \
+		echo "Eigen library not found. Downloading..."; \
+		make eigen-download; \
+	fi
+
+eigen-download:
+	@if command -v wget > /dev/null 2>&1; then \
+		wget -O eigen.tar.bz2 "$(EIGEN_URL)"; \
+	elif command -v curl > /dev/null 2>&1; then \
+		curl -L -o eigen.tar.bz2 "$(EIGEN_URL)"; \
+	else \
+		echo "Error: Neither wget nor curl found. Please install one of them."; \
+		exit 1; \
+	fi
+	@if [ -f "eigen.tar.bz2" ]; then \
+		tar -xjf eigen.tar.bz2; \
+		rm -f eigen.tar.bz2; \
+		echo "Eigen library successfully downloaded and extracted."; \
+	else \
+		echo "Error: Failed to download Eigen library"; \
 		exit 1; \
 	fi
 

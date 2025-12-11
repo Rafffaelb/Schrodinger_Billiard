@@ -14,13 +14,15 @@ This project analyzes statistical physics behaviors in quantum chaotic systems, 
 
 - C++11 compatible compiler (g++)
 - GNU Make
-- Internet connection (for automatic Eigen library download)
+- wget or curl (for automatic Eigen library download)
 
 Note: The Eigen library is automatically downloaded during the build process, so no manual installation is required.
 
 ## Building the Project
 
-To build the project, simply run:
+### Windows Build
+
+To build the project on Windows, simply run:
 
 ```bash
 make
@@ -29,119 +31,68 @@ make
 This will:
 1. Automatically download and extract the Eigen library if not already present
 2. Compile all source files
+3. Generate the executable `WignerDyson.exe`
 
-## Quick Start
+### Linux Build
 
-```bash
-# Build the project (automatically downloads required Eigen library)
-make
-
-# Run a simulation (example: orthogonal conductance vs channel count)
-./WignerDyson.exe Orthogonal Channel
-
-# View results in Data_Analysis Jupyter notebooks
-```
-
-## Installing Docker (Windows)
-
-To simplify setup, you can use Docker to run this project in a consistent environment:
-
-Option 1 - Guided Installation:
-```cmd
-install_docker.bat
-```
-
-Option 2 - Automated Installation (requires admin privileges):
-```cmd
-install_docker_enhanced.bat
-```
-
-Follow the instructions in the script to download and install Docker Desktop,
-then restart your computer and launch Docker Desktop.
-
-## Using Docker
-
-This project can be built and run using Docker for a consistent environment across different systems.
-
-For detailed Docker usage instructions, see [README_DOCKER.md](README_DOCKER.md).
-
-### Building the Docker Image
-
-Make sure you are in the `WignerDyson` directory before building (this is where the Dockerfile is located):
+To build the project on Linux, use the Linux-specific Makefile:
 
 ```bash
-# Navigate to the WignerDyson directory where the Dockerfile is located
-cd WignerDyson
-
-# Build the Docker image
-docker build -t schrodinger-billiard .
+make -f Makefile.linux
 ```
 
-Alternatively, from the parent directory:
-```bash
-# Build from the parent directory by specifying the path
-docker build -t schrodinger-billiard WignerDyson/
-```
+This will:
+1. Automatically download and extract the Eigen library if not already present
+2. Compile all source files
+3. Generate the executable `WignerDyson`
 
-Or using the provided helper script (Linux/macOS):
-```bash
-cd WignerDyson
-chmod +x docker_helper.sh
-./docker_helper.sh build
-```
-
-Or using the provided helper script (Windows):
-```cmd
-cd WignerDyson
-docker_helper.bat build
-```
-
-Or using docker-compose:
+You can also use the provided build script:
 
 ```bash
-cd WignerDyson
-docker-compose build
+./build.sh
 ```
 
-### Running Simulations with Docker
+To manually download Eigen:
 
 ```bash
-# Run the container interactively
-docker run -it schrodinger-billiard
-
-# Run a specific simulation
-docker run schrodinger-billiard ./WignerDyson.exe Orthogonal Channel
-
-# Using docker-compose to preserve data
-docker-compose run schrodinger-billiard ./WignerDyson.exe Orthogonal Channel
-
-# Using the helper script
-./docker_helper.sh run
-./docker_helper.sh exec "./WignerDyson.exe Orthogonal Channel"
+make -f Makefile.linux eigen-download
 ```
 
-### Accessing Results
-
-When using docker-compose or the volume mount options, the Data_Analysis directory is mounted to your host system, so you can access simulation results directly.
-
-### Running Jupyter Notebooks
+To clean object files and executables:
 
 ```bash
-docker-compose run schrodinger-billiard jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+make -f Makefile.linux clean
 ```
 
-Then access the notebook at http://localhost:8888 and use the token displayed in the terminal.
+To perform a full clean (including Eigen library):
 
-## Simulation Types
+```bash
+make -f Makefile.linux clean-all
+```
 
-### Quantum Chaos Regimes
-- `Orthogonal` - Time-reversal symmetric systems (β=1)
-- `Unitary` - Systems with broken time-reversal symmetry (β=2)
-- `Symplectic` - Systems with spin-orbit coupling (β=4)
+## Running Simulations
 
-### Physical Observables
+The simulator supports various symmetry classes and simulation types. Run it with the following syntax:
 
-#### Transport Properties
+```bash
+./WignerDyson.exe <symmetry_class> <simulation_type> [other_parameters]
+```
+
+On Linux systems:
+
+```bash
+./WignerDyson <symmetry_class> <simulation_type> [other_parameters]
+```
+
+### Symmetry Classes
+
+- `Orthogonal` - Gaussian Orthogonal Ensemble (GOE)
+- `Unitary` - Gaussian Unitary Ensemble (GUE)
+- `Symplectic` - Gaussian Symplectic Ensemble (GSE)
+
+### Simulation Types
+
+#### Conductance Analysis
 - `Channel` - Conductance vs channel count
 - `Gamma` - Conductance vs gamma parameter
 - `Energy` - Conductance vs energy
@@ -154,6 +105,7 @@ Then access the notebook at http://localhost:8888 and use the token displayed in
 - `Bell_Parameter_Fixed_Base` - Bell parameter with fixed basis
 
 #### Scattering Properties
+- `Talphabeta` - T_αβ scattering matrix elements
 
 ### Example Commands
 
@@ -173,6 +125,7 @@ Then access the notebook at http://localhost:8888 and use the token displayed in
 Simulation results are written to `.dat` files in the current directory:
 - Conductance data: `Conductance_Channels.dat`, `Conductance_Gamma.dat`, etc.
 - Entanglement data: `Concurrence_Gamma.dat`, `Bell_Parameter_Ress.dat`, etc.
+- Scattering data: `Talphabeta.dat`
 
 ## Data Analysis
 
@@ -181,50 +134,53 @@ The [Data_Analysis](file:///c:/Users/rafam/Documents/Physics_content/Schrodinger
 - `Concurrence_Gamma.ipynb`
 - `Conductance_Energy.ipynb`
 - `Conductance_ShotNoise.ipynb`
-
-## Results Visualization
-
-Results are saved as `.dat` files and can be analyzed using the Jupyter notebooks in `WignerDyson/Data_Analysis/`.
+- `Talphabeta.ipynb`
 
 ## Project Structure
 
 ```
 .
 ├── Data_Analysis/          # Jupyter notebooks for data analysis
-│   ├── Bell_Parameter/     # Bell parameter analysis results
-│   ├── Channel/            # Conductance vs channel count analysis
-│   ├── Concurrence/        # Entanglement concurrence analysis
-│   ├── Energy/             # Conductance vs energy analysis
-│   ├── Gamma/              # Conductance vs gamma parameter analysis
-│   └── Various .ipynb files for data visualization and analysis
-├── eigen-3.4.0/            # Eigen library (automatically downloaded, Git-ignored)
-├── gpu_experiment/         # Experimental GPU-accelerated implementation (Git-ignored)
-├── include/                # Header files for all classes
-│   ├── Orthogonal.h        # Orthogonal ensemble (GOE) implementation
-│   ├── Unitary.h           # Unitary ensemble (GUE) implementation
-│   ├── Symplectic.h        # Symplectic ensemble (GSE) implementation
-│   ├── Quantum_chaotic_billiard.h  # Main quantum billiard class
-│   └── WignerDyson_AbstractClass_h/  # Abstract base classes
+├── include/                # Header files
+│   ├── WignerDyson_AbstractClass_h/
+│   │   ├── WignerDyson.h   # Abstract base class
+│   │   └── Run_Simulation_*.h # Simulation modules
+│   ├── Orthogonal.h        # Orthogonal symmetry implementation
+│   ├── Unitary.h           # Unitary symmetry implementation
+│   ├── Symplectic.h        # Symplectic symmetry implementation
+│   └── Quantum_chaotic_billiard.h
 ├── src/                    # Source files
-│   ├── Orthogonal.cpp      # Orthogonal ensemble implementation
-│   ├── Unitary.cpp         # Unitary ensemble implementation
-│   ├── Symplectic.cpp      # Symplectic ensemble implementation
-│   ├── Quantum_chaotic_billiard.cpp  # Main quantum billiard implementation
-│   └── WignerDyson_AbstractClass_cpp/  # Abstract class implementations
-├── third_party/            # Third-party installation scripts (Git-ignored)
-├── Dockerfile              # Docker configuration for containerization
-├── docker-compose.yml      # Docker Compose configuration for multi-container setups
-├── .dockerignore           # Files to ignore when building Docker images (Git-ignored)
-├── Makefile               # Build configuration
-├── main.cpp               # Main program entry point
-└── Various .bat files     # Installation scripts for dependencies (Git-ignored)
+│   ├── WignerDyson_AbstractClass_cpp/
+│   │   ├── WignerDyson.cpp # Base class implementation
+│   │   └── Run_Simulation_*.cpp # Simulation module implementations
+│   ├── Orthogonal.cpp      # Orthogonal symmetry implementation
+│   ├── Unitary.cpp         # Unitary symmetry implementation
+│   ├── Symplectic.cpp      # Symplectic symmetry implementation
+│   └── Quantum_chaotic_billiard.cpp
+├── Makefile                # Build configuration
+├── download_eigen.bat      # Eigen download script for Windows
+├── main.cpp                # Main entry point
+└── README.md               # This file
 ```
 
-**Note on Git-ignored Directories**: Several directories in this project are not tracked by Git:
-- `eigen-3.4.0/`: Third-party Eigen library, automatically downloaded during build
-- `gpu_experiment/`: Experimental GPU-accelerated code that is separate from the main project
-- `third_party/`: Scripts for installing additional dependencies
-- `.dockerignore`: Docker ignore file (not needed in version control)
-- `.bat files`: Windows batch scripts for dependency installation
+## Technical Details
 
-These directories are excluded via `.gitignore` because they contain either third-party code or platform-specific installation scripts. They are essential for building and running the project locally but are not part of the core source code.
+- Uses Eigen library for linear algebra operations (automatically downloaded)
+- Implements OpenMP parallelization for ensemble averaging
+- Supports FMA (Fused Multiply-Add) instruction set optimization
+- Cross-platform build system with automatic dependency management
+
+## Troubleshooting
+
+### Eigen download issues
+If the automatic Eigen download fails, you can manually download it:
+1. Download Eigen 3.4.0 from https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.bz2
+2. Extract it in the project root directory
+3. Rename the folder to `eigen-3.4.0`
+
+### Compilation errors
+Ensure you're using a C++11 compatible compiler with OpenMP support.
+
+## License
+
+This project is intended for scientific research purposes.
