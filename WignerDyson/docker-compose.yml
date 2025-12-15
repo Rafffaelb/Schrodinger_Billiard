@@ -2,13 +2,32 @@ version: '3.8'
 
 services:
   schrodinger-billiard:
-    build: .
-    container_name: schrodinger-billiard
+    build: 
+      context: .
+      args:
+        USER_ID: ${UID:-1000}
+        GROUP_ID: ${GID:-1000}
     volumes:
-      # Mount the Data_Analysis directory to access results on the host
       - ./Data_Analysis:/app/Data_Analysis
-      # Mount the current directory to access any other output files
-      - .:/app/host-volume
+      - ./output:/app/output
     stdin_open: true
     tty: true
     working_dir: /app
+    user: "${UID:-1000}:${GID:-1000}"
+    environment:
+      - OMP_NUM_THREADS=${OMP_NUM_THREADS:-*}
+
+  jupyter:
+    build: 
+      context: .
+      args:
+        USER_ID: ${UID:-1000}
+        GROUP_ID: ${GID:-1000}
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./Data_Analysis:/app/Data_Analysis
+      - ./output:/app/output
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /app
+    command: jupyter notebook --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
