@@ -21,15 +21,19 @@ SRCS = main.cpp \
 OBJS = $(SRCS:.cpp=.o)
 TARGET = WignerDyson
 
-.PHONY: all clean clean-all eigen-download
+.PHONY: all clean clean-all eigen-download eigen-check
 
 all: eigen-check $(TARGET)
 
 eigen-check:
-	@if not exist "$(EIGEN_DIR)" ( \
-		echo Eigen library not found. Downloading... && \
-		call download_eigen.bat \
-	)
+	@if [ ! -d "$(EIGEN_DIR)" ]; then \
+		echo "Eigen library not found. Downloading..."; \
+		make eigen-download; \
+	fi
+
+eigen-download:
+	@chmod +x ./download_eigen_linux.sh
+	@./download_eigen_linux.sh
 
 $(TARGET): $(OBJS)
 	$(CC) $(CXXFLAGS) -o $@ $^ -lm
@@ -38,11 +42,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	del /Q *.o src\*.o src\WignerDyson_AbstractClass_cpp\*.o $(TARGET).exe 2>nul || echo No files to delete
+	rm -f *.o src/*.o src/WignerDyson_AbstractClass_cpp/*.o $(TARGET)
 
 clean-all: clean
-	if exist $(EIGEN_DIR) rmdir /S /Q $(EIGEN_DIR)
-
-# Rule to download Eigen if needed
-eigen-download:
-	call download_eigen.bat
+	rm -rf $(EIGEN_DIR) $(TARGET)
