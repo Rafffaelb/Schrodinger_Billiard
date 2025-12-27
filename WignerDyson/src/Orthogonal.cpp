@@ -90,9 +90,9 @@ void Orthogonal::Create_H(MatrixXcd* H_pointer, int ress, double V){
 	}
 
 	for (int i = 1; i < ress + 1; i++){
-		H1(i-1,i-1) = A(i-1,i-1)*sqrt(V/(2.0));
+		H1(i-1,i-1) = A(i-1,i-1)*sqrt(V/(4.0));
 		for (int j = i + 1; j < ress + 1; j++){
-			H1(i-1,j-1) = A(i-1,j-1)*sqrt(V/(1.0));
+			H1(i-1,j-1) = A(i-1,j-1)*sqrt(V/(2.0));
 		}
 	}
 
